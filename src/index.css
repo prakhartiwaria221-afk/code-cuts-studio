@@ -55,6 +55,50 @@ All colors MUST be HSL.
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 10%;
+
+    --card: 0 0% 98%;
+    --card-foreground: 0 0% 10%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 10%;
+
+    --primary: 45 90% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 45 20% 95%;
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 0 0% 95%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 45 90% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 90%;
+    --input: 0 0% 90%;
+    --ring: 45 90% 50%;
+
+    /* Custom light mode tokens */
+    --gold: 45 90% 50%;
+    --gold-light: 45 90% 60%;
+    --dark-surface: 0 0% 96%;
+    --darker-surface: 0 0% 98%;
+    
+    /* Gradients */
+    --gradient-gold: linear-gradient(135deg, hsl(45 90% 50%), hsl(40 85% 45%));
+    --gradient-dark: linear-gradient(180deg, hsl(0 0% 100%), hsl(0 0% 98%));
+    
+    /* Shadows */
+    --shadow-gold: 0 0 30px hsl(45 90% 50% / 0.2);
+    --shadow-card: 0 10px 40px hsl(0 0% 0% / 0.1);
+  }
 }
 
 @layer base {
@@ -63,6 +107,10 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground transition-colors duration-300;
+  }
+  
+  html {
+    @apply transition-colors duration-300;
   }
 }
