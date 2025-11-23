@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { ArrowRight, Github, Linkedin, Mail, Instagram } from "lucide-react";
-import heroImage from "@/assets/hero-profile.jpg";
+import profileImage from "@/assets/profile-prakhar.jpg";
 
 const Hero = () => {
   return (
@@ -83,18 +83,27 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Content - Image */}
-          <div className="relative animate-slide-up">
-            <div className="relative rounded-2xl overflow-hidden border border-border/50 shadow-2xl">
-              <img
-                src={heroImage}
-                alt="Prakhar Tiwari"
-                className="w-full h-auto object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
+          {/* Right Content - Profile Image */}
+          <div className="relative animate-slide-up flex items-center justify-center">
+            <div className="relative">
+              {/* Outer decorative ring */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-gold-light to-primary opacity-20 blur-2xl animate-glow" />
+              
+              {/* Main profile frame */}
+              <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full p-2 bg-gradient-to-br from-primary to-gold-light">
+                <div className="w-full h-full rounded-full overflow-hidden border-4 border-background shadow-2xl">
+                  <img
+                    src={profileImage}
+                    alt="Prakhar Tiwari"
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              
+              {/* Decorative accent rings */}
+              <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full border-2 border-primary/30 animate-pulse" />
+              <div className="absolute -bottom-4 -left-4 w-32 h-32 rounded-full border-2 border-primary/20" />
             </div>
-            {/* Decorative element */}
-            <div className="absolute -z-10 top-8 -right-8 w-full h-full border-2 border-primary/30 rounded-2xl" />
           </div>
         </div>
       </div>
