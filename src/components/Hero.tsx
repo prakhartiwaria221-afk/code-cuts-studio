@@ -1,8 +1,16 @@
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { ArrowRight, Github, Linkedin, Mail, Instagram } from "lucide-react";
 import profileImage from "@/assets/profile-prakhar.jpg";
 
 const Hero = () => {
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const handleProfileClick = () => {
+    setIsAnimating(true);
+    setTimeout(() => setIsAnimating(false), 600);
+  };
+
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
       {/* Animated background elements */}
@@ -90,19 +98,30 @@ const Hero = () => {
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-gold-light to-primary opacity-20 blur-2xl animate-glow" />
               
               {/* Main profile frame */}
-              <div className="relative w-80 h-80 md:w-96 md:h-96 rounded-full p-2 bg-gradient-to-br from-primary to-gold-light">
+              <div 
+                className={`relative w-80 h-80 md:w-96 md:h-96 rounded-full p-2 bg-gradient-to-br from-primary to-gold-light cursor-pointer transition-all duration-500 ${
+                  isAnimating ? 'scale-110 rotate-6' : 'hover:scale-105 hover:rotate-2'
+                }`}
+                onClick={handleProfileClick}
+              >
                 <div className="w-full h-full rounded-full overflow-hidden border-4 border-background shadow-2xl">
                   <img
                     src={profileImage}
                     alt="Prakhar Tiwari"
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover transition-transform duration-500 ${
+                      isAnimating ? 'scale-110' : ''
+                    }`}
                   />
                 </div>
               </div>
               
               {/* Decorative accent rings */}
-              <div className="absolute -top-4 -right-4 w-24 h-24 rounded-full border-2 border-primary/30 animate-pulse" />
-              <div className="absolute -bottom-4 -left-4 w-32 h-32 rounded-full border-2 border-primary/20" />
+              <div className={`absolute -top-4 -right-4 w-24 h-24 rounded-full border-2 border-primary/30 transition-all duration-500 ${
+                isAnimating ? 'scale-125 opacity-100 animate-pulse' : 'animate-pulse'
+              }`} />
+              <div className={`absolute -bottom-4 -left-4 w-32 h-32 rounded-full border-2 border-primary/20 transition-all duration-500 ${
+                isAnimating ? 'scale-125 opacity-100' : ''
+              }`} />
             </div>
           </div>
         </div>
