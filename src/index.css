@@ -114,3 +114,43 @@ All colors MUST be HSL.
     @apply transition-colors duration-300;
   }
 }
+
+/* Custom animations */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(45deg);
+  }
+  50% {
+    transform: translateY(-20px) rotate(45deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 20s linear infinite;
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Theme-specific display utilities */
+.light .light\:block {
+  display: block !important;
+}
+
+.light .light\:hidden {
+  display: none !important;
+}
+
+:root:not(.light) .dark\:block {
+  display: block;
+}
