@@ -38,15 +38,15 @@ const About = () => {
           <div className="mb-16 animate-slide-up">
             <div className="bg-card border border-border rounded-2xl p-8 backdrop-blur-sm">
               <p className="text-lg text-muted-foreground leading-relaxed">
-                Prakhar Tiwari is a passionate video editor and front-end developer blending creativity and code
+                I am a passionate video editor and front-end developer blending creativity and code
                 to build beautiful digital experiences. With expertise in{" "}
-                <span className="text-primary font-semibold">C++, Java, React</span>, and modern web design, he
-                focuses on clean, functional, visually appealing builds.
+                <span className="text-primary font-semibold">C++, Java, React</span>, and modern web design, I
+                focus on clean, functional, visually appealing builds.
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mt-4">
-                A disciplined state-level table tennis player, he brings{" "}
+                A disciplined state-level table tennis player, I bring{" "}
                 <span className="text-primary font-semibold">consistency, speed, and problem-solving</span> to
-                all his work.
+                all my work.
               </p>
             </div>
           </div>
