@@ -13,34 +13,81 @@ const Hero = () => {
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-      {/* Dark Mode - Video Editing Background */}
+      {/* Dark Mode - Video Editing Software Interface */}
       <div className="absolute inset-0 overflow-hidden dark:block hidden light:hidden">
-        {/* Film strip elements */}
-        <div className="absolute top-10 left-10 w-16 h-64 border-2 border-primary/20 rounded-sm">
-          <div className="absolute top-2 left-1 w-3 h-3 bg-primary/30 rounded-sm" />
-          <div className="absolute top-2 right-1 w-3 h-3 bg-primary/30 rounded-sm" />
-          <div className="absolute top-10 left-1 w-3 h-3 bg-primary/30 rounded-sm" />
-          <div className="absolute top-10 right-1 w-3 h-3 bg-primary/30 rounded-sm" />
-          <div className="absolute top-18 left-1 w-3 h-3 bg-primary/30 rounded-sm" />
-          <div className="absolute top-18 right-1 w-3 h-3 bg-primary/30 rounded-sm" />
+        {/* Top toolbar */}
+        <div className="absolute top-4 left-4 right-4 h-10 bg-muted/20 rounded-lg border border-primary/10 flex items-center px-4 gap-4">
+          <div className="flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-destructive/50" />
+            <div className="w-3 h-3 rounded-full bg-yellow-500/50" />
+            <div className="w-3 h-3 rounded-full bg-green-500/50" />
+          </div>
+          <div className="flex gap-2 ml-4">
+            {['File', 'Edit', 'View', 'Effects'].map((item) => (
+              <span key={item} className="text-xs text-muted-foreground/50">{item}</span>
+            ))}
+          </div>
         </div>
         
-        {/* Timeline bar */}
-        <div className="absolute bottom-20 left-1/4 right-1/4 h-2 bg-muted/30 rounded-full">
-          <div className="absolute left-0 top-0 w-1/3 h-full bg-primary/40 rounded-full" />
-          <div className="absolute left-1/3 top-1/2 -translate-y-1/2 w-4 h-4 bg-primary rounded-full shadow-lg" />
+        {/* Left panel - Layers */}
+        <div className="absolute top-20 left-4 w-48 bg-muted/10 rounded-lg border border-primary/10 p-3">
+          <div className="text-xs text-primary/50 mb-2">LAYERS</div>
+          {['Video Track 1', 'Audio Track', 'Effects', 'Text Overlay'].map((layer, i) => (
+            <div key={layer} className={`text-xs py-1.5 px-2 rounded ${i === 0 ? 'bg-primary/20 text-primary' : 'text-muted-foreground/40'}`}>
+              {layer}
+            </div>
+          ))}
         </div>
         
-        {/* Play button */}
-        <div className="absolute top-1/3 right-20 w-20 h-20 border-2 border-primary/30 rounded-full flex items-center justify-center">
-          <div className="w-0 h-0 border-t-8 border-t-transparent border-l-12 border-l-primary/40 border-b-8 border-b-transparent ml-1" />
+        {/* Film strip */}
+        <div className="absolute top-20 right-4 w-16 h-64 border-2 border-primary/20 rounded-sm">
+          {[...Array(8)].map((_, i) => (
+            <div key={i} className="flex justify-between px-1 mt-2">
+              <div className="w-3 h-3 bg-primary/30 rounded-sm" />
+              <div className="w-3 h-3 bg-primary/30 rounded-sm" />
+            </div>
+          ))}
         </div>
         
-        {/* Video frames */}
-        <div className="absolute bottom-1/3 left-20 flex gap-2">
-          <div className="w-16 h-10 bg-muted/20 rounded border border-primary/20" />
-          <div className="w-16 h-10 bg-muted/30 rounded border border-primary/30" />
-          <div className="w-16 h-10 bg-muted/20 rounded border border-primary/20" />
+        {/* Timeline with playhead animation */}
+        <div className="absolute bottom-24 left-8 right-8 bg-muted/20 rounded-lg border border-primary/10 p-4">
+          {/* Time markers */}
+          <div className="flex justify-between mb-2 text-xs text-muted-foreground/40">
+            {['00:00', '00:15', '00:30', '00:45', '01:00'].map((time) => (
+              <span key={time}>{time}</span>
+            ))}
+          </div>
+          
+          {/* Timeline tracks */}
+          <div className="space-y-2">
+            <div className="h-8 bg-primary/20 rounded flex items-center px-2">
+              <div className="w-32 h-6 bg-primary/40 rounded text-xs flex items-center justify-center text-primary-foreground/60">
+                Clip 1
+              </div>
+              <div className="w-24 h-6 bg-primary/30 rounded ml-2 text-xs flex items-center justify-center text-primary-foreground/60">
+                Clip 2
+              </div>
+            </div>
+            <div className="h-6 bg-blue-500/10 rounded flex items-center px-2">
+              <div className="w-full h-4 bg-blue-500/20 rounded" />
+            </div>
+          </div>
+          
+          {/* Animated playhead */}
+          <div className="absolute top-0 bottom-0 w-0.5 bg-primary animate-playhead" />
+        </div>
+        
+        {/* Play controls */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex items-center gap-4">
+          <div className="w-8 h-8 border border-primary/30 rounded flex items-center justify-center">
+            <div className="w-2 h-3 border-l-2 border-r-2 border-primary/40" />
+          </div>
+          <div className="w-12 h-12 border-2 border-primary/40 rounded-full flex items-center justify-center">
+            <div className="w-0 h-0 border-t-6 border-t-transparent border-l-10 border-l-primary/60 border-b-6 border-b-transparent ml-1" />
+          </div>
+          <div className="w-8 h-8 border border-primary/30 rounded flex items-center justify-center">
+            <div className="w-3 h-3 bg-primary/40 rounded-sm" />
+          </div>
         </div>
         
         {/* Glowing orbs */}
@@ -162,15 +209,56 @@ const Hero = () => {
             </div>
           </div>
 
-          {/* Right Content - Profile Image */}
+          {/* Right Content - Profile Image with Orbiting Icons */}
           <div className="relative animate-slide-up flex items-center justify-center">
             <div className="relative">
               {/* Outer decorative ring */}
               <div className="absolute inset-0 rounded-full bg-gradient-to-br from-primary via-gold-light to-primary opacity-20 blur-2xl animate-glow" />
               
+              {/* Orbiting tech icons */}
+              <div className="absolute inset-0 w-80 h-80 md:w-96 md:h-96 animate-orbit">
+                {/* React Icon */}
+                <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-card rounded-full border-2 border-primary/50 flex items-center justify-center shadow-lg">
+                  <svg viewBox="0 0 100 100" className="w-7 h-7 text-primary animate-spin-slow">
+                    <ellipse cx="50" cy="50" rx="40" ry="15" fill="none" stroke="currentColor" strokeWidth="3" />
+                    <ellipse cx="50" cy="50" rx="40" ry="15" fill="none" stroke="currentColor" strokeWidth="3" transform="rotate(60 50 50)" />
+                    <ellipse cx="50" cy="50" rx="40" ry="15" fill="none" stroke="currentColor" strokeWidth="3" transform="rotate(120 50 50)" />
+                    <circle cx="50" cy="50" r="8" fill="currentColor" />
+                  </svg>
+                </div>
+                
+                {/* Java Icon */}
+                <div className="absolute top-1/2 -right-6 -translate-y-1/2 w-12 h-12 bg-card rounded-full border-2 border-primary/50 flex items-center justify-center shadow-lg">
+                  <span className="text-primary font-bold text-lg">☕</span>
+                </div>
+                
+                {/* C++ Icon */}
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-card rounded-full border-2 border-primary/50 flex items-center justify-center shadow-lg">
+                  <span className="text-primary font-bold text-sm">C++</span>
+                </div>
+                
+                {/* HTML Icon */}
+                <div className="absolute top-1/2 -left-6 -translate-y-1/2 w-12 h-12 bg-card rounded-full border-2 border-primary/50 flex items-center justify-center shadow-lg">
+                  <span className="text-primary font-bold text-xs">&lt;/&gt;</span>
+                </div>
+              </div>
+              
+              {/* Second orbit layer */}
+              <div className="absolute inset-0 w-80 h-80 md:w-96 md:h-96 animate-orbit-reverse">
+                {/* JS Icon */}
+                <div className="absolute top-4 right-4 w-10 h-10 bg-card rounded-full border-2 border-primary/40 flex items-center justify-center shadow-lg">
+                  <span className="text-primary font-bold text-xs">JS</span>
+                </div>
+                
+                {/* CSS Icon */}
+                <div className="absolute bottom-4 left-4 w-10 h-10 bg-card rounded-full border-2 border-primary/40 flex items-center justify-center shadow-lg">
+                  <span className="text-primary font-bold text-xs">CSS</span>
+                </div>
+              </div>
+              
               {/* Main profile frame */}
               <div 
-                className={`relative w-80 h-80 md:w-96 md:h-96 rounded-full p-2 bg-gradient-to-br from-primary to-gold-light cursor-pointer transition-all duration-500 ${
+                className={`relative w-80 h-80 md:w-96 md:h-96 rounded-full p-2 bg-gradient-to-br from-primary to-gold-light cursor-pointer transition-all duration-500 z-10 ${
                   isAnimating ? 'scale-110 rotate-6' : 'hover:scale-105 hover:rotate-2'
                 }`}
                 onClick={handleProfileClick}
