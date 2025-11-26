@@ -134,12 +134,51 @@ All colors MUST be HSL.
   }
 }
 
+@keyframes orbit {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-reverse {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes playhead {
+  0% {
+    left: 1rem;
+  }
+  100% {
+    left: calc(100% - 1rem);
+  }
+}
+
 .animate-spin-slow {
   animation: spin-slow 20s linear infinite;
 }
 
 .animate-float {
   animation: float 6s ease-in-out infinite;
+}
+
+.animate-orbit {
+  animation: orbit 15s linear infinite;
+}
+
+.animate-orbit-reverse {
+  animation: orbit-reverse 20s linear infinite;
+}
+
+.animate-playhead {
+  animation: playhead 4s ease-in-out infinite alternate;
 }
 
 /* Theme-specific display utilities */
