@@ -66,9 +66,9 @@ const Contact = () => {
                     <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
                       <item.icon className="text-primary" size={24} />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm text-muted-foreground">{item.label}</p>
-                      <p className="text-foreground font-medium group-hover:text-primary transition-colors">
+                      <p className="text-foreground font-medium group-hover:text-primary transition-colors truncate text-sm sm:text-base">
                         {item.value}
                       </p>
                     </div>
