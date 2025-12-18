@@ -8,36 +8,48 @@ const Projects = () => {
       description: "Fully responsive personal portfolio with smooth animations and modern design",
       tags: ["React", "Tailwind", "TypeScript"],
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop",
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "",
     },
     {
       title: "Java Calculator",
       description: "GUI-based calculator with advanced operations and calculation history",
       tags: ["Java", "Swing", "GUI"],
       image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=800&h=500&fit=crop",
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "",
     },
     {
       title: "Netflix Clone",
       description: "Dynamic web interface inspired by Netflix with responsive design",
       tags: ["HTML", "CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=800&h=500&fit=crop",
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "",
     },
     {
       title: "Restaurant Order System",
       description: "Java-based billing and order management system with inventory tracking",
       tags: ["Java", "OOP", "Database"],
       image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=500&fit=crop",
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "",
     },
     {
       title: "C++ Data Structures",
       description: "Implementation of algorithms and linked data structures",
       tags: ["C++", "Algorithms", "DSA"],
       image: "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=800&h=500&fit=crop",
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "",
     },
     {
       title: "Social Media Graphics",
       description: "Creative visuals, animations, and brand content for digital platforms",
       tags: ["Design", "After Effects", "Photoshop"],
       image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&h=500&fit=crop",
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "",
     },
   ];
 
@@ -94,20 +106,29 @@ const Projects = () => {
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
+                  {project.live && (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="flex-1 border-primary text-primary hover:bg-primary/10"
+                      asChild
+                    >
+                      <a href={project.live} target="_blank" rel="noopener noreferrer">
+                        <ExternalLink size={16} className="mr-2" />
+                        View
+                      </a>
+                    </Button>
+                  )}
                   <Button
                     size="sm"
                     variant="outline"
-                    className="flex-1 border-primary text-primary hover:bg-primary/10"
+                    className={`border-border hover:border-primary/50 hover:text-primary ${!project.live ? 'flex-1' : ''}`}
+                    asChild
                   >
-                    <ExternalLink size={16} className="mr-2" />
-                    View
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="border-border hover:border-primary/50"
-                  >
-                    <Github size={16} />
+                    <a href={project.github} target="_blank" rel="noopener noreferrer">
+                      <Github size={16} className={project.live ? '' : 'mr-2'} />
+                      {!project.live && 'View on GitHub'}
+                    </a>
                   </Button>
                 </div>
               </div>
