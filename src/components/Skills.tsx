@@ -15,30 +15,30 @@ const Skills = () => {
   ];
 
   return (
-    <section id="skills" className="py-24 bg-darker-surface relative overflow-hidden">
+    <section id="skills" className="py-16 sm:py-24 bg-darker-surface relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-16 animate-fade-in">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             <span className="text-primary">Skills &</span> <span className="text-foreground">Expertise</span>
           </h2>
-          <div className="w-20 h-1 bg-primary mx-auto" />
+          <div className="w-16 sm:w-20 h-1 bg-primary mx-auto" />
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-6 sm:gap-12 max-w-6xl mx-auto">
           {/* Tech Skills */}
           <div className="animate-slide-up">
-            <div className="bg-card border border-border rounded-2xl p-8 h-full backdrop-blur-sm hover:border-primary/50 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-8">
-                <Code2 className="text-primary" size={32} />
-                <h3 className="text-2xl font-bold text-foreground">Technical Skills</h3>
+            <div className="bg-card border border-border rounded-2xl p-5 sm:p-8 h-full backdrop-blur-sm hover:border-primary/50 transition-all duration-300">
+              <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+                <Code2 className="text-primary" size={28} />
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground">Technical Skills</h3>
               </div>
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {techSkills.map((skill, index) => (
                   <div key={index}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-foreground font-medium">{skill.name}</span>
-                      <span className="text-primary font-medium">{skill.level}%</span>
+                      <span className="text-foreground font-medium text-sm sm:text-base">{skill.name}</span>
+                      <span className="text-primary font-medium text-sm sm:text-base">{skill.level}%</span>
                     </div>
                     <div className="h-2 bg-secondary rounded-full overflow-hidden">
                       <div
@@ -54,17 +54,17 @@ const Skills = () => {
 
           {/* Creative Skills */}
           <div className="animate-slide-up">
-            <div className="bg-card border border-border rounded-2xl p-8 h-full backdrop-blur-sm hover:border-primary/50 transition-all duration-300">
-              <div className="flex items-center gap-3 mb-8">
-                <Palette className="text-primary" size={32} />
-                <h3 className="text-2xl font-bold text-foreground">Creative Skills</h3>
+            <div className="bg-card border border-border rounded-2xl p-5 sm:p-8 h-full backdrop-blur-sm hover:border-primary/50 transition-all duration-300">
+              <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+                <Palette className="text-primary" size={28} />
+                <h3 className="text-xl sm:text-2xl font-bold text-foreground">Creative Skills</h3>
               </div>
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {creativeSkills.map((skill, index) => (
                   <div key={index}>
                     <div className="flex justify-between mb-2">
-                      <span className="text-foreground font-medium">{skill.name}</span>
-                      <span className="text-primary font-medium">{skill.level}%</span>
+                      <span className="text-foreground font-medium text-sm sm:text-base">{skill.name}</span>
+                      <span className="text-primary font-medium text-sm sm:text-base">{skill.level}%</span>
                     </div>
                     <div className="h-2 bg-secondary rounded-full overflow-hidden">
                       <div
@@ -77,8 +77,8 @@ const Skills = () => {
               </div>
 
               {/* Additional Info */}
-              <div className="mt-12 p-6 bg-secondary/50 rounded-xl border border-border/50">
-                <p className="text-muted-foreground leading-relaxed">
+              <div className="mt-8 sm:mt-12 p-4 sm:p-6 bg-secondary/50 rounded-xl border border-border/50">
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
                   Combining technical precision with creative vision to deliver projects that are both
                   functionally robust and visually stunning.
                 </p>
