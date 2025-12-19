@@ -1,9 +1,19 @@
-import { Mail, Phone, Github, Linkedin, Instagram } from "lucide-react";
+import { useState } from "react";
+import { Mail, Phone, Github, Linkedin, Instagram, Loader2 } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
+import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
   const contactInfo = [
     {
       icon: Mail,
@@ -36,6 +46,50 @@ const Contact = () => {
       href: "https://instagram.com/prakhar6038",
     },
   ];
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!formData.name || !formData.email || !formData.message) {
+      toast({
+        title: "Missing fields",
+        description: "Please fill in all fields",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      const { data, error } = await supabase.functions.invoke("send-contact-email", {
+        body: formData,
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Message sent!",
+        description: "Thank you for reaching out. I'll get back to you soon!",
+      });
+
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error: any) {
+      console.error("Error sending message:", error);
+      toast({
+        title: "Failed to send",
+        description: error.message || "Something went wrong. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <section id="contact" className="py-24 bg-darker-surface relative overflow-hidden">
@@ -99,7 +153,7 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div className="animate-slide-up">
-            <form className="bg-card border border-border rounded-2xl p-8 backdrop-blur-sm space-y-6">
+            <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-8 backdrop-blur-sm space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                   Name
@@ -108,7 +162,10 @@ const Contact = () => {
                   id="name"
                   type="text"
                   placeholder="Your name"
+                  value={formData.name}
+                  onChange={handleInputChange}
                   className="bg-secondary border-border focus:border-primary"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -120,7 +177,10 @@ const Contact = () => {
                   id="email"
                   type="email"
                   placeholder="your.email@example.com"
+                  value={formData.email}
+                  onChange={handleInputChange}
                   className="bg-secondary border-border focus:border-primary"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -132,7 +192,10 @@ const Contact = () => {
                   id="message"
                   placeholder="Tell me about your project..."
                   rows={5}
+                  value={formData.message}
+                  onChange={handleInputChange}
                   className="bg-secondary border-border focus:border-primary resize-none"
+                  disabled={isSubmitting}
                 />
               </div>
 
@@ -140,8 +203,16 @@ const Contact = () => {
                 type="submit"
                 size="lg"
                 className="w-full bg-primary text-primary-foreground hover:bg-gold-light transition-all"
+                disabled={isSubmitting}
               >
-                Send Message
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  "Send Message"
+                )}
               </Button>
             </form>
           </div>
