@@ -92,36 +92,36 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-darker-surface relative overflow-hidden">
+    <section id="contact" className="py-16 sm:py-24 bg-darker-surface relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-16 animate-fade-in">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             <span className="text-foreground">Get In</span> <span className="text-primary">Touch</span>
           </h2>
-          <div className="w-20 h-1 bg-primary mx-auto mb-4" />
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <div className="w-16 sm:w-20 h-1 bg-primary mx-auto mb-4" />
+          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-2">
             Let's collaborate and create something amazing together
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+        <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
           {/* Contact Info */}
           <div className="animate-slide-up">
-            <div className="space-y-8">
+            <div className="space-y-6 sm:space-y-8">
               {/* Contact Methods */}
-              <div className="space-y-6">
+              <div className="space-y-4 sm:space-y-6">
                 {contactInfo.map((item, index) => (
                   <a
                     key={index}
                     href={item.href}
-                    className="flex items-center gap-4 p-6 bg-card border border-border rounded-xl hover:border-primary/50 transition-all duration-300 group"
+                    className="flex items-center gap-3 sm:gap-4 p-4 sm:p-6 bg-card border border-border rounded-xl hover:border-primary/50 transition-all duration-300 group"
                   >
-                    <div className="p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors">
-                      <item.icon className="text-primary" size={24} />
+                    <div className="p-2 sm:p-3 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors flex-shrink-0">
+                      <item.icon className="text-primary" size={20} />
                     </div>
-                    <div className="min-w-0">
-                      <p className="text-sm text-muted-foreground">{item.label}</p>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs sm:text-sm text-muted-foreground">{item.label}</p>
                       <p className="text-foreground font-medium group-hover:text-primary transition-colors truncate text-sm sm:text-base">
                         {item.value}
                       </p>
@@ -131,19 +131,19 @@ const Contact = () => {
               </div>
 
               {/* Social Links */}
-              <div className="bg-card border border-border rounded-xl p-6">
-                <h3 className="text-xl font-bold text-foreground mb-4">Connect With Me</h3>
-                <div className="flex gap-4">
+              <div className="bg-card border border-border rounded-xl p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold text-foreground mb-3 sm:mb-4">Connect With Me</h3>
+                <div className="flex gap-3 sm:gap-4">
                   {socialLinks.map((social, index) => (
                     <a
                       key={index}
                       href={social.href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 bg-secondary rounded-lg hover:bg-primary/20 transition-all duration-300 group"
+                      className="p-2.5 sm:p-3 bg-secondary rounded-lg hover:bg-primary/20 transition-all duration-300 group"
                       aria-label={social.label}
                     >
-                      <social.icon className="text-muted-foreground group-hover:text-primary transition-colors" size={24} />
+                      <social.icon className="text-muted-foreground group-hover:text-primary transition-colors" size={20} />
                     </a>
                   ))}
                 </div>
@@ -153,7 +153,7 @@ const Contact = () => {
 
           {/* Contact Form */}
           <div className="animate-slide-up">
-            <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-8 backdrop-blur-sm space-y-6">
+            <form onSubmit={handleSubmit} className="bg-card border border-border rounded-2xl p-5 sm:p-8 backdrop-blur-sm space-y-4 sm:space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
                   Name

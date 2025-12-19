@@ -54,21 +54,21 @@ const Projects = () => {
   ];
 
   return (
-    <section id="projects" className="py-24 relative overflow-hidden">
+    <section id="projects" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16 animate-fade-in">
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4">
+        <div className="text-center mb-10 sm:mb-16 animate-fade-in">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
             <span className="text-foreground">Featured</span> <span className="text-primary">Projects</span>
           </h2>
-          <div className="w-20 h-1 bg-primary mx-auto mb-4" />
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+          <div className="w-16 sm:w-20 h-1 bg-primary mx-auto mb-4" />
+          <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-2">
             A showcase of my latest work blending technical expertise with creative vision
           </p>
         </div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
           {projects.map((project, index) => (
             <div
               key={index}
@@ -76,7 +76,7 @@ const Projects = () => {
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Project Image */}
-              <div className="relative h-48 overflow-hidden">
+              <div className="relative h-40 sm:h-48 overflow-hidden">
                 <img
                   src={project.image}
                   alt={project.title}
@@ -86,11 +86,11 @@ const Projects = () => {
               </div>
 
               {/* Project Info */}
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+              <div className="p-4 sm:p-6">
+                <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
