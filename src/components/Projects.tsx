@@ -43,14 +43,6 @@ const Projects = () => {
       github: "https://github.com/prakhartiwaria221-afk",
       live: "",
     },
-    {
-      title: "Social Media Graphics",
-      description: "Creative visuals, animations, and brand content for digital platforms",
-      tags: ["Design", "After Effects", "Photoshop"],
-      image: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=800&h=500&fit=crop",
-      github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
-    },
   ];
 
   return (
