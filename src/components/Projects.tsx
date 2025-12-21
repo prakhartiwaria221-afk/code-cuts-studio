@@ -12,9 +12,9 @@ const Projects = () => {
       live: "",
     },
     {
-      title: "Java Calculator",
-      description: "GUI-based calculator with advanced operations and calculation history",
-      tags: ["Java", "Swing", "GUI"],
+      title: "Calculator",
+      description: "A fully functional calculator made with HTML, CSS and JavaScript",
+      tags: ["HTML", "CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=800&h=500&fit=crop",
       github: "https://github.com/prakhartiwaria221-afk",
       live: "",
