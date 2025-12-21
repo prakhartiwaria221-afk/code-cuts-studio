@@ -10,8 +10,8 @@ const Skills = () => {
   ];
 
   const creativeSkills = [
-    { name: "Video Editing", level: 92 },
-    { name: "Graphic Design", level: 85 },
+    { name: "Video Editing", level: 70 },
+    { name: "Graphic Design", level: 50 },
   ];
 
   return (
