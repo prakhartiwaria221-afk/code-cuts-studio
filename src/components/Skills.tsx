@@ -2,11 +2,11 @@ import { Code2, Palette } from "lucide-react";
 
 const Skills = () => {
   const techSkills = [
-    { name: "C++", level: 85 },
-    { name: "Java", level: 80 },
-    { name: "React", level: 85 },
-    { name: "Front-End Development", level: 90 },
-    { name: "Web Design", level: 88 },
+    { name: "C++", level: 60 },
+    { name: "Java", level: 50 },
+    { name: "React", level: 50 },
+    { name: "Front-End Development", level: 80 },
+    { name: "Web Design", level: 60 },
   ];
 
   const creativeSkills = [
