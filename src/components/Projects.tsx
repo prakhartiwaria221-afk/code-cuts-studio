@@ -1,5 +1,6 @@
 import { ExternalLink, Github } from "lucide-react";
 import { Button } from "./ui/button";
+import bookpardImage from "@/assets/bookpard-project.png";
 
 const Projects = () => {
   const projects = [
@@ -7,7 +8,7 @@ const Projects = () => {
       title: "BookPard",
       description: "A full-stack web application featuring authentication, book selling, admin dashboard, secure payments, and responsive UI. Strengthened my understanding of real-world application architecture and backend integration.",
       tags: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
-      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&h=500&fit=crop",
+      image: bookpardImage,
       github: "https://github.com/prakhartiwaria221-afk",
       live: "",
     },
