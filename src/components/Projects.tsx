@@ -4,6 +4,22 @@ import { Button } from "./ui/button";
 const Projects = () => {
   const projects = [
     {
+      title: "BookPard",
+      description: "A full-stack web application featuring authentication, book selling, admin dashboard, secure payments, and responsive UI. Strengthened my understanding of real-world application architecture and backend integration.",
+      tags: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
+      image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=800&h=500&fit=crop",
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "",
+    },
+    {
+      title: "Library Management System",
+      description: "Console-based system using C++ and OOP concepts. Manages books, students, issuing/returning books, fine calculation, and role-based login with file handling for data storage.",
+      tags: ["C++", "OOP", "File Handling"],
+      image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&h=500&fit=crop",
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "",
+    },
+    {
       title: "Portfolio Website",
       description: "Fully responsive personal portfolio with smooth animations and modern design",
       tags: ["React", "Tailwind", "TypeScript"],
