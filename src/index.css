@@ -196,6 +196,17 @@ All colors MUST be HSL.
   animation: playhead 4s ease-in-out infinite alternate;
 }
 
+/* Scroll reveal animations */
+.scroll-reveal.animate-revealed {
+  opacity: 1 !important;
+  transform: translate(0, 0) !important;
+}
+
+/* Smooth section transitions */
+section {
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
 /* Theme-specific display utilities */
 .light .light\:block {
   display: block !important;
@@ -207,4 +218,9 @@ All colors MUST be HSL.
 
 :root:not(.light) .dark\:block {
   display: block;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
 }
