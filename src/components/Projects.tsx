@@ -63,47 +63,6 @@ const Projects = () => {
       github: "https://github.com/prakhartiwaria221-afk",
       live: "",
     },
-    // ========== ADD YOUR NEW PROJECTS BELOW ==========
-    {
-      title: "New Project 1",
-      description: "Add your project description here. Describe what the project does and what you learned.",
-      tags: ["Add", "Your", "Tags"],
-      image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=500&fit=crop",
-      github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
-    },
-    {
-      title: "New Project 2",
-      description: "Add your project description here. Describe what the project does and what you learned.",
-      tags: ["Add", "Your", "Tags"],
-      image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=500&fit=crop",
-      github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
-    },
-    {
-      title: "New Project 3",
-      description: "Add your project description here. Describe what the project does and what you learned.",
-      tags: ["Add", "Your", "Tags"],
-      image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=500&fit=crop",
-      github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
-    },
-    {
-      title: "New Project 4",
-      description: "Add your project description here. Describe what the project does and what you learned.",
-      tags: ["Add", "Your", "Tags"],
-      image: "https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=800&h=500&fit=crop",
-      github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
-    },
-    {
-      title: "New Project 5",
-      description: "Add your project description here. Describe what the project does and what you learned.",
-      tags: ["Add", "Your", "Tags"],
-      image: "https://images.unsplash.com/photo-1542831371-29b0f74f9713?w=800&h=500&fit=crop",
-      github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
-    },
   ];
 
   // Get all unique tags
