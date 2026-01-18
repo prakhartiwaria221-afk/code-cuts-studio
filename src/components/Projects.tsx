@@ -1,8 +1,14 @@
-import { ExternalLink, Github } from "lucide-react";
+import { useState } from "react";
+import { ExternalLink, Github, Play, Filter } from "lucide-react";
 import { Button } from "./ui/button";
 import bookpardImage from "@/assets/bookpard-project.png";
+import ProjectDemo from "./ProjectDemo";
 
 const Projects = () => {
+  const [activeFilter, setActiveFilter] = useState<string>("All");
+  const [demoProject, setDemoProject] = useState<typeof projects[0] | null>(null);
+  const [showDemo, setShowDemo] = useState(false);
+
   const projects = [
     {
       title: "BookPard",
@@ -62,13 +68,28 @@ const Projects = () => {
     },
   ];
 
+  // Get all unique tags
+  const allTags = ["All", ...new Set(projects.flatMap((p) => p.tags))];
+
+  // Filter projects based on active filter
+  const filteredProjects =
+    activeFilter === "All"
+      ? projects
+      : projects.filter((p) => p.tags.includes(activeFilter));
+
+  const handleDemoClick = (project: typeof projects[0]) => {
+    setDemoProject(project);
+    setShowDemo(true);
+  };
+
   return (
     <section id="projects" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-10 sm:mb-16 animate-fade-in">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
-            <span className="text-foreground">Featured</span> <span className="text-primary">Projects</span>
+            <span className="text-foreground">Featured</span>{" "}
+            <span className="text-primary">Projects</span>
           </h2>
           <div className="w-16 sm:w-20 h-1 bg-primary mx-auto mb-4" />
           <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-2">
@@ -76,11 +97,32 @@ const Projects = () => {
           </p>
         </div>
 
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-12 animate-fade-in">
+          <div className="flex items-center gap-2 mr-2 text-muted-foreground">
+            <Filter size={18} />
+            <span className="text-sm hidden sm:inline">Filter:</span>
+          </div>
+          {allTags.map((tag) => (
+            <button
+              key={tag}
+              onClick={() => setActiveFilter(tag)}
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm rounded-full border transition-all duration-300 ${
+                activeFilter === tag
+                  ? "bg-primary text-primary-foreground border-primary"
+                  : "bg-card text-foreground border-border hover:border-primary/50"
+              }`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+
         {/* Projects Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 max-w-7xl mx-auto">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <div
-              key={index}
+              key={project.title}
               className="group bg-card border border-border rounded-2xl overflow-hidden hover:border-primary/50 transition-all duration-300 animate-slide-up"
               style={{ animationDelay: `${index * 100}ms` }}
             >
@@ -92,6 +134,16 @@ const Projects = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent opacity-60" />
+                
+                {/* Demo Preview Button */}
+                <button
+                  onClick={() => handleDemoClick(project)}
+                  className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                >
+                  <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
+                    <Play size={24} className="text-primary-foreground ml-1" />
+                  </div>
+                </button>
               </div>
 
               {/* Project Info */}
@@ -99,52 +151,73 @@ const Projects = () => {
                 <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-sm sm:text-base text-muted-foreground mb-4 line-clamp-2">{project.description}</p>
+                <p className="text-sm sm:text-base text-muted-foreground mb-4 line-clamp-2">
+                  {project.description}
+                </p>
 
                 {/* Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {project.tags.map((tag, i) => (
-                    <span
+                    <button
                       key={i}
-                      className="text-xs px-3 py-1 bg-secondary text-foreground rounded-full border border-border"
+                      onClick={() => setActiveFilter(tag)}
+                      className={`text-xs px-3 py-1 rounded-full border transition-all cursor-pointer ${
+                        activeFilter === tag
+                          ? "bg-primary/20 text-primary border-primary/50"
+                          : "bg-secondary text-foreground border-border hover:border-primary/30"
+                      }`}
                     >
                       {tag}
-                    </span>
+                    </button>
                   ))}
                 </div>
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="flex-1 border-primary text-primary hover:bg-primary/10"
+                    onClick={() => handleDemoClick(project)}
+                  >
+                    <Play size={16} className="mr-2" />
+                    Demo
+                  </Button>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className="border-border hover:border-primary/50 hover:text-primary"
+                    asChild
+                  >
+                    <a href={project.github} target="_blank" rel="noopener noreferrer">
+                      <Github size={16} />
+                    </a>
+                  </Button>
                   {project.live && (
                     <Button
                       size="sm"
                       variant="outline"
-                      className="flex-1 border-primary text-primary hover:bg-primary/10"
+                      className="border-border hover:border-primary/50 hover:text-primary"
                       asChild
                     >
                       <a href={project.live} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink size={16} className="mr-2" />
-                        View
+                        <ExternalLink size={16} />
                       </a>
                     </Button>
                   )}
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className={`border-border hover:border-primary/50 hover:text-primary ${!project.live ? 'flex-1' : ''}`}
-                    asChild
-                  >
-                    <a href={project.github} target="_blank" rel="noopener noreferrer">
-                      <Github size={16} className={project.live ? '' : 'mr-2'} />
-                      {!project.live && 'View on GitHub'}
-                    </a>
-                  </Button>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
+
+      {/* Demo Modal */}
+      <ProjectDemo
+        isOpen={showDemo}
+        onClose={() => setShowDemo(false)}
+        project={demoProject}
+      />
     </section>
   );
 };

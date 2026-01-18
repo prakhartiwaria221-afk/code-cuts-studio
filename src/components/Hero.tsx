@@ -2,9 +2,17 @@ import { useState } from "react";
 import { Button } from "./ui/button";
 import { ArrowRight, Github, Linkedin, Mail, Instagram } from "lucide-react";
 import profileImage from "@/assets/profile-prakhar.jpg";
+import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 
 const Hero = () => {
   const [isAnimating, setIsAnimating] = useState(false);
+  
+  const { currentText } = useTypingAnimation({
+    words: ["Front-End Developer", "Video Editor", "Tech Creator", "Problem Solver"],
+    typingSpeed: 100,
+    deletingSpeed: 50,
+    delayBetweenWords: 2000,
+  });
 
   const handleProfileClick = () => {
     setIsAnimating(true);
@@ -142,8 +150,9 @@ const Hero = () => {
           {/* Left Content */}
           <div className="space-y-6 md:space-y-8 animate-fade-in text-center lg:text-left order-2 lg:order-1">
             <div className="space-y-3 md:space-y-4">
-              <p className="text-primary text-sm md:text-lg font-medium tracking-wide">
-                FRONT-END DEVELOPER • VIDEO EDITOR • TECH CREATOR
+              <p className="text-primary text-sm md:text-lg font-medium tracking-wide h-6 md:h-7">
+                <span>{currentText}</span>
+                <span className="animate-pulse">|</span>
               </p>
               <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold leading-tight">
                 <span className="text-foreground">Creative</span>
