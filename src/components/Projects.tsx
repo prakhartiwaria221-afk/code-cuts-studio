@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { ExternalLink, Github, Play, Filter } from "lucide-react";
+import { ExternalLink, Github, Filter } from "lucide-react";
 import { Button } from "./ui/button";
 import bookpardImage from "@/assets/bookpard-project.png";
-import ProjectDemo from "./ProjectDemo";
 
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState<string>("All");
-  const [demoProject, setDemoProject] = useState<typeof projects[0] | null>(null);
-  const [showDemo, setShowDemo] = useState(false);
 
   const projects = [
     {
@@ -77,11 +74,6 @@ const Projects = () => {
       ? projects
       : projects.filter((p) => p.tags.includes(activeFilter));
 
-  const handleDemoClick = (project: typeof projects[0]) => {
-    setDemoProject(project);
-    setShowDemo(true);
-  };
-
   return (
     <section id="projects" className="py-16 sm:py-24 relative overflow-hidden">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -134,16 +126,6 @@ const Projects = () => {
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-card via-card/50 to-transparent opacity-60" />
-                
-                {/* Demo Preview Button */}
-                <button
-                  onClick={() => handleDemoClick(project)}
-                  className="absolute inset-0 flex items-center justify-center bg-background/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                >
-                  <div className="w-14 h-14 rounded-full bg-primary flex items-center justify-center shadow-lg transform scale-75 group-hover:scale-100 transition-transform duration-300">
-                    <Play size={24} className="text-primary-foreground ml-1" />
-                  </div>
-                </button>
               </div>
 
               {/* Project Info */}
@@ -174,50 +156,36 @@ const Projects = () => {
 
                 {/* Action Buttons */}
                 <div className="flex gap-3">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="flex-1 border-primary text-primary hover:bg-primary/10"
-                    onClick={() => handleDemoClick(project)}
-                  >
-                    <Play size={16} className="mr-2" />
-                    Demo
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    className="border-border hover:border-primary/50 hover:text-primary"
-                    asChild
-                  >
-                    <a href={project.github} target="_blank" rel="noopener noreferrer">
-                      <Github size={16} />
-                    </a>
-                  </Button>
                   {project.live && (
                     <Button
                       size="sm"
                       variant="outline"
-                      className="border-border hover:border-primary/50 hover:text-primary"
+                      className="flex-1 border-primary text-primary hover:bg-primary/10"
                       asChild
                     >
                       <a href={project.live} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink size={16} />
+                        <ExternalLink size={16} className="mr-2" />
+                        View
                       </a>
                     </Button>
                   )}
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    className={`border-border hover:border-primary/50 hover:text-primary ${!project.live ? 'flex-1' : ''}`}
+                    asChild
+                  >
+                    <a href={project.github} target="_blank" rel="noopener noreferrer">
+                      <Github size={16} className={project.live ? '' : 'mr-2'} />
+                      {!project.live && 'View on GitHub'}
+                    </a>
+                  </Button>
                 </div>
               </div>
             </div>
           ))}
         </div>
       </div>
-
-      {/* Demo Modal */}
-      <ProjectDemo
-        isOpen={showDemo}
-        onClose={() => setShowDemo(false)}
-        project={demoProject}
-      />
     </section>
   );
 };
