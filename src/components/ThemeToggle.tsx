@@ -6,7 +6,6 @@ const ThemeToggle = () => {
   const [theme, setTheme] = useState<"light" | "dark">("dark");
 
   useEffect(() => {
-    // Check system preference on mount
     const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
     
@@ -14,7 +13,6 @@ const ThemeToggle = () => {
     setTheme(initialTheme);
     document.documentElement.classList.toggle("light", initialTheme === "light");
 
-    // Listen for system preference changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) => {
       if (!localStorage.getItem("theme")) {
@@ -40,11 +38,11 @@ const ThemeToggle = () => {
       variant="ghost"
       size="icon"
       onClick={toggleTheme}
-      className="relative overflow-hidden group"
+      className="relative w-10 h-10 rounded-xl overflow-hidden group hover:bg-primary/10"
       aria-label="Toggle theme"
     >
-      <Sun className="h-5 w-5 rotate-0 scale-100 transition-all dark:rotate-90 dark:scale-0 text-foreground group-hover:text-primary" />
-      <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 text-foreground group-hover:text-primary" />
+      <Sun className="h-5 w-5 rotate-0 scale-100 transition-all duration-300 dark:rotate-90 dark:scale-0 text-foreground group-hover:text-primary" />
+      <Moon className="absolute h-5 w-5 rotate-90 scale-0 transition-all duration-300 dark:rotate-0 dark:scale-100 text-foreground group-hover:text-primary" />
     </Button>
   );
 };
