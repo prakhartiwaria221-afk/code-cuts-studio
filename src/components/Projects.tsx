@@ -2,18 +2,38 @@ import { useState } from "react";
 import { ExternalLink, Github, Filter, Sparkles } from "lucide-react";
 import { Button } from "./ui/button";
 import bookpardImage from "@/assets/bookpard-project.png";
+import mindbloomImage from "@/assets/mindbloom-project.png";
+import coordinetImage from "@/assets/coordinet-project.png";
 
 const Projects = () => {
   const [activeFilter, setActiveFilter] = useState<string>("All");
 
   const projects = [
     {
+      title: "MindBloom",
+      description: "AI-based adaptive learning platform with gamified learning, voice-guided systems, emotion-aware apps, routine-based digital assistants, micro-learning modules, and sensory-friendly design. Goal: make learning engaging, personalized, and stress-free.",
+      tags: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
+      image: mindbloomImage,
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "https://mindbloom-demo.lovable.app",
+      featured: true,
+    },
+    {
+      title: "CoordiNet - When Every Second Counts",
+      description: "Emergency coordination platform connecting police, hospitals, and disaster authorities with citizens. Features role-based dashboards, live emergency map, AI triage system, evacuation route planner, resource management, and predictive alerts.",
+      tags: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
+      image: coordinetImage,
+      github: "https://github.com/prakhartiwaria221-afk",
+      live: "https://coordinet-demo.lovable.app",
+      featured: true,
+    },
+    {
       title: "BookPard",
       description: "A full-stack web application featuring authentication, book selling, admin dashboard, secure payments, and responsive UI.",
       tags: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
       image: bookpardImage,
       github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
+      live: "https://bookpard-demo.lovable.app",
       featured: true,
     },
     {
@@ -22,7 +42,7 @@ const Projects = () => {
       tags: ["C++", "OOP", "File Handling"],
       image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&h=500&fit=crop",
       github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
+      live: "https://github.com/prakhartiwaria221-afk",
     },
     {
       title: "Portfolio Website",
@@ -30,7 +50,7 @@ const Projects = () => {
       tags: ["React", "Tailwind", "TypeScript"],
       image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop",
       github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
+      live: "https://prakhar-portfolio.lovable.app",
     },
     {
       title: "Calculator",
@@ -38,7 +58,7 @@ const Projects = () => {
       tags: ["HTML", "CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1587145820266-a5951ee6f620?w=800&h=500&fit=crop",
       github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
+      live: "https://github.com/prakhartiwaria221-afk",
     },
     {
       title: "Netflix Clone",
@@ -46,7 +66,7 @@ const Projects = () => {
       tags: ["HTML", "CSS", "JavaScript"],
       image: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=800&h=500&fit=crop",
       github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
+      live: "https://github.com/prakhartiwaria221-afk",
     },
     {
       title: "Restaurant Order System",
@@ -54,7 +74,7 @@ const Projects = () => {
       tags: ["Java", "OOP", "Database"],
       image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=500&fit=crop",
       github: "https://github.com/prakhartiwaria221-afk",
-      live: "",
+      live: "https://github.com/prakhartiwaria221-afk",
     },
   ];
 
@@ -136,21 +156,21 @@ const Projects = () => {
                 
                 {/* Overlay Actions */}
                 <div className="absolute inset-0 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg hover:scale-110 transition-transform"
-                    >
-                      <ExternalLink size={20} />
-                    </a>
-                  )}
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg hover:scale-110 transition-transform"
+                    title="View Live Demo"
+                  >
+                    <ExternalLink size={20} />
+                  </a>
                   <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center text-foreground shadow-lg hover:scale-110 hover:border-primary/50 transition-all"
+                    title="View Source Code"
                   >
                     <Github size={20} />
                   </a>
