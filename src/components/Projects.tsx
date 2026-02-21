@@ -157,15 +157,6 @@ const Projects = () => {
                 {/* Overlay Actions */}
                 <div className="absolute inset-0 flex items-center justify-center gap-3 transition-all duration-300">
                   <a
-                    href={project.live}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-primary-foreground shadow-lg hover:scale-110 transition-transform"
-                    title="View Live Demo"
-                  >
-                    <ExternalLink size={20} />
-                  </a>
-                  <a
                     href={project.github}
                     target="_blank"
                     rel="noopener noreferrer"
