@@ -33,7 +33,7 @@ const Projects = () => {
       tags: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
       image: bookpardImage,
       github: "https://github.com/prakhartiwaria221-afk",
-      live: "https://bookpard-demo.lovable.app",
+      live: "https://bookpard-treasure-trove.lovable.app",
       featured: true,
     },
     {
