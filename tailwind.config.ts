@@ -51,6 +51,7 @@ export default {
         "teal-light": "hsl(var(--teal-light))",
         "teal-dark": "hsl(var(--teal-dark))",
         cyan: "hsl(var(--cyan))",
+        cream: "hsl(var(--cream))",
         "dark-surface": "hsl(var(--dark-surface))",
         "darker-surface": "hsl(var(--darker-surface))",
       },
@@ -83,8 +84,8 @@ export default {
           "100%": { opacity: "1", transform: "translateY(0)" }
         },
         "glow": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(175 85% 50% / 0.2)" },
-          "50%": { boxShadow: "0 0 40px hsl(175 85% 50% / 0.4)" }
+          "0%, 100%": { boxShadow: "0 0 20px hsl(174 50% 36% / 0.2)" },
+          "50%": { boxShadow: "0 0 40px hsl(174 50% 36% / 0.4)" }
         },
         "pulse-soft": {
           "0%, 100%": { opacity: "1" },

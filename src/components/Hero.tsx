@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { Button } from "./ui/button";
-import { ArrowRight, Github, Linkedin, Instagram, Download } from "lucide-react";
+import { Github, Linkedin, Instagram } from "lucide-react";
 import profileImage from "@/assets/profile-prakhar.jpg";
 import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 
@@ -14,109 +12,92 @@ const Hero = () => {
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-      {/* Background Elements */}
-      <div className="absolute inset-0">
-        <div className="absolute top-1/3 right-1/4 w-[600px] h-[600px] bg-primary/8 rounded-full blur-[150px]" />
-        <div className="absolute bottom-1/3 left-1/3 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px]" />
-      </div>
+      {/* Decorative Blobs */}
+      <div className="absolute top-10 right-10 w-[200px] h-[200px] rounded-full border-[30px] border-muted/30 animate-blob" />
+      <div className="absolute bottom-20 left-10 w-[150px] h-[150px] rounded-full border-[25px] border-muted/20 animate-float" />
+      <div className="absolute top-1/2 right-1/3 w-[80px] h-[80px] rounded-full bg-teal-light/10 animate-float-gentle" />
+      
+      {/* Small decorative dots */}
+      <div className="absolute top-[20%] left-[15%] w-3 h-3 rounded-full bg-muted-foreground/20" />
+      <div className="absolute top-[40%] right-[10%] w-2 h-2 rounded-full bg-muted-foreground/30" />
+      <div className="absolute bottom-[30%] left-[40%] w-4 h-4 rounded-full bg-muted-foreground/15" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left Content */}
-          <div className="space-y-6 animate-fade-in text-center lg:text-left order-2 lg:order-1">
-            {/* Greeting */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          {/* Left Content - Arch Profile */}
+          <div className="relative flex items-center justify-center order-1">
+            <div className="relative w-full max-w-sm mx-auto">
+              {/* Arch shaped white/cream background */}
+              <div className="relative rounded-b-none overflow-hidden">
+                <div 
+                  className="w-full h-[450px] sm:h-[520px] relative"
+                  style={{
+                    borderRadius: '200px 200px 0 0',
+                    overflow: 'hidden',
+                    background: 'linear-gradient(180deg, hsl(40 30% 95%), hsl(0 0% 100%))',
+                  }}
+                >
+                  <img
+                    src={profileImage}
+                    alt="Prakhar Tiwari"
+                    className="w-full h-full object-cover object-top"
+                  />
+                </div>
+              </div>
+
+              {/* Decorative circle behind arch */}
+              <div className="absolute -top-8 -left-8 w-[120px] h-[120px] rounded-full bg-muted/20 -z-10" />
+              <div className="absolute -bottom-4 -right-6 w-[80px] h-[80px] rounded-full border-[15px] border-muted/25 -z-10" />
+            </div>
+          </div>
+
+          {/* Right Content */}
+          <div className="space-y-6 animate-fade-in text-center lg:text-left order-2">
+            {/* Paper plane icon */}
+            <div className="text-muted-foreground/50 text-3xl">✈</div>
+            
+            {/* Name */}
             <div className="space-y-2">
-              <p className="text-muted-foreground text-lg tracking-wide uppercase">Hello, I'm</p>
-              
-              {/* Name */}
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.95] tracking-tight">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight">
+                <span className="text-foreground">I am </span>
                 <span className="text-foreground">Prakhar</span>
-                <br />
-                <span className="gradient-text">Tiwari</span>
               </h1>
             </div>
 
             {/* Typing Role */}
             <div className="h-8">
-              <span className="text-primary text-lg md:text-xl font-semibold tracking-wide">
+              <span className="text-muted-foreground text-lg md:text-xl font-light italic tracking-wide">
                 {currentText}
-                <span className="animate-pulse text-primary">|</span>
+                <span className="animate-pulse text-foreground">|</span>
               </span>
             </div>
-            
-            {/* Description */}
-            <p className="text-muted-foreground text-base md:text-lg max-w-lg mx-auto lg:mx-0 leading-relaxed">
-              Blending creativity and code to craft beautiful, functional digital experiences that leave a lasting impression.
-            </p>
 
-            {/* Social Pill Badges */}
-            <div className="flex flex-wrap gap-3 justify-center lg:justify-start">
+            {/* Quote box */}
+            <div className="max-w-xs mx-auto lg:mx-0">
+              <div className="quote-box">
+                <p className="text-sm text-muted-foreground italic leading-relaxed">
+                  "Blending creativity and code to craft beautiful, functional digital experiences."
+                </p>
+              </div>
+            </div>
+
+            {/* Social Icons */}
+            <div className="flex gap-3 justify-center lg:justify-start pt-2">
               {[
-                { icon: Github, label: "GitHub", href: "https://github.com/prakhartiwaria221-afk" },
-                { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com/in/prakhar-tiwari-8b04a7296" },
-                { icon: Instagram, label: "Instagram", href: "https://instagram.com/prakhar6038" },
+                { icon: Github, href: "https://github.com/prakhartiwaria221-afk", label: "GH" },
+                { icon: Linkedin, href: "https://linkedin.com/in/prakhar-tiwari-8b04a7296", label: "IN" },
+                { icon: Instagram, href: "https://instagram.com/prakhar6038", label: "IG" },
               ].map((social, i) => (
                 <a
                   key={i}
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-card border border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 text-sm font-medium"
+                  className="w-11 h-11 rounded-full border-2 border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground/50 transition-all duration-300 text-xs font-bold"
                 >
-                  <social.icon size={16} />
                   {social.label}
                 </a>
               ))}
-            </div>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
-              <Button
-                size="lg"
-                className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-lg shadow-primary/25 group px-8 rounded-full h-12"
-                asChild
-              >
-                <a href="#projects" className="flex items-center gap-2">
-                  View Projects
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-border hover:border-primary/50 hover:bg-primary/5 group px-8 rounded-full h-12"
-                asChild
-              >
-                <a href="#contact" className="flex items-center gap-2">
-                  Hire Me
-                </a>
-              </Button>
-            </div>
-          </div>
-
-          {/* Right Content - Large Profile Photo */}
-          <div className="relative flex items-center justify-center order-1 lg:order-2">
-            <div className="relative w-full max-w-md lg:max-w-lg mx-auto">
-              {/* Glow Effect Behind */}
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-cyan/20 to-primary/10 rounded-3xl blur-3xl scale-110 animate-pulse" />
-              
-              {/* Profile Image Container */}
-              <div className="relative rounded-3xl overflow-hidden border-2 border-border/50 shadow-2xl shadow-primary/10">
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
-                <img
-                  src={profileImage}
-                  alt="Prakhar Tiwari"
-                  className="w-full h-[400px] sm:h-[480px] lg:h-[550px] object-cover object-top"
-                />
-                
-                {/* Overlay Badge */}
-                <div className="absolute bottom-6 left-6 right-6 z-20">
-                  <div className="flex items-center gap-3 px-4 py-3 rounded-2xl bg-card/80 backdrop-blur-xl border border-border/50">
-                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
-                    <span className="text-sm font-medium text-foreground">Available for opportunities</span>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -126,7 +107,7 @@ const Hero = () => {
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 animate-fade-in">
         <span className="text-xs text-muted-foreground tracking-widest uppercase">Scroll</span>
         <div className="w-5 h-9 rounded-full border-2 border-border/60 flex justify-center pt-2">
-          <div className="w-1 h-2.5 rounded-full bg-primary animate-bounce" />
+          <div className="w-1 h-2.5 rounded-full bg-foreground/50 animate-bounce" />
         </div>
       </div>
     </section>

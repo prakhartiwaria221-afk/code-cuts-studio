@@ -11,7 +11,6 @@ const Navigation = () => {
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
-      
       const sections = ["home", "about", "skills", "projects", "contact"];
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -24,7 +23,6 @@ const Navigation = () => {
         }
       }
     };
-    
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -32,16 +30,15 @@ const Navigation = () => {
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    { name: "Projects", href: "#projects" },
+    { name: "Portfolio", href: "#projects" },
     { name: "Contact", href: "#contact" },
   ];
 
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled 
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/30" 
+        scrolled
+          ? "bg-background/90 backdrop-blur-xl border-b border-border/30"
           : "bg-transparent"
       }`}
     >
@@ -49,22 +46,23 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-18 py-4">
           {/* Logo */}
           <a href="#home" className="flex items-center gap-2 group">
-            <span className="text-xl font-bold text-foreground tracking-tight">
-              Prakhar<span className="text-primary">.</span>
+            <span className="text-xl font-black text-foreground tracking-tight">
+              PT<span className="text-primary">.</span>
             </span>
           </a>
 
-          {/* Desktop Navigation - Centered */}
-          <div className="hidden md:flex items-center gap-1 bg-card/50 backdrop-blur-sm rounded-full px-2 py-1.5 border border-border/30">
+          {/* Desktop Navigation - Pill style */}
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
-              const isActive = activeSection === link.href.slice(1);
+              const isActive = activeSection === link.href.slice(1) || 
+                (link.href === "#projects" && activeSection === "projects");
               return (
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`px-4 py-1.5 text-sm font-medium rounded-full transition-all duration-300 ${
-                    isActive 
-                      ? "text-primary-foreground bg-primary" 
+                  className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                    isActive
+                      ? "bg-foreground text-background"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
@@ -77,16 +75,6 @@ const Navigation = () => {
           {/* Right Side */}
           <div className="flex items-center gap-3">
             <ThemeToggle />
-            
-            <Button
-              className="hidden md:flex bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-6"
-              size="sm"
-              asChild
-            >
-              <a href="#contact">Hire Me</a>
-            </Button>
-
-            {/* Mobile Menu Button */}
             <Button
               variant="ghost"
               size="icon"
@@ -101,7 +89,7 @@ const Navigation = () => {
         {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden pb-6 animate-fade-in">
-            <div className="flex flex-col gap-1 bg-card/80 backdrop-blur-xl rounded-2xl p-3 border border-border/30">
+            <div className="flex flex-col gap-1 bg-card/90 backdrop-blur-xl rounded-2xl p-3 border border-border/30">
               {navLinks.map((link) => {
                 const isActive = activeSection === link.href.slice(1);
                 return (
@@ -109,8 +97,8 @@ const Navigation = () => {
                     key={link.name}
                     href={link.href}
                     className={`px-4 py-3 rounded-xl text-sm font-medium transition-all ${
-                      isActive 
-                        ? "text-primary-foreground bg-primary" 
+                      isActive
+                        ? "text-background bg-foreground"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                     }`}
                     onClick={() => setIsOpen(false)}
@@ -119,12 +107,6 @@ const Navigation = () => {
                   </a>
                 );
               })}
-              <Button
-                className="mt-2 bg-primary text-primary-foreground rounded-full"
-                asChild
-              >
-                <a href="#contact" onClick={() => setIsOpen(false)}>Hire Me</a>
-              </Button>
             </div>
           </div>
         )}
