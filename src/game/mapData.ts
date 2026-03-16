@@ -25,8 +25,9 @@ export const T = {
   LAMP: 19,
 } as const;
 
-const WALKABLE = new Set([T.GRASS, T.PATH, T.FLOWER, T.SAND, T.GRASS_DARK]);
-export const isWalkable = (tile: number) => WALKABLE.has(tile);
+const WALKABLE_TILES = [T.GRASS, T.PATH, T.FLOWER, T.SAND, T.GRASS_DARK] as number[];
+const WALKABLE_SET = new Set(WALKABLE_TILES);
+export const isWalkable = (tile: number) => WALKABLE_SET.has(tile);
 
 export const isInteractive = (tile: number): string | null => {
   switch (tile) {
