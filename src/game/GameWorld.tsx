@@ -163,6 +163,10 @@ const GameWorld = () => {
       waterTimerRef.current = 0;
     }
 
+    // Day/night cycle
+    pulseFrameRef.current++;
+    lightingRef.current = getLightingState(Date.now() - cycleStartRef.current);
+
     // Hint
     const cx = Math.floor((p.x + TILE_SIZE / 2) / TILE_SIZE);
     const cy = Math.floor((p.y + TILE_SIZE / 2) / TILE_SIZE);
