@@ -241,7 +241,31 @@ const GameWorld = () => {
     ctx.shadowBlur = 3;
     ctx.fillText('Prakhar', p.x - cam.x + TILE_SIZE / 2, p.y - cam.y - 6);
     ctx.shadowBlur = 0;
-  };
+
+    // Day/night lighting overlay
+    const lighting = lightingRef.current;
+    const lampPositions: { sx: number; sy: number }[] = [];
+    for (let y = startY; y < endY; y++) {
+      for (let x = startX; x < endX; x++) {
+        if (gameMap[y]?.[x] === T.LAMP) {
+          lampPositions.push({ sx: x * TILE_SIZE - cam.x + TILE_SIZE / 2, sy: y * TILE_SIZE - cam.y + TILE_SIZE / 2 });
+        }
+      }
+    }
+    drawLightingOverlay(ctx, cw, ch, lighting, lampPositions);
+
+    // Mini-map
+    drawMiniMap(ctx, cw, ch, p.x, p.y, pulseFrameRef.current);
+
+    // Time of day indicator
+    const timeIcons: Record<string, string> = { dawn: '🌅', day: '☀️', dusk: '🌇', night: '🌙' };
+    ctx.font = '8px "Press Start 2P", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = '#000';
+    ctx.shadowBlur = 3;
+    ctx.fillText(`${timeIcons[lighting.timeOfDay]} ${lighting.timeOfDay.toUpperCase()}`, 16, ch - 16);
+    ctx.shadowBlur = 0;
 
   const drawTile = (ctx: CanvasRenderingContext2D, tile: number, x: number, y: number, tx: number, ty: number) => {
     const s = TILE_SIZE;
