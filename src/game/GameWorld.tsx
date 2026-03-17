@@ -26,6 +26,9 @@ const GameWorld = () => {
   const waterFrameRef = useRef(0);
   const waterTimerRef = useRef(0);
   const npcsRef = useRef<NPC[]>(createNPCs());
+  const cycleStartRef = useRef(Date.now());
+  const pulseFrameRef = useRef(0);
+  const lightingRef = useRef<LightingState>(getLightingState(0));
 
   useEffect(() => {
     setIsMobile('ontouchstart' in window || navigator.maxTouchPoints > 0);
