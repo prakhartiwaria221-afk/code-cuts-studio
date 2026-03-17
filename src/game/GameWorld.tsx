@@ -2,6 +2,9 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { gameMap, TILE_SIZE, MAP_W, MAP_H, T, isWalkable, isInteractive, SPAWN, BUILDING_LABELS, PORTFOLIO_CONTENT } from './mapData';
 import { createNPCs, updateNPC, drawNPC, isNearNPC, NPC } from './npcs';
 import { playStep, playInteract, playDialogOpen, playDialogClose, playMenuSelect, startMusic, stopMusic, toggleMusic, initAudio } from './audioEngine';
+import { getLightingState, drawLightingOverlay, LightingState } from './dayNightCycle';
+import { drawMiniMap } from './MiniMap';
+import { T } from './mapData';
 import GameDialog from './GameDialog';
 
 type Direction = 0 | 1 | 2 | 3;
