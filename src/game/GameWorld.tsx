@@ -2,6 +2,8 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import { gameMap, TILE_SIZE, MAP_W, MAP_H, T, isWalkable, isInteractive, SPAWN, BUILDING_LABELS, PORTFOLIO_CONTENT } from './mapData';
 import { createNPCs, updateNPC, drawNPC, isNearNPC, NPC } from './npcs';
 import { playStep, playInteract, playDialogOpen, playDialogClose, playMenuSelect, startMusic, stopMusic, toggleMusic, initAudio } from './audioEngine';
+import { getLightingState, drawLightingOverlay, LightingState } from './dayNightCycle';
+import { drawMiniMap } from './MiniMap';
 import GameDialog from './GameDialog';
 
 type Direction = 0 | 1 | 2 | 3;
@@ -24,6 +26,9 @@ const GameWorld = () => {
   const waterFrameRef = useRef(0);
   const waterTimerRef = useRef(0);
   const npcsRef = useRef<NPC[]>(createNPCs());
+  const cycleStartRef = useRef(Date.now());
+  const pulseFrameRef = useRef(0);
+  const lightingRef = useRef<LightingState>(getLightingState(0));
 
   useEffect(() => {
     setIsMobile('ontouchstart' in window || navigator.maxTouchPoints > 0);
@@ -158,6 +163,10 @@ const GameWorld = () => {
       waterTimerRef.current = 0;
     }
 
+    // Day/night cycle
+    pulseFrameRef.current++;
+    lightingRef.current = getLightingState(Date.now() - cycleStartRef.current);
+
     // Hint
     const cx = Math.floor((p.x + TILE_SIZE / 2) / TILE_SIZE);
     const cy = Math.floor((p.y + TILE_SIZE / 2) / TILE_SIZE);
@@ -231,6 +240,31 @@ const GameWorld = () => {
     ctx.shadowColor = '#000';
     ctx.shadowBlur = 3;
     ctx.fillText('Prakhar', p.x - cam.x + TILE_SIZE / 2, p.y - cam.y - 6);
+    ctx.shadowBlur = 0;
+
+    // Day/night lighting overlay
+    const lighting = lightingRef.current;
+    const lampPositions: { sx: number; sy: number }[] = [];
+    for (let y = startY; y < endY; y++) {
+      for (let x = startX; x < endX; x++) {
+        if (gameMap[y]?.[x] === T.LAMP) {
+          lampPositions.push({ sx: x * TILE_SIZE - cam.x + TILE_SIZE / 2, sy: y * TILE_SIZE - cam.y + TILE_SIZE / 2 });
+        }
+      }
+    }
+    drawLightingOverlay(ctx, cw, ch, lighting, lampPositions);
+
+    // Mini-map
+    drawMiniMap(ctx, cw, ch, p.x, p.y, pulseFrameRef.current);
+
+    // Time of day indicator
+    const timeIcons: Record<string, string> = { dawn: '🌅', day: '☀️', dusk: '🌇', night: '🌙' };
+    ctx.font = '8px "Press Start 2P", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillStyle = '#fff';
+    ctx.shadowColor = '#000';
+    ctx.shadowBlur = 3;
+    ctx.fillText(`${timeIcons[lighting.timeOfDay]} ${lighting.timeOfDay.toUpperCase()}`, 16, ch - 16);
     ctx.shadowBlur = 0;
   };
 
