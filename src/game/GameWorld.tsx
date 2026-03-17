@@ -266,6 +266,7 @@ const GameWorld = () => {
     ctx.shadowBlur = 3;
     ctx.fillText(`${timeIcons[lighting.timeOfDay]} ${lighting.timeOfDay.toUpperCase()}`, 16, ch - 16);
     ctx.shadowBlur = 0;
+  };
 
   const drawTile = (ctx: CanvasRenderingContext2D, tile: number, x: number, y: number, tx: number, ty: number) => {
     const s = TILE_SIZE;
