@@ -254,8 +254,8 @@ const GameWorld = () => {
     }
     drawLightingOverlay(ctx, cw, ch, lighting, lampPositions);
 
-    // Mini-map
-    drawMiniMap(ctx, cw, ch, p.x, p.y, pulseFrameRef.current);
+    // Mini-map (hidden)
+    // drawMiniMap(ctx, cw, ch, p.x, p.y, pulseFrameRef.current);
 
     // Time of day indicator
     const timeIcons: Record<string, string> = { dawn: '🌅', day: '☀️', dusk: '🌇', night: '🌙' };
