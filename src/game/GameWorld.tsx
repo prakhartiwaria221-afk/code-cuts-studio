@@ -4,7 +4,6 @@ import { createNPCs, updateNPC, drawNPC, isNearNPC, NPC } from './npcs';
 import { playStep, playInteract, playDialogOpen, playDialogClose, playMenuSelect, startMusic, stopMusic, toggleMusic, initAudio } from './audioEngine';
 import { getLightingState, drawLightingOverlay, LightingState } from './dayNightCycle';
 import { drawMiniMap } from './MiniMap';
-import { T } from './mapData';
 import GameDialog from './GameDialog';
 
 type Direction = 0 | 1 | 2 | 3;
