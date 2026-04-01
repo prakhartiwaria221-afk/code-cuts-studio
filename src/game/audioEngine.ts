@@ -1,4 +1,4 @@
-// Chiptune audio engine using Web Audio API - no external dependencies
+// Magical audio engine - Harry Potter themed chiptune
 let audioCtx: AudioContext | null = null;
 let musicGain: GainNode | null = null;
 let sfxGain: GainNode | null = null;
@@ -10,10 +10,10 @@ const getCtx = (): AudioContext => {
   if (!audioCtx) {
     audioCtx = new AudioContext();
     musicGain = audioCtx.createGain();
-    musicGain.gain.value = 0.15;
+    musicGain.gain.value = 0.12;
     musicGain.connect(audioCtx.destination);
     sfxGain = audioCtx.createGain();
-    sfxGain.gain.value = 0.25;
+    sfxGain.gain.value = 0.2;
     sfxGain.connect(audioCtx.destination);
   }
   if (audioCtx.state === 'suspended') audioCtx.resume();
@@ -34,40 +34,22 @@ const playNote = (freq: number, duration: number, type: OscillatorType = 'square
   osc.stop(ctx.currentTime + duration);
 };
 
-// Walking footstep
+// Magical footstep (stone corridor echo)
 export const playStep = () => {
   stepTimer++;
   if (stepTimer % 12 !== 0) return;
-  const freq = 80 + Math.random() * 40;
-  playNote(freq, 0.05, 'triangle');
+  const freq = 60 + Math.random() * 30;
+  playNote(freq, 0.06, 'triangle');
 };
 
-// Interaction / door open
+// Spell cast / interaction
 export const playInteract = () => {
   const ctx = getCtx();
   const now = ctx.currentTime;
-  [523, 659, 784].forEach((f, i) => {
+  [587, 740, 880, 1047].forEach((f, i) => {
     const osc = ctx.createOscillator();
     const g = ctx.createGain();
-    osc.type = 'square';
-    osc.frequency.value = f;
-    g.gain.setValueAtTime(0.2, now + i * 0.08);
-    g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.08 + 0.15);
-    osc.connect(g);
-    g.connect(sfxGain!);
-    osc.start(now + i * 0.08);
-    osc.stop(now + i * 0.08 + 0.15);
-  });
-};
-
-// Dialog open
-export const playDialogOpen = () => {
-  const ctx = getCtx();
-  const now = ctx.currentTime;
-  [262, 330, 392, 523].forEach((f, i) => {
-    const osc = ctx.createOscillator();
-    const g = ctx.createGain();
-    osc.type = 'triangle';
+    osc.type = 'sine';
     osc.frequency.value = f;
     g.gain.setValueAtTime(0.15, now + i * 0.06);
     g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.06 + 0.2);
@@ -78,53 +60,71 @@ export const playDialogOpen = () => {
   });
 };
 
+// Dialog open (magical reveal)
+export const playDialogOpen = () => {
+  const ctx = getCtx();
+  const now = ctx.currentTime;
+  [330, 392, 494, 587, 659].forEach((f, i) => {
+    const osc = ctx.createOscillator();
+    const g = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.value = f;
+    g.gain.setValueAtTime(0.12, now + i * 0.07);
+    g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.07 + 0.25);
+    osc.connect(g);
+    g.connect(sfxGain!);
+    osc.start(now + i * 0.07);
+    osc.stop(now + i * 0.07 + 0.25);
+  });
+};
+
 // Dialog close
 export const playDialogClose = () => {
   const ctx = getCtx();
   const now = ctx.currentTime;
-  [523, 392, 262].forEach((f, i) => {
+  [659, 494, 330].forEach((f, i) => {
     const osc = ctx.createOscillator();
     const g = ctx.createGain();
-    osc.type = 'triangle';
+    osc.type = 'sine';
     osc.frequency.value = f;
-    g.gain.setValueAtTime(0.1, now + i * 0.05);
-    g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.05 + 0.12);
+    g.gain.setValueAtTime(0.08, now + i * 0.05);
+    g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.05 + 0.15);
     osc.connect(g);
     g.connect(sfxGain!);
     osc.start(now + i * 0.05);
-    osc.stop(now + i * 0.05 + 0.12);
+    osc.stop(now + i * 0.05 + 0.15);
   });
 };
 
-// Menu select / start
+// Menu select (magical chime)
 export const playMenuSelect = () => {
   const ctx = getCtx();
   const now = ctx.currentTime;
-  [440, 880].forEach((f, i) => {
+  [494, 659, 988].forEach((f, i) => {
     const osc = ctx.createOscillator();
     const g = ctx.createGain();
-    osc.type = 'square';
+    osc.type = 'sine';
     osc.frequency.value = f;
-    g.gain.setValueAtTime(0.2, now + i * 0.1);
-    g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.15);
+    g.gain.setValueAtTime(0.18, now + i * 0.1);
+    g.gain.exponentialRampToValueAtTime(0.01, now + i * 0.1 + 0.2);
     osc.connect(g);
     g.connect(sfxGain!);
     osc.start(now + i * 0.1);
-    osc.stop(now + i * 0.1 + 0.15);
+    osc.stop(now + i * 0.1 + 0.2);
   });
 };
 
-// Background chiptune melody loop
+// Hogwarts-inspired melody (mysterious, magical minor key)
 const MELODY = [
-  262, 294, 330, 349, 392, 349, 330, 294,
-  262, 330, 392, 523, 392, 330, 294, 262,
-  349, 392, 440, 392, 349, 330, 294, 330,
-  262, 294, 330, 392, 440, 392, 330, 262,
+  330, 370, 440, 494, 523, 494, 440, 370,
+  330, 392, 440, 523, 587, 523, 494, 440,
+  370, 330, 294, 330, 370, 440, 494, 440,
+  392, 370, 330, 294, 262, 294, 330, 370,
 ];
 
 const BASS = [
-  131, 131, 165, 165, 196, 196, 165, 165,
-  131, 131, 165, 165, 175, 175, 131, 131,
+  165, 165, 196, 196, 220, 220, 196, 196,
+  165, 165, 196, 196, 247, 247, 220, 220,
 ];
 
 let melodyIdx = 0;
@@ -142,36 +142,35 @@ export const startMusic = () => {
     const ctx = getCtx();
     const now = ctx.currentTime;
 
-    // Melody
+    // Melody - use sine for ethereal feel
     const mFreq = MELODY[melodyIdx % MELODY.length];
     const mOsc = ctx.createOscillator();
     const mG = ctx.createGain();
-    mOsc.type = 'square';
+    mOsc.type = 'sine';
     mOsc.frequency.value = mFreq;
-    mG.gain.setValueAtTime(0.08, now);
-    mG.gain.exponentialRampToValueAtTime(0.01, now + 0.25);
+    mG.gain.setValueAtTime(0.06, now);
+    mG.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
     mOsc.connect(mG);
     mG.connect(musicGain!);
     mOsc.start(now);
-    mOsc.stop(now + 0.25);
+    mOsc.stop(now + 0.35);
     melodyIdx++;
 
-    // Bass (every 2 beats)
     if (melodyIdx % 2 === 0) {
       const bFreq = BASS[bassIdx % BASS.length];
       const bOsc = ctx.createOscillator();
       const bG = ctx.createGain();
       bOsc.type = 'triangle';
       bOsc.frequency.value = bFreq;
-      bG.gain.setValueAtTime(0.06, now);
-      bG.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+      bG.gain.setValueAtTime(0.04, now);
+      bG.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
       bOsc.connect(bG);
       bG.connect(musicGain!);
       bOsc.start(now);
-      bOsc.stop(now + 0.4);
+      bOsc.stop(now + 0.5);
       bassIdx++;
     }
-  }, 280);
+  }, 320);
 };
 
 export const stopMusic = () => {

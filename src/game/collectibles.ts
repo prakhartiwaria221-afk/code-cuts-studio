@@ -1,16 +1,14 @@
-import { TILE_SIZE, MAP_W, MAP_H, T, isInteractive, BUILDING_LABELS, SPAWN } from './mapData';
+import { TILE_SIZE } from './mapData';
 
-// Collectible items scattered around the map
 export interface Collectible {
   x: number;
   y: number;
-  type: 'coin' | 'gem' | 'star' | 'scroll';
+  type: 'snitch' | 'chocolate_frog' | 'spell_book' | 'deathly_hallow';
   collected: boolean;
   color: string;
   points: number;
 }
 
-// Secret areas
 export interface SecretZone {
   x: number;
   y: number;
@@ -22,53 +20,48 @@ export interface SecretZone {
 }
 
 export const COLLECTIBLES: Collectible[] = [
-  // Coins along paths
-  { x: 10, y: 14, type: 'coin', collected: false, color: '#ffd700', points: 10 },
-  { x: 14, y: 14, type: 'coin', collected: false, color: '#ffd700', points: 10 },
-  { x: 25, y: 14, type: 'coin', collected: false, color: '#ffd700', points: 10 },
-  { x: 30, y: 14, type: 'coin', collected: false, color: '#ffd700', points: 10 },
-  { x: 19, y: 6, type: 'coin', collected: false, color: '#ffd700', points: 10 },
-  { x: 19, y: 21, type: 'coin', collected: false, color: '#ffd700', points: 10 },
-  { x: 20, y: 10, type: 'coin', collected: false, color: '#ffd700', points: 10 },
-  { x: 20, y: 24, type: 'coin', collected: false, color: '#ffd700', points: 10 },
-  // Gems near buildings
-  { x: 10, y: 12, type: 'gem', collected: false, color: '#3498db', points: 25 },
-  { x: 29, y: 12, type: 'gem', collected: false, color: '#e74c3c', points: 25 },
-  { x: 22, y: 8, type: 'gem', collected: false, color: '#2ecc71', points: 25 },
-  { x: 16, y: 21, type: 'gem', collected: false, color: '#9b59b6', points: 25 },
-  // Stars in corners
-  { x: 4, y: 3, type: 'star', collected: false, color: '#ffd700', points: 50 },
-  { x: 36, y: 3, type: 'star', collected: false, color: '#ffd700', points: 50 },
-  { x: 4, y: 26, type: 'star', collected: false, color: '#ffd700', points: 50 },
-  { x: 36, y: 26, type: 'star', collected: false, color: '#ffd700', points: 50 },
-  // Scrolls (rare)
-  { x: 7, y: 7, type: 'scroll', collected: false, color: '#c4a87a', points: 100 },
-  { x: 34, y: 20, type: 'scroll', collected: false, color: '#c4a87a', points: 100 },
+  // Golden Snitches along paths
+  { x: 12, y: 17, type: 'snitch', collected: false, color: '#ffd700', points: 15 },
+  { x: 16, y: 17, type: 'snitch', collected: false, color: '#ffd700', points: 15 },
+  { x: 28, y: 17, type: 'snitch', collected: false, color: '#ffd700', points: 15 },
+  { x: 34, y: 17, type: 'snitch', collected: false, color: '#ffd700', points: 15 },
+  { x: 22, y: 8, type: 'snitch', collected: false, color: '#ffd700', points: 15 },
+  { x: 22, y: 24, type: 'snitch', collected: false, color: '#ffd700', points: 15 },
+  { x: 22, y: 12, type: 'snitch', collected: false, color: '#ffd700', points: 15 },
+  { x: 22, y: 28, type: 'snitch', collected: false, color: '#ffd700', points: 15 },
+  // Chocolate Frogs near buildings
+  { x: 12, y: 14, type: 'chocolate_frog', collected: false, color: '#5a2a0a', points: 25 },
+  { x: 32, y: 14, type: 'chocolate_frog', collected: false, color: '#5a2a0a', points: 25 },
+  { x: 25, y: 10, type: 'chocolate_frog', collected: false, color: '#5a2a0a', points: 25 },
+  { x: 19, y: 24, type: 'chocolate_frog', collected: false, color: '#5a2a0a', points: 25 },
+  // Spell Books in corners
+  { x: 5, y: 5, type: 'spell_book', collected: false, color: '#2244aa', points: 50 },
+  { x: 40, y: 5, type: 'spell_book', collected: false, color: '#aa2244', points: 50 },
+  { x: 5, y: 30, type: 'spell_book', collected: false, color: '#44aa22', points: 50 },
+  { x: 40, y: 30, type: 'spell_book', collected: false, color: '#aa8822', points: 50 },
+  // Deathly Hallows (rare)
+  { x: 8, y: 8, type: 'deathly_hallow', collected: false, color: '#ddd', points: 100 },
+  { x: 38, y: 24, type: 'deathly_hallow', collected: false, color: '#ddd', points: 100 },
 ];
 
 export const SECRET_ZONES: SecretZone[] = [
   {
-    x: 3, y: 3, w: 3, h: 3,
+    x: 4, y: 4, w: 3, h: 3,
     discovered: false,
-    name: 'Hidden Grove',
-    message: '🌟 You found a secret grove! Prakhar loves exploring hidden corners of technology too!',
+    name: 'Chamber of Secrets',
+    message: '🐍 You found the Chamber of Secrets! Prakhar speaks Parseltongue (Python) too!',
   },
   {
-    x: 35, y: 25, w: 3, h: 3,
+    x: 38, y: 28, w: 3, h: 3,
     discovered: false,
-    name: 'Secret Beach',
-    message: '🏖️ You discovered a secret beach! Like Prakhar, always seeking new horizons!',
+    name: 'Shrieking Shack',
+    message: '🏚️ You discovered the Shrieking Shack! Some say Prakhar debugs code here at midnight!',
   },
 ];
 
-export const checkCollectibles = (
-  px: number,
-  py: number,
-  collectibles: Collectible[]
-): Collectible | null => {
+export const checkCollectibles = (px: number, py: number, collectibles: Collectible[]): Collectible | null => {
   const ptx = Math.floor((px + TILE_SIZE / 2) / TILE_SIZE);
   const pty = Math.floor((py + TILE_SIZE / 2) / TILE_SIZE);
-
   for (const c of collectibles) {
     if (!c.collected && c.x === ptx && c.y === pty) {
       c.collected = true;
@@ -78,14 +71,9 @@ export const checkCollectibles = (
   return null;
 };
 
-export const checkSecretZones = (
-  px: number,
-  py: number,
-  zones: SecretZone[]
-): SecretZone | null => {
+export const checkSecretZones = (px: number, py: number, zones: SecretZone[]): SecretZone | null => {
   const ptx = Math.floor((px + TILE_SIZE / 2) / TILE_SIZE);
   const pty = Math.floor((py + TILE_SIZE / 2) / TILE_SIZE);
-
   for (const z of zones) {
     if (!z.discovered && ptx >= z.x && ptx < z.x + z.w && pty >= z.y && pty < z.y + z.h) {
       z.discovered = true;
@@ -95,105 +83,116 @@ export const checkSecretZones = (
   return null;
 };
 
-export const drawCollectible = (
-  ctx: CanvasRenderingContext2D,
-  c: Collectible,
-  camX: number,
-  camY: number,
-  frame: number
-) => {
+export const drawCollectible = (ctx: CanvasRenderingContext2D, c: Collectible, camX: number, camY: number, frame: number) => {
   if (c.collected) return;
-
   const sx = c.x * TILE_SIZE - camX;
   const sy = c.y * TILE_SIZE - camY;
   const bounce = Math.sin(frame * 0.06 + c.x + c.y) * 3;
 
   switch (c.type) {
-    case 'coin': {
-      const w = 6 + Math.abs(Math.sin(frame * 0.08 + c.x)) * 4;
+    case 'snitch': {
+      // Golden Snitch
+      const w = 5 + Math.abs(Math.sin(frame * 0.1 + c.x)) * 3;
       ctx.fillStyle = '#ffd700';
       ctx.beginPath();
-      ctx.ellipse(sx + 16, sy + 12 + bounce, w, 6, 0, 0, Math.PI * 2);
+      ctx.ellipse(sx + 16, sy + 12 + bounce, w, 5, 0, 0, Math.PI * 2);
       ctx.fill();
       ctx.fillStyle = '#daa520';
       ctx.beginPath();
-      ctx.ellipse(sx + 16, sy + 12 + bounce, w - 2, 4, 0, 0, Math.PI * 2);
+      ctx.ellipse(sx + 16, sy + 12 + bounce, w - 2, 3, 0, 0, Math.PI * 2);
       ctx.fill();
-      ctx.fillStyle = '#ffd700';
-      ctx.font = '6px "Press Start 2P"';
-      ctx.textAlign = 'center';
-      ctx.fillText('P', sx + 16, sy + 14 + bounce);
-      break;
-    }
-    case 'gem': {
-      ctx.fillStyle = c.color;
-      // Diamond shape
+      // Wings
+      const wingFlap = Math.sin(frame * 0.2 + c.x) * 3;
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
       ctx.beginPath();
-      ctx.moveTo(sx + 16, sy + 6 + bounce);
-      ctx.lineTo(sx + 22, sy + 14 + bounce);
-      ctx.lineTo(sx + 16, sy + 22 + bounce);
-      ctx.lineTo(sx + 10, sy + 14 + bounce);
-      ctx.closePath();
+      ctx.ellipse(sx + 8, sy + 9 + bounce + wingFlap, 5, 2, -0.3, 0, Math.PI * 2);
       ctx.fill();
-      // Highlight
-      ctx.fillStyle = 'rgba(255,255,255,0.4)';
       ctx.beginPath();
-      ctx.moveTo(sx + 16, sy + 6 + bounce);
-      ctx.lineTo(sx + 19, sy + 14 + bounce);
-      ctx.lineTo(sx + 16, sy + 14 + bounce);
-      ctx.closePath();
+      ctx.ellipse(sx + 24, sy + 9 + bounce - wingFlap, 5, 2, 0.3, 0, Math.PI * 2);
       ctx.fill();
-      // Sparkle
-      const sparkle = Math.sin(frame * 0.1 + c.x * 3) > 0.7;
-      if (sparkle) {
-        ctx.fillStyle = '#fff';
-        ctx.fillRect(sx + 14, sy + 8 + bounce, 2, 2);
-      }
-      break;
-    }
-    case 'star': {
-      ctx.fillStyle = c.color;
-      const rot = frame * 0.03;
-      ctx.save();
-      ctx.translate(sx + 16, sy + 14 + bounce);
-      ctx.rotate(rot);
-      for (let i = 0; i < 5; i++) {
-        const angle = (i * Math.PI * 2) / 5 - Math.PI / 2;
-        const innerAngle = angle + Math.PI / 5;
-        if (i === 0) {
-          ctx.beginPath();
-          ctx.moveTo(Math.cos(angle) * 8, Math.sin(angle) * 8);
-        } else {
-          ctx.lineTo(Math.cos(angle) * 8, Math.sin(angle) * 8);
-        }
-        ctx.lineTo(Math.cos(innerAngle) * 3, Math.sin(innerAngle) * 3);
-      }
-      ctx.closePath();
-      ctx.fill();
-      ctx.restore();
-      break;
-    }
-    case 'scroll': {
-      // Scroll body
-      ctx.fillStyle = '#c4a87a';
-      ctx.fillRect(sx + 10, sy + 8 + bounce, 12, 16);
-      ctx.fillStyle = '#a88a5a';
-      ctx.fillRect(sx + 8, sy + 8 + bounce, 16, 3);
-      ctx.fillRect(sx + 8, sy + 21 + bounce, 16, 3);
-      // Text lines
-      ctx.fillStyle = '#5a3a1a';
-      ctx.fillRect(sx + 12, sy + 13 + bounce, 8, 1);
-      ctx.fillRect(sx + 12, sy + 16 + bounce, 6, 1);
-      ctx.fillRect(sx + 12, sy + 19 + bounce, 7, 1);
       // Glow
-      ctx.fillStyle = `rgba(196, 168, 122, ${0.2 + Math.sin(frame * 0.05) * 0.1})`;
+      ctx.fillStyle = `rgba(255, 215, 0, ${0.15 + Math.sin(frame * 0.08) * 0.08})`;
+      ctx.beginPath();
+      ctx.arc(sx + 16, sy + 12 + bounce, 10, 0, Math.PI * 2);
+      ctx.fill();
+      break;
+    }
+    case 'chocolate_frog': {
+      // Chocolate Frog
+      ctx.fillStyle = '#5a2a0a';
+      ctx.fillRect(sx + 10, sy + 14 + bounce, 12, 8);
+      ctx.fillRect(sx + 8, sy + 12 + bounce, 4, 4);
+      ctx.fillRect(sx + 20, sy + 12 + bounce, 4, 4);
+      // Eyes
+      ctx.fillStyle = '#ffd700';
+      ctx.fillRect(sx + 12, sy + 14 + bounce, 2, 2);
+      ctx.fillRect(sx + 18, sy + 14 + bounce, 2, 2);
+      // Legs
+      ctx.fillStyle = '#4a1a00';
+      const hop = Math.sin(frame * 0.1 + c.x * 3) > 0.5 ? -2 : 0;
+      ctx.fillRect(sx + 8, sy + 20 + bounce + hop, 4, 4);
+      ctx.fillRect(sx + 20, sy + 20 + bounce + hop, 4, 4);
+      break;
+    }
+    case 'spell_book': {
+      // Spell Book
+      ctx.fillStyle = c.color;
+      ctx.fillRect(sx + 8, sy + 8 + bounce, 16, 18);
+      ctx.fillStyle = darkenCol(c.color, 0.7);
+      ctx.fillRect(sx + 8, sy + 8 + bounce, 2, 18);
+      ctx.fillRect(sx + 8, sy + 24 + bounce, 16, 2);
+      // Pages
+      ctx.fillStyle = '#e8e0d0';
+      ctx.fillRect(sx + 10, sy + 10 + bounce, 12, 14);
+      // Magical rune
+      ctx.fillStyle = c.color;
+      ctx.font = '8px "Press Start 2P"';
+      ctx.textAlign = 'center';
+      ctx.fillText('✦', sx + 16, sy + 20 + bounce);
+      // Glow
+      ctx.fillStyle = `rgba(100, 100, 255, ${0.1 + Math.sin(frame * 0.05 + c.y) * 0.06})`;
       ctx.beginPath();
       ctx.arc(sx + 16, sy + 16 + bounce, 12, 0, Math.PI * 2);
       ctx.fill();
       break;
     }
+    case 'deathly_hallow': {
+      // Deathly Hallows symbol
+      ctx.strokeStyle = '#ddd';
+      ctx.lineWidth = 1.5;
+      // Triangle
+      ctx.beginPath();
+      ctx.moveTo(sx + 16, sy + 4 + bounce);
+      ctx.lineTo(sx + 24, sy + 22 + bounce);
+      ctx.lineTo(sx + 8, sy + 22 + bounce);
+      ctx.closePath();
+      ctx.stroke();
+      // Circle
+      ctx.beginPath();
+      ctx.arc(sx + 16, sy + 16 + bounce, 5, 0, Math.PI * 2);
+      ctx.stroke();
+      // Line
+      ctx.beginPath();
+      ctx.moveTo(sx + 16, sy + 4 + bounce);
+      ctx.lineTo(sx + 16, sy + 22 + bounce);
+      ctx.stroke();
+      // Glow
+      const rot = frame * 0.02;
+      ctx.fillStyle = `rgba(255, 255, 255, ${0.08 + Math.sin(rot) * 0.05})`;
+      ctx.beginPath();
+      ctx.arc(sx + 16, sy + 14 + bounce, 14, 0, Math.PI * 2);
+      ctx.fill();
+      break;
+    }
   }
 };
+
+function darkenCol(hex: string, factor: number): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `rgb(${Math.floor(r * factor)},${Math.floor(g * factor)},${Math.floor(b * factor)})`;
+}
 
 export const getScore = (collectibles: Collectible[]): number =>
   collectibles.filter(c => c.collected).reduce((sum, c) => sum + c.points, 0);

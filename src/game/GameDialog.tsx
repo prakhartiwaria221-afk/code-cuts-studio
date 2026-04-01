@@ -14,7 +14,6 @@ const GameDialog = ({ content, onClose }: GameDialogProps) => {
   const [visibleLines, setVisibleLines] = useState(0);
   const [shake, setShake] = useState(true);
 
-  // Entry animation
   useEffect(() => {
     const t = setTimeout(() => setShake(false), 150);
     return () => clearTimeout(t);
@@ -45,40 +44,41 @@ const GameDialog = ({ content, onClose }: GameDialogProps) => {
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 px-4" style={{ fontFamily: '"Press Start 2P", monospace' }}>
-      {/* Backdrop with blur */}
-      <div className="absolute inset-0 bg-black/65 backdrop-blur-[2px]" onClick={onClose} />
+      {/* Backdrop */}
+      <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]" onClick={onClose} />
 
-      {/* Dialog box with entry animation */}
+      {/* Dialog - parchment style */}
       <div
-        className="relative bg-[#12122a] max-w-lg w-full max-h-[80vh] overflow-hidden animate-scale-in"
+        className="relative max-w-lg w-full max-h-[80vh] overflow-hidden"
         style={{
-          border: '3px solid #4a8c3f',
-          boxShadow: '0 0 30px rgba(74, 140, 63, 0.15), inset 0 0 60px rgba(0,0,0,0.5)',
+          background: 'linear-gradient(180deg, #2a1a0a, #1a1020, #0d0818)',
+          border: '3px solid #8b6914',
+          boxShadow: '0 0 40px rgba(139, 105, 20, 0.2), inset 0 0 60px rgba(0,0,0,0.5)',
           transform: shake ? 'scale(1.02)' : 'scale(1)',
           transition: 'transform 0.15s ease-out',
         }}
       >
-        {/* Corner decorations */}
-        <div className="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-[#ffd700]" />
-        <div className="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-[#ffd700]" />
-        <div className="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-[#ffd700]" />
-        <div className="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-[#ffd700]" />
+        {/* Corner decorations - golden */}
+        <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-[#ffd700]" />
+        <div className="absolute top-0 right-0 w-4 h-4 border-t-2 border-r-2 border-[#ffd700]" />
+        <div className="absolute bottom-0 left-0 w-4 h-4 border-b-2 border-l-2 border-[#ffd700]" />
+        <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-[#ffd700]" />
 
-        {/* Title bar */}
-        <div className="bg-gradient-to-r from-[#4a8c3f] to-[#3a7a2f] px-5 py-2.5 flex items-center justify-between">
-          <span className="text-[#0d0d1a] text-[10px] font-bold tracking-wider">{content.title}</span>
+        {/* Title bar - Hogwarts dark */}
+        <div className="px-5 py-2.5 flex items-center justify-between" style={{ background: 'linear-gradient(90deg, #5a1020, #2a1040, #1a2050)' }}>
+          <span className="text-[#ffd700] text-[10px] font-bold tracking-wider">{content.title}</span>
           <button
             onClick={onClose}
-            className="text-[#0d0d1a] hover:text-white text-xs w-6 h-6 flex items-center justify-center hover:bg-black/20 transition-colors rounded-sm"
+            className="text-[#ffd700] hover:text-white text-xs w-6 h-6 flex items-center justify-center hover:bg-white/10 transition-colors rounded-sm"
           >
             ✕
           </button>
         </div>
 
-        {/* Scanline effect */}
-        <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
+        {/* Magical scanline effect */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.02]"
           style={{
-            background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.1) 2px, rgba(255,255,255,0.1) 4px)',
+            background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,215,0,0.1) 2px, rgba(255,215,0,0.1) 4px)',
           }}
         />
 
@@ -86,25 +86,25 @@ const GameDialog = ({ content, onClose }: GameDialogProps) => {
         <div className="p-6 overflow-y-auto max-h-[55vh]">
           <div className="space-y-1.5">
             {content.lines.slice(0, visibleLines).map((line, i) => (
-              <p key={i} className="text-[#d0d0d0] text-[9px] sm:text-[10px] leading-relaxed whitespace-pre-wrap min-h-[14px]"
-                style={{ textShadow: '0 0 8px rgba(74, 140, 63, 0.1)' }}>
+              <p key={i} className="text-[#d4c4a0] text-[9px] sm:text-[10px] leading-relaxed whitespace-pre-wrap min-h-[14px]"
+                style={{ textShadow: '0 0 8px rgba(139, 105, 20, 0.15)' }}>
                 {line}
               </p>
             ))}
             {!allVisible && (
-              <span className="inline-block text-[#4a8c3f] animate-pulse text-sm mt-1">▼</span>
+              <span className="inline-block text-[#ffd700] animate-pulse text-sm mt-1">⚡</span>
             )}
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="border-t border-[#4a8c3f]/20 px-5 py-2.5 flex justify-between items-center bg-[#0d0d18]">
-          <div className="flex gap-1">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="w-1.5 h-1.5 bg-[#4a8c3f]/40 rounded-full" />
+        <div className="px-5 py-2.5 flex justify-between items-center" style={{ borderTop: '1px solid rgba(139, 105, 20, 0.2)', background: '#0a0510' }}>
+          <div className="flex gap-1.5">
+            {['🔴', '🟡', '🟢', '🔵'].map((dot, i) => (
+              <span key={i} className="text-[6px] opacity-40">{dot}</span>
             ))}
           </div>
-          <button onClick={onClose} className="text-[#666] text-[7px] hover:text-[#4a8c3f] transition-colors tracking-wider">
+          <button onClick={onClose} className="text-[#8b6914] text-[7px] hover:text-[#ffd700] transition-colors tracking-wider">
             {allVisible ? '[ SPACE ] Close' : '[ SPACE ] Skip'}
           </button>
         </div>
