@@ -24,6 +24,7 @@ const GameWorld = () => {
   const [discoveryTimer, setDiscoveryTimer] = useState(0);
   const [zonesFound, setZonesFound] = useState(0);
   const [stepCount, setStepCount] = useState(0);
+  const [house, setHouse] = useState<string>('Gryffindor');
 
   const playerRef = useRef({
     x: SPAWN.x * TILE_SIZE, y: SPAWN.y * TILE_SIZE,
@@ -64,7 +65,7 @@ const GameWorld = () => {
     for (const npc of npcsRef.current) {
       if (isNearNPC(p.x, p.y, npc)) {
         playInteract();
-        setNpcDialog({ title: `💬 ${npc.name}`, lines: npc.dialog });
+        setNpcDialog({ title: `⚡ ${npc.name}`, lines: npc.dialog });
         setGameState('dialog');
         return;
       }
@@ -109,7 +110,6 @@ const GameWorld = () => {
   const mobilePress = useCallback((key: string) => { keysRef.current.add(key); }, []);
   const mobileRelease = useCallback((key: string) => { keysRef.current.delete(key); }, []);
 
-  // Discovery message timer
   useEffect(() => {
     if (discoveryTimer > 0) {
       const t = setTimeout(() => {
@@ -120,7 +120,6 @@ const GameWorld = () => {
     }
   }, [discoveryTimer]);
 
-  // Game loop
   useEffect(() => {
     if (gameState !== 'playing') return;
     const canvas = canvasRef.current;
@@ -162,11 +161,7 @@ const GameWorld = () => {
     if (keys.has('arrowleft') || keys.has('a')) { dx = -speed; p.dir = 2; }
     if (keys.has('arrowright') || keys.has('d')) { dx = speed; p.dir = 3; }
 
-    // Diagonal normalization
-    if (dx !== 0 && dy !== 0) {
-      dx *= 0.707;
-      dy *= 0.707;
-    }
+    if (dx !== 0 && dy !== 0) { dx *= 0.707; dy *= 0.707; }
 
     p.moving = dx !== 0 || dy !== 0;
     if (dx !== 0 && canWalk(p.x + dx, p.y)) p.x += dx;
@@ -184,21 +179,17 @@ const GameWorld = () => {
       p.bobTimer = 0;
     }
 
-    // Update NPCs
     npcsRef.current.forEach(updateNPC);
 
-    // Water animation
     waterTimerRef.current++;
     if (waterTimerRef.current > 25) {
       waterFrameRef.current = (waterFrameRef.current + 1) % 3;
       waterTimerRef.current = 0;
     }
 
-    // Day/night cycle
     globalFrameRef.current++;
     lightingRef.current = getLightingState(Date.now() - cycleStartRef.current);
 
-    // Screen shake decay
     const shake = screenShakeRef.current;
     if (shake.intensity > 0) {
       shake.x = (Math.random() - 0.5) * shake.intensity;
@@ -207,19 +198,17 @@ const GameWorld = () => {
       if (shake.intensity < 0.1) shake.intensity = 0;
     }
 
-    // Collectibles
     const item = checkCollectibles(p.x, p.y, collectiblesRef.current);
     if (item) {
       playInteract();
       screenShakeRef.current.intensity = 3;
       setScore(getScore(collectiblesRef.current));
       setCollected(getCollectedCount(collectiblesRef.current));
-      const names = { coin: '🪙 Coin', gem: '💎 Gem', star: '⭐ Star', scroll: '📜 Scroll' };
+      const names: Record<string, string> = { snitch: '⚡ Golden Snitch', chocolate_frog: '🐸 Chocolate Frog', spell_book: '📖 Spell Book', deathly_hallow: '△ Deathly Hallow' };
       setDiscoveryMsg(`${names[item.type]} collected! +${item.points} pts`);
       setDiscoveryTimer(50);
     }
 
-    // Secret zones
     const secret = checkSecretZones(p.x, p.y, secretZonesRef.current);
     if (secret) {
       screenShakeRef.current.intensity = 5;
@@ -228,12 +217,10 @@ const GameWorld = () => {
       setDiscoveryTimer(80);
     }
 
-    // Particles
     const cam = cameraRef.current;
     spawnEnvironmentParticles(cam.x, cam.y, window.innerWidth, window.innerHeight, lightingRef.current.timeOfDay);
     updateParticles();
 
-    // Water bubbles for visible water tiles
     const startX = Math.floor(cam.x / TILE_SIZE);
     const startY = Math.floor(cam.y / TILE_SIZE);
     const endX = Math.min(MAP_W, startX + Math.ceil(window.innerWidth / TILE_SIZE) + 2);
@@ -245,24 +232,21 @@ const GameWorld = () => {
       }
     }
 
-    // Hint
     const cx = Math.floor((p.x + TILE_SIZE / 2) / TILE_SIZE);
     const cy = Math.floor((p.y + TILE_SIZE / 2) / TILE_SIZE);
     let foundHint = '';
-
     for (const npc of npcsRef.current) {
       if (isNearNPC(p.x, p.y, npc)) {
-        foundHint = isMobile ? `Tap [A] to talk to ${npc.name}` : `Press SPACE to talk to ${npc.name}`;
+        foundHint = isMobile ? `Tap [A] to speak with ${npc.name}` : `Press SPACE to speak with ${npc.name}`;
         break;
       }
     }
-
     if (!foundHint) {
       const dirs = [[0, -1], [0, 1], [-1, 0], [1, 0]];
       for (const [ddx, ddy] of dirs) {
         const tile = gameMap[cy + ddy]?.[cx + ddx];
         if (tile !== undefined && isInteractive(tile)) {
-          foundHint = isMobile ? 'Tap [A] to interact' : 'Press SPACE to interact';
+          foundHint = isMobile ? 'Tap [A] to cast Alohomora' : 'Press SPACE to cast Alohomora';
           break;
         }
       }
@@ -275,7 +259,6 @@ const GameWorld = () => {
     const cam = cameraRef.current;
     const shake = screenShakeRef.current;
 
-    // Smooth camera follow
     const targetCamX = p.x + TILE_SIZE / 2 - cw / 2;
     const targetCamY = p.y + TILE_SIZE / 2 - ch / 2;
     cam.x += (targetCamX - cam.x) * 0.1;
@@ -283,7 +266,6 @@ const GameWorld = () => {
     cam.x = Math.max(0, Math.min(cam.x, MAP_W * TILE_SIZE - cw));
     cam.y = Math.max(0, Math.min(cam.y, MAP_H * TILE_SIZE - ch));
 
-    // Apply screen shake
     const offsetX = cam.x + shake.x;
     const offsetY = cam.y + shake.y;
 
@@ -296,7 +278,6 @@ const GameWorld = () => {
 
     const gf = globalFrameRef.current;
 
-    // Draw tiles with enhanced renderer
     for (let y = startY; y < endY; y++) {
       for (let x = startX; x < endX; x++) {
         const tile = gameMap[y]?.[x];
@@ -305,48 +286,41 @@ const GameWorld = () => {
       }
     }
 
-    // Draw collectibles
     for (const c of collectiblesRef.current) {
       drawCollectible(ctx, c, offsetX, offsetY, gf);
     }
 
-    // Building labels with shadow
-    ctx.font = '10px "Press Start 2P", monospace';
+    // Building labels with magical glow
+    ctx.font = '9px "Press Start 2P", monospace';
     ctx.textAlign = 'center';
     BUILDING_LABELS.forEach(label => {
       const lx = label.x * TILE_SIZE - offsetX;
       const ly = label.y * TILE_SIZE - offsetY;
-      // Shadow
-      ctx.fillStyle = 'rgba(0,0,0,0.6)';
+      ctx.fillStyle = 'rgba(0,0,0,0.7)';
       ctx.fillText(label.text, lx + 1, ly + 1);
-      // Text
-      ctx.fillStyle = '#fff';
-      ctx.shadowColor = '#000';
+      ctx.fillStyle = '#ffd700';
+      ctx.shadowColor = '#ffd700';
       ctx.shadowBlur = 6;
       ctx.fillText(label.text, lx, ly);
       ctx.shadowBlur = 0;
     });
 
-    // Draw NPCs
     npcsRef.current.forEach(npc => drawNPC(ctx, npc, offsetX, offsetY));
-
-    // Particles behind player
     drawParticles(ctx, offsetX, offsetY);
 
-    // Draw player with bob
     const bobY = p.moving ? Math.sin(p.bobTimer) * 1.5 : 0;
     drawPlayer(ctx, p.x - offsetX, p.y - offsetY + bobY, p.dir, p.frame);
 
-    // Player name tag with glow
+    // Player name tag
     ctx.font = '8px "Press Start 2P", monospace';
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#fff';
-    ctx.shadowColor = '#000';
-    ctx.shadowBlur = 4;
-    ctx.fillText('Prakhar', p.x - offsetX + TILE_SIZE / 2, p.y - offsetY - 8 + bobY);
+    ctx.fillStyle = '#ffd700';
+    ctx.shadowColor = '#ffd700';
+    ctx.shadowBlur = 3;
+    ctx.fillText('Prakhar', p.x - offsetX + TILE_SIZE / 2, p.y - offsetY - 12 + bobY);
     ctx.shadowBlur = 0;
 
-    // Lighting overlay
+    // Lighting
     const lighting = lightingRef.current;
     const lampPositions: { sx: number; sy: number }[] = [];
     for (let y = startY; y < endY; y++) {
@@ -358,120 +332,133 @@ const GameWorld = () => {
     }
     drawLightingOverlay(ctx, cw, ch, lighting, lampPositions);
 
-    // === HUD ===
     drawHUD(ctx, cw, ch, lighting);
   };
 
   const drawHUD = (ctx: CanvasRenderingContext2D, cw: number, ch: number, lighting: LightingState) => {
-    const gf = globalFrameRef.current;
-
-    // Top-left: Game title with styled frame
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
-    roundRect(ctx, 8, 8, 200, 44, 4);
+    // Top-left: Hogwarts crest area
+    ctx.fillStyle = 'rgba(10, 5, 20, 0.8)';
+    roundRect(ctx, 8, 8, 210, 48, 4);
     ctx.fill();
-    ctx.strokeStyle = '#4a8c3f';
+    ctx.strokeStyle = '#8b6914';
     ctx.lineWidth = 2;
-    roundRect(ctx, 8, 8, 200, 44, 4);
+    roundRect(ctx, 8, 8, 210, 48, 4);
     ctx.stroke();
-    // Green bar accent
-    ctx.fillStyle = '#4a8c3f';
-    ctx.fillRect(12, 12, 3, 36);
+    // Gold accent bar
+    ctx.fillStyle = '#8b6914';
+    ctx.fillRect(12, 12, 3, 40);
 
     ctx.font = '9px "Press Start 2P", monospace';
     ctx.textAlign = 'left';
-    ctx.fillStyle = '#4a8c3f';
-    ctx.fillText("Prakhar's World", 22, 28);
+    ctx.fillStyle = '#ffd700';
+    ctx.fillText("⚡ Hogwarts", 22, 28);
     ctx.font = '6px "Press Start 2P", monospace';
-    ctx.fillStyle = '#888';
-    ctx.fillText('Portfolio Adventure', 22, 42);
+    ctx.fillStyle = '#8b6914';
+    ctx.fillText(`${house} · Portfolio`, 22, 44);
 
-    // Top-right: Score panel
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.75)';
-    roundRect(ctx, cw - 216, 8, 208, 68, 4);
+    // Top-right: Score (House Points)
+    ctx.fillStyle = 'rgba(10, 5, 20, 0.8)';
+    roundRect(ctx, cw - 220, 8, 212, 72, 4);
     ctx.fill();
     ctx.strokeStyle = '#ffd700';
     ctx.lineWidth = 1;
-    roundRect(ctx, cw - 216, 8, 208, 68, 4);
+    roundRect(ctx, cw - 220, 8, 212, 72, 4);
     ctx.stroke();
 
-    // Score
     ctx.font = '7px "Press Start 2P", monospace';
     ctx.textAlign = 'left';
     ctx.fillStyle = '#ffd700';
-    ctx.fillText(`SCORE: ${score}`, cw - 204, 26);
+    ctx.fillText(`HOUSE PTS: ${score}`, cw - 208, 26);
 
-    // Items collected bar
-    ctx.fillStyle = '#888';
-    ctx.fillText(`ITEMS: ${collected}/${COLLECTIBLES.length}`, cw - 204, 40);
-    // Progress bar
+    ctx.fillStyle = '#c4a87a';
+    ctx.fillText(`ITEMS: ${collected}/${COLLECTIBLES.length}`, cw - 208, 40);
     const barW = 140;
     const progress = collected / COLLECTIBLES.length;
-    ctx.fillStyle = '#333';
-    ctx.fillRect(cw - 204, 46, barW, 6);
-    ctx.fillStyle = '#4a8c3f';
-    ctx.fillRect(cw - 204, 46, barW * progress, 6);
-    ctx.strokeStyle = '#555';
+    ctx.fillStyle = '#1a1020';
+    ctx.fillRect(cw - 208, 46, barW, 6);
+    ctx.fillStyle = '#8b6914';
+    ctx.fillRect(cw - 208, 46, barW * progress, 6);
+    ctx.strokeStyle = '#333';
     ctx.lineWidth = 0.5;
-    ctx.strokeRect(cw - 204, 46, barW, 6);
+    ctx.strokeRect(cw - 208, 46, barW, 6);
 
-    // Secrets found
     ctx.fillStyle = '#9b59b6';
-    ctx.fillText(`SECRETS: ${zonesFound}/${SECRET_ZONES.length}`, cw - 204, 66);
+    ctx.fillText(`SECRETS: ${zonesFound}/${SECRET_ZONES.length}`, cw - 208, 68);
 
     // Time of day (bottom-left)
     const timeIcons: Record<string, string> = { dawn: '🌅', day: '☀️', dusk: '🌇', night: '🌙' };
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.65)';
-    roundRect(ctx, 8, ch - 38, 120, 30, 4);
+    ctx.fillStyle = 'rgba(10, 5, 20, 0.7)';
+    roundRect(ctx, 8, ch - 38, 130, 30, 4);
     ctx.fill();
-    ctx.strokeStyle = '#5aafc8';
+    ctx.strokeStyle = '#4a3080';
     ctx.lineWidth = 1;
-    roundRect(ctx, 8, ch - 38, 120, 30, 4);
+    roundRect(ctx, 8, ch - 38, 130, 30, 4);
     ctx.stroke();
     ctx.font = '8px "Press Start 2P", monospace';
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#5aafc8';
-    ctx.fillText(`${timeIcons[lighting.timeOfDay]} ${lighting.timeOfDay.toUpperCase()}`, 68, ch - 18);
+    ctx.fillStyle = '#aaddff';
+    ctx.fillText(`${timeIcons[lighting.timeOfDay]} ${lighting.timeOfDay.toUpperCase()}`, 73, ch - 18);
 
-    // Steps counter (bottom-left, above time)
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-    roundRect(ctx, 8, ch - 62, 100, 20, 3);
+    // Steps
+    ctx.fillStyle = 'rgba(10, 5, 20, 0.5)';
+    roundRect(ctx, 8, ch - 62, 110, 20, 3);
     ctx.fill();
     ctx.font = '6px "Press Start 2P", monospace';
-    ctx.fillStyle = '#aaa';
+    ctx.fillStyle = '#8b6914';
     ctx.textAlign = 'left';
-    ctx.fillText(`👣 ${Math.floor(stepCount / 20)} steps`, 16, ch - 48);
+    ctx.fillText(`🧹 ${Math.floor(stepCount / 20)} steps`, 16, ch - 48);
   };
 
   const drawPlayer = (ctx: CanvasRenderingContext2D, x: number, y: number, dir: Direction, frame: number) => {
     const s = 2;
 
-    // Enhanced shadow
-    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    // Shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
     ctx.beginPath();
     ctx.ellipse(x + 16, y + 30, 10, 4, 0, 0, Math.PI * 2);
     ctx.fill();
+
+    // Wizard hat
+    const houseColor = '#7a1020';
+    ctx.fillStyle = '#1a1020';
+    ctx.fillRect(x + 4*s, y - 2*s, 8*s, 2*s);
+    ctx.fillRect(x + 6*s, y - 5*s, 4*s, 3*s);
+    ctx.fillRect(x + 7*s, y - 7*s, 2*s, 2*s);
+    // Hat band
+    ctx.fillStyle = houseColor;
+    ctx.fillRect(x + 4*s, y - 1*s, 8*s, 1*s);
 
     // Skin
     ctx.fillStyle = '#f0c8a0';
     if (dir === 0) {
       ctx.fillRect(x + 5*s, y + 1*s, 6*s, 6*s);
-      // Hair
       ctx.fillStyle = '#3d2b1f';
       ctx.fillRect(x + 5*s, y, 6*s, 2*s);
       ctx.fillRect(x + 4*s, y + 1*s, 1*s, 3*s);
       ctx.fillRect(x + 11*s, y + 1*s, 1*s, 3*s);
-      // Eyes with blink
       const blink = globalFrameRef.current % 180 < 5;
       ctx.fillStyle = blink ? '#f0c8a0' : '#222';
       ctx.fillRect(x + 6*s, y + 4*s, 2*s, blink ? 0.5*s : 1*s);
       ctx.fillRect(x + 9*s, y + 4*s, 2*s, blink ? 0.5*s : 1*s);
-      // Eye highlights
       if (!blink) {
         ctx.fillStyle = '#fff';
         ctx.fillRect(x + 6*s, y + 4*s, 1*s, 0.5*s);
         ctx.fillRect(x + 9*s, y + 4*s, 1*s, 0.5*s);
       }
-      // Mouth
+      // Lightning scar
+      ctx.fillStyle = '#ffd700';
+      ctx.fillRect(x + 7.5*s, y + 2*s, 0.5*s, 0.5*s);
+      ctx.fillRect(x + 7*s, y + 2.5*s, 0.5*s, 0.5*s);
+      ctx.fillRect(x + 7.5*s, y + 3*s, 0.5*s, 0.5*s);
+      // Glasses
+      ctx.strokeStyle = '#444';
+      ctx.lineWidth = 0.8;
+      ctx.strokeRect(x + 5.5*s, y + 3.5*s, 3*s, 2*s);
+      ctx.strokeRect(x + 8.5*s, y + 3.5*s, 3*s, 2*s);
+      ctx.beginPath();
+      ctx.moveTo(x + 8.5*s, y + 4.5*s);
+      ctx.lineTo(x + 8.5*s, y + 4.5*s);
+      ctx.stroke();
       ctx.fillStyle = '#c0968a';
       ctx.fillRect(x + 7*s, y + 6*s, 2*s, 0.5*s);
     } else if (dir === 1) {
@@ -498,32 +485,46 @@ const GameWorld = () => {
       ctx.fillRect(x + 10.5*s, y + 4*s, 0.5*s, 0.5*s);
     }
 
-    // Body with detail
-    ctx.fillStyle = '#e74c3c';
+    // Wizard robe (Gryffindor-colored)
+    ctx.fillStyle = '#1a1020';
     ctx.fillRect(x + 4*s, y + 7*s, 8*s, 5*s);
-    // Shirt collar
-    ctx.fillStyle = '#c0392b';
+    // House stripe
+    ctx.fillStyle = houseColor;
     ctx.fillRect(x + 6*s, y + 7*s, 4*s, 1*s);
+    // Gold trim
+    ctx.fillStyle = '#8b6914';
+    ctx.fillRect(x + 4*s, y + 7*s, 8*s, 0.5*s);
 
-    // Arms with swing
-    ctx.fillStyle = '#c0392b';
+    // Arms (robe sleeves)
+    ctx.fillStyle = '#0e0818';
     const armSwing = playerRef.current.moving ? Math.sin(playerRef.current.bobTimer * 2) * 2 : 0;
     ctx.fillRect(x + 3*s, y + 7*s + armSwing, 1*s, 4*s);
     ctx.fillRect(x + 12*s, y + 7*s - armSwing, 1*s, 4*s);
 
-    // Legs with smoother walk
-    ctx.fillStyle = '#2c3e50';
+    // Wand in right hand
+    ctx.fillStyle = '#6b4423';
+    if (dir === 3) {
+      ctx.fillRect(x + 13*s, y + 9*s - armSwing, 1*s, 3*s);
+      // Wand tip sparkle
+      if (globalFrameRef.current % 30 < 10) {
+        ctx.fillStyle = '#ffd700';
+        ctx.fillRect(x + 13*s, y + 8*s - armSwing, 1*s, 1*s);
+      }
+    }
+
+    // Legs (dark robes)
+    ctx.fillStyle = '#0a0510';
     if (playerRef.current.moving) {
       const legPhase = Math.sin(playerRef.current.bobTimer * 2);
-      ctx.fillRect(x + 5*s, y + 12*s + legPhase, 3*s, 3*s - Math.abs(legPhase) * 0.5);
-      ctx.fillRect(x + 9*s, y + 12*s - legPhase, 3*s, 3*s - Math.abs(legPhase) * 0.5);
+      ctx.fillRect(x + 5*s, y + 12*s + legPhase, 3*s, 3*s);
+      ctx.fillRect(x + 9*s, y + 12*s - legPhase, 3*s, 3*s);
     } else {
       ctx.fillRect(x + 5*s, y + 12*s, 3*s, 3*s);
       ctx.fillRect(x + 9*s, y + 12*s, 3*s, 3*s);
     }
 
     // Shoes
-    ctx.fillStyle = '#6b3a1a';
+    ctx.fillStyle = '#222';
     ctx.fillRect(x + 4*s, y + 14.5*s, 4*s, 1.5*s);
     ctx.fillRect(x + 9*s, y + 14.5*s, 4*s, 1.5*s);
   };
@@ -541,99 +542,123 @@ const GameWorld = () => {
 
   if (gameState === 'start') {
     return (
-      <div className="fixed inset-0 bg-[#0d0d1a] flex flex-col items-center justify-center z-50" style={{ fontFamily: '"Press Start 2P", monospace' }}>
-        {/* Animated border */}
-        <div className="absolute inset-4 border-4 border-[#4a8c3f]/80 pointer-events-none animate-pulse" style={{ animationDuration: '3s' }} />
-        <div className="absolute inset-6 border-2 border-[#4a8c3f]/30 pointer-events-none" />
-        <div className="absolute inset-8 border border-[#5aafc8]/20 pointer-events-none" />
+      <div className="fixed inset-0 flex flex-col items-center justify-center z-50" style={{
+        fontFamily: '"Press Start 2P", monospace',
+        background: 'linear-gradient(180deg, #0a0510, #1a1030, #0d0818)',
+      }}>
+        {/* Magical border */}
+        <div className="absolute inset-4 border-2 border-[#8b6914]/50 pointer-events-none animate-pulse" style={{ animationDuration: '4s' }} />
+        <div className="absolute inset-6 border border-[#ffd700]/20 pointer-events-none" />
 
-        {/* Stars background */}
-        {Array.from({ length: 20 }, (_, i) => (
+        {/* Floating magical particles */}
+        {Array.from({ length: 25 }, (_, i) => (
           <div key={i} className="absolute animate-pulse"
             style={{
               left: `${5 + (i * 47) % 90}%`,
               top: `${3 + (i * 31) % 85}%`,
-              width: i % 3 === 0 ? '2px' : '1.5px',
-              height: i % 3 === 0 ? '2px' : '1.5px',
-              backgroundColor: i % 5 === 0 ? '#ffd700' : '#fff',
+              width: i % 4 === 0 ? '3px' : '2px',
+              height: i % 4 === 0 ? '3px' : '2px',
+              backgroundColor: i % 3 === 0 ? '#ffd700' : i % 5 === 0 ? '#aaddff' : '#8b6914',
               animationDelay: `${(i * 0.3) % 2}s`,
-              animationDuration: `${1.5 + (i % 3)}s`,
+              animationDuration: `${2 + (i % 3)}s`,
+              borderRadius: '50%',
+              boxShadow: i % 3 === 0 ? '0 0 6px #ffd700' : 'none',
             }} />
         ))}
 
-        {/* Pixel art character preview */}
-        <div className="relative mb-8">
-          <div className="w-16 h-16 relative" style={{ imageRendering: 'pixelated' }}>
-            <svg viewBox="0 0 32 32" width="64" height="64">
-              {/* Hair */}
-              <rect x="10" y="1" width="12" height="4" fill="#3d2b1f"/>
-              <rect x="8" y="3" width="2" height="6" fill="#3d2b1f"/>
-              <rect x="22" y="3" width="2" height="6" fill="#3d2b1f"/>
-              {/* Face */}
-              <rect x="10" y="3" width="12" height="10" fill="#f0c8a0"/>
-              {/* Eyes */}
-              <rect x="12" y="7" width="2" height="2" fill="#222"/>
-              <rect x="18" y="7" width="2" height="2" fill="#222"/>
-              <rect x="12" y="7" width="1" height="1" fill="#fff"/>
-              <rect x="18" y="7" width="1" height="1" fill="#fff"/>
-              {/* Mouth */}
-              <rect x="14" y="11" width="4" height="1" fill="#c0968a"/>
-              {/* Shirt */}
-              <rect x="8" y="13" width="16" height="8" fill="#e74c3c"/>
-              <rect x="12" y="13" width="8" height="2" fill="#c0392b"/>
-              {/* Arms */}
-              <rect x="6" y="14" width="2" height="6" fill="#c0392b"/>
-              <rect x="24" y="14" width="2" height="6" fill="#c0392b"/>
-              {/* Pants */}
-              <rect x="10" y="21" width="5" height="6" fill="#2c3e50"/>
-              <rect x="17" y="21" width="5" height="6" fill="#2c3e50"/>
-              {/* Shoes */}
-              <rect x="9" y="27" width="6" height="3" fill="#6b3a1a"/>
-              <rect x="17" y="27" width="6" height="3" fill="#6b3a1a"/>
-            </svg>
-          </div>
+        {/* Sorting Hat icon */}
+        <div className="relative mb-6">
+          <svg viewBox="0 0 48 48" width="80" height="80" style={{ imageRendering: 'pixelated' }}>
+            {/* Hat brim */}
+            <rect x="6" y="30" width="36" height="6" fill="#3a2010"/>
+            {/* Hat body */}
+            <rect x="12" y="12" width="24" height="20" fill="#2a1508"/>
+            {/* Hat tip */}
+            <rect x="16" y="4" width="16" height="10" fill="#3a2010"/>
+            <rect x="24" y="0" width="8" height="6" fill="#2a1508"/>
+            <rect x="30" y="-2" width="4" height="4" fill="#3a2010"/>
+            {/* Face crease */}
+            <rect x="16" y="26" width="16" height="2" fill="#1a0a00"/>
+            {/* Eyes */}
+            <rect x="18" y="22" width="3" height="3" fill="#ffd700"/>
+            <rect x="27" y="22" width="3" height="3" fill="#ffd700"/>
+            {/* Patch */}
+            <rect x="22" y="14" width="4" height="4" fill="#4a2a10"/>
+          </svg>
         </div>
 
-        <div className="text-center mb-8 animate-fade-in">
-          <h1 className="text-[#4a8c3f] text-3xl sm:text-5xl mb-3 leading-relaxed tracking-wider" style={{ textShadow: '0 0 20px rgba(74,140,63,0.3)' }}>PRAKHAR</h1>
-          <h1 className="text-[#5aafc8] text-3xl sm:text-5xl mb-5 leading-relaxed tracking-wider" style={{ textShadow: '0 0 20px rgba(90,175,200,0.3)' }}>TIWARI</h1>
-          <div className="flex items-center gap-3 justify-center mb-3">
-            <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#c4a87a]" />
-            <p className="text-[#c4a87a] text-xs tracking-[0.3em]">PORTFOLIO RPG</p>
-            <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-[#c4a87a]" />
+        <div className="text-center mb-6 animate-fade-in">
+          <h1 className="text-[#ffd700] text-2xl sm:text-4xl mb-2 tracking-widest" style={{ textShadow: '0 0 20px rgba(255,215,0,0.3)' }}>
+            ⚡ HOGWARTS ⚡
+          </h1>
+          <h2 className="text-[#c4a87a] text-xl sm:text-3xl mb-4 tracking-wider" style={{ textShadow: '0 0 15px rgba(196,168,122,0.2)' }}>
+            PORTFOLIO
+          </h2>
+          <div className="flex items-center gap-3 justify-center mb-2">
+            <div className="w-12 h-0.5 bg-gradient-to-r from-transparent to-[#8b6914]" />
+            <p className="text-[#8b6914] text-[9px] tracking-[0.3em]">PRAKHAR TIWARI</p>
+            <div className="w-12 h-0.5 bg-gradient-to-l from-transparent to-[#8b6914]" />
           </div>
-          <p className="text-[#888] text-[8px] sm:text-[10px] leading-relaxed max-w-md mx-auto px-4">
-            Explore • Discover • Collect
+          <p className="text-[#666] text-[8px] sm:text-[9px] leading-relaxed max-w-sm mx-auto px-4 mt-2">
+            "It is our choices that show what we truly are,<br/>far more than our abilities."
           </p>
+          <p className="text-[#555] text-[7px] mt-1">— Albus Dumbledore</p>
+        </div>
+
+        {/* House selection */}
+        <div className="flex gap-2 mb-5">
+          {[
+            { name: 'Gryffindor', color: '#7a1020', emoji: '🦁' },
+            { name: 'Slytherin', color: '#1a5030', emoji: '🐍' },
+            { name: 'Ravenclaw', color: '#1a2060', emoji: '🦅' },
+            { name: 'Hufflepuff', color: '#6a5a10', emoji: '🦡' },
+          ].map(h => (
+            <button key={h.name} onClick={() => setHouse(h.name)}
+              className={`px-3 py-2 text-[7px] border transition-all duration-300 ${
+                house === h.name
+                  ? 'border-[#ffd700] text-[#ffd700] scale-110'
+                  : 'border-[#333] text-[#666] hover:border-[#8b6914] hover:text-[#8b6914]'
+              }`}
+              style={{ backgroundColor: house === h.name ? h.color : 'rgba(10,5,20,0.8)' }}>
+              {h.emoji} {h.name}
+            </button>
+          ))}
         </div>
 
         <button onClick={handleStart}
-          className="group relative bg-[#e74c3c] hover:bg-[#c0392b] text-white px-12 py-4 text-sm tracking-widest transition-all duration-200 hover:scale-105 border-b-4 border-[#962d22] active:border-b-0 active:mt-1 mb-6"
-          style={{ textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>
-          <span className="relative z-10">▶ PLAY</span>
-          <div className="absolute inset-0 bg-gradient-to-t from-transparent to-white/10" />
+          className="group relative px-14 py-4 text-sm tracking-widest transition-all duration-300 hover:scale-105 mb-5"
+          style={{
+            background: 'linear-gradient(180deg, #8b6914, #5a4010)',
+            border: '2px solid #ffd700',
+            color: '#fff',
+            boxShadow: '0 0 20px rgba(139,105,20,0.3)',
+            textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+          }}>
+          <span className="relative z-10">⚡ ENTER ⚡</span>
         </button>
 
-        <div className="text-[#666] text-[7px] text-center space-y-1.5 mb-4">
-          <p className="text-[#888]">━━ CONTROLS ━━</p>
+        <div className="text-[#555] text-[7px] text-center space-y-1.5 mb-4">
+          <p className="text-[#8b6914]">━━ SPELL CONTROLS ━━</p>
           <p>WASD / Arrows — Move</p>
-          <p>SPACE / E — Interact</p>
+          <p>SPACE / E — Cast Alohomora</p>
           <p>M — Toggle Music</p>
         </div>
 
         <div className="flex gap-6 text-[7px] text-[#555]">
-          <span>🪙 {COLLECTIBLES.length} Items</span>
-          <span>🏠 4 Buildings</span>
+          <span>⚡ {COLLECTIBLES.length} Items</span>
+          <span>🏰 4 Locations</span>
           <span>🗝️ {SECRET_ZONES.length} Secrets</span>
-          <span>👥 4 NPCs</span>
+          <span>🧙 4 Characters</span>
         </div>
 
         <div className="absolute bottom-6 left-0 right-0 flex items-center justify-center gap-4">
-          <p className="text-[#555] text-[7px]">Skip the adventure?</p>
+          <p className="text-[#444] text-[7px]">Skip the magic?</p>
           <a href="https://linkedin.com/in/prakhar-tiwari-8b04a7296" target="_blank" rel="noopener noreferrer"
-            className="bg-[#0077b5] text-white px-4 py-1.5 text-[8px] hover:bg-[#005f8d] transition-colors border-b-2 border-[#005a8a] active:border-b-0">LinkedIn</a>
+            className="text-white px-4 py-1.5 text-[8px] transition-colors border border-[#0077b5] hover:bg-[#0077b5]/20"
+            style={{ background: 'rgba(0,119,181,0.15)' }}>LinkedIn</a>
           <a href="https://github.com/prakhartiwaria221-afk" target="_blank" rel="noopener noreferrer"
-            className="bg-[#333] text-white px-4 py-1.5 text-[8px] hover:bg-[#444] transition-colors border-b-2 border-[#222] active:border-b-0">GitHub</a>
+            className="text-white px-4 py-1.5 text-[8px] transition-colors border border-[#555] hover:bg-white/10"
+            style={{ background: 'rgba(50,50,50,0.3)' }}>GitHub</a>
         </div>
       </div>
     );
@@ -642,26 +667,28 @@ const GameWorld = () => {
   const dialogContent = npcDialog || (dialogKey ? PORTFOLIO_CONTENT[dialogKey as keyof typeof PORTFOLIO_CONTENT] : null);
 
   return (
-    <div className="fixed inset-0 bg-[#0d0d1a]" style={{ fontFamily: '"Press Start 2P", monospace' }}>
+    <div className="fixed inset-0" style={{ fontFamily: '"Press Start 2P", monospace', background: '#0a0510' }}>
       <canvas ref={canvasRef} className="block w-full h-full" />
 
-      {/* Music toggle (floating) */}
+      {/* Music toggle */}
       <button onClick={handleToggleMusic}
-        className="absolute top-16 left-3 bg-black/60 px-2 py-1.5 border border-[#5aafc8]/40 text-[#5aafc8] text-[7px] hover:bg-black/80 transition-colors rounded-sm">
+        className="absolute top-16 left-3 px-2 py-1.5 border text-[7px] transition-colors rounded-sm"
+        style={{ background: 'rgba(10,5,20,0.7)', borderColor: '#8b6914', color: '#ffd700' }}>
         {musicOn ? '🔊' : '🔇'} [M]
       </button>
 
       {/* Discovery notification */}
       {discoveryMsg && (
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 bg-black/85 px-6 py-3 border-2 border-[#ffd700] animate-scale-in"
-          style={{ opacity: discoveryTimer > 10 ? 1 : discoveryTimer / 10 }}>
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 px-6 py-3 border-2 animate-scale-in"
+          style={{ background: 'rgba(10,5,20,0.9)', borderColor: '#ffd700', opacity: discoveryTimer > 10 ? 1 : discoveryTimer / 10 }}>
           <p className="text-[#ffd700] text-[10px] whitespace-nowrap">{discoveryMsg}</p>
         </div>
       )}
 
       {/* Interaction hint */}
       {hint && (
-        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 bg-black/80 px-6 py-3 border-2 border-[#ffd700]/80 rounded-sm">
+        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 px-6 py-3 border-2 rounded-sm"
+          style={{ background: 'rgba(10,5,20,0.85)', borderColor: '#ffd700' }}>
           <p className="text-[#ffd700] text-[10px] whitespace-nowrap animate-pulse">{hint}</p>
         </div>
       )}
@@ -672,25 +699,28 @@ const GameWorld = () => {
           <div className="absolute bottom-8 left-8 grid grid-cols-3 grid-rows-3 gap-1" style={{ width: '130px', height: '130px' }}>
             <div />
             <button onTouchStart={() => mobilePress('arrowup')} onTouchEnd={() => mobileRelease('arrowup')}
-              className="bg-black/70 border-2 border-white/30 text-white text-lg flex items-center justify-center active:bg-white/20 active:scale-95 select-none rounded-sm transition-transform">▲</button>
+              className="flex items-center justify-center active:scale-95 select-none text-lg text-white"
+              style={{ background: 'rgba(10,5,20,0.7)', border: '2px solid rgba(139,105,20,0.5)' }}>▲</button>
             <div />
             <button onTouchStart={() => mobilePress('arrowleft')} onTouchEnd={() => mobileRelease('arrowleft')}
-              className="bg-black/70 border-2 border-white/30 text-white text-lg flex items-center justify-center active:bg-white/20 active:scale-95 select-none rounded-sm transition-transform">◄</button>
-            <div className="bg-black/30 border border-white/10 rounded-sm" />
+              className="flex items-center justify-center active:scale-95 select-none text-lg text-white"
+              style={{ background: 'rgba(10,5,20,0.7)', border: '2px solid rgba(139,105,20,0.5)' }}>◄</button>
+            <div style={{ background: 'rgba(10,5,20,0.3)', border: '1px solid rgba(139,105,20,0.2)' }} />
             <button onTouchStart={() => mobilePress('arrowright')} onTouchEnd={() => mobileRelease('arrowright')}
-              className="bg-black/70 border-2 border-white/30 text-white text-lg flex items-center justify-center active:bg-white/20 active:scale-95 select-none rounded-sm transition-transform">►</button>
+              className="flex items-center justify-center active:scale-95 select-none text-lg text-white"
+              style={{ background: 'rgba(10,5,20,0.7)', border: '2px solid rgba(139,105,20,0.5)' }}>►</button>
             <div />
             <button onTouchStart={() => mobilePress('arrowdown')} onTouchEnd={() => mobileRelease('arrowdown')}
-              className="bg-black/70 border-2 border-white/30 text-white text-lg flex items-center justify-center active:bg-white/20 active:scale-95 select-none rounded-sm transition-transform">▼</button>
+              className="flex items-center justify-center active:scale-95 select-none text-lg text-white"
+              style={{ background: 'rgba(10,5,20,0.7)', border: '2px solid rgba(139,105,20,0.5)' }}>▼</button>
             <div />
           </div>
           <button onTouchStart={() => { keysRef.current.add(' '); tryInteract(); }} onTouchEnd={() => keysRef.current.delete(' ')}
-            className="absolute bottom-12 right-12 w-18 h-18 rounded-full bg-[#e74c3c]/90 border-3 border-[#ffd700] text-white text-sm flex items-center justify-center active:scale-90 select-none shadow-lg shadow-[#e74c3c]/30 transition-transform"
-            style={{ width: '72px', height: '72px' }}>A</button>
+            className="absolute bottom-12 right-12 rounded-full flex items-center justify-center active:scale-90 select-none text-sm text-white"
+            style={{ width: '72px', height: '72px', background: 'rgba(139,105,20,0.8)', border: '3px solid #ffd700', boxShadow: '0 0 15px rgba(255,215,0,0.2)' }}>⚡</button>
         </>
       )}
 
-      {/* Dialog */}
       {gameState === 'dialog' && dialogContent && (
         <GameDialog content={dialogContent} onClose={closeDialog} />
       )}
@@ -698,7 +728,6 @@ const GameWorld = () => {
   );
 };
 
-// Helper: draw rounded rectangle
 const roundRect = (ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) => {
   ctx.beginPath();
   ctx.moveTo(x + r, y);

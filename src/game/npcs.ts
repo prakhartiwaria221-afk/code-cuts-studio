@@ -21,93 +21,105 @@ export interface NPC {
 
 const NPC_DEFS: Omit<NPC, 'frame' | 'frameTimer' | 'moving' | 'dir' | 'patrolIndex' | 'waitTimer'>[] = [
   {
-    id: 'guide',
-    x: 17 * TILE_SIZE,
-    y: 13 * TILE_SIZE,
-    color: '#f0c8a0',
-    hairColor: '#d4a017',
-    shirtColor: '#3498db',
-    name: 'Guide',
+    id: 'dumbledore',
+    x: 20 * TILE_SIZE,
+    y: 16 * TILE_SIZE,
+    color: '#f0d0b0',
+    hairColor: '#c0c0c0',
+    shirtColor: '#4a2080',
+    name: 'Dumbledore',
     dialog: [
-      "Hey there, adventurer! 👋",
+      "Ah, welcome to Hogwarts! 🧙‍♂️",
       "",
-      "Welcome to Prakhar's world!",
-      "Each building holds a piece of",
-      "his story. Go explore them all!",
+      "I am Professor Dumbledore.",
+      "Explore the castle to discover",
+      "Prakhar's magical portfolio!",
       "",
-      "💡 Tip: Walk up to doors and",
-      "signs, then press SPACE!",
+      "💡 Happiness can be found even",
+      "in the darkest of times, if one",
+      "only remembers to turn on the light.",
+      "",
+      "⚡ Walk to doors & press SPACE!",
     ],
     patrolPoints: [
-      { x: 17, y: 13 }, { x: 17, y: 16 }, { x: 22, y: 16 }, { x: 22, y: 13 },
-    ],
-    speed: 1.2,
-  },
-  {
-    id: 'scholar',
-    x: 14 * TILE_SIZE,
-    y: 8 * TILE_SIZE,
-    color: '#d4a07a',
-    hairColor: '#1a1a2e',
-    shirtColor: '#8e44ad',
-    name: 'Scholar',
-    dialog: [
-      "I study at the Skills Academy! 📚",
-      "",
-      "Prakhar knows React, TypeScript,",
-      "C++, Java, and more!",
-      "",
-      "💡 Tip: Check the Skills building",
-      "to the north for the full list!",
-    ],
-    patrolPoints: [
-      { x: 14, y: 8 }, { x: 19, y: 8 }, { x: 19, y: 3 }, { x: 14, y: 3 },
-    ],
-    speed: 1.0,
-  },
-  {
-    id: 'artist',
-    x: 25 * TILE_SIZE,
-    y: 15 * TILE_SIZE,
-    color: '#f0c8a0',
-    hairColor: '#c0392b',
-    shirtColor: '#27ae60',
-    name: 'Artist',
-    dialog: [
-      "Have you seen Prakhar's projects? 🎨",
-      "",
-      "MindBloom, CoordiNet, BookPard...",
-      "They're all built with modern tech!",
-      "",
-      "💡 Tip: Visit the Projects building",
-      "on the east side of town!",
-    ],
-    patrolPoints: [
-      { x: 25, y: 15 }, { x: 29, y: 15 }, { x: 29, y: 12 }, { x: 25, y: 12 },
+      { x: 20, y: 16 }, { x: 20, y: 19 }, { x: 24, y: 19 }, { x: 24, y: 16 },
     ],
     speed: 0.8,
   },
   {
-    id: 'messenger',
-    x: 15 * TILE_SIZE,
-    y: 20 * TILE_SIZE,
-    color: '#d4a07a',
-    hairColor: '#2c3e50',
-    shirtColor: '#e67e22',
-    name: 'Messenger',
+    id: 'mcgonagall',
+    x: 14 * TILE_SIZE,
+    y: 10 * TILE_SIZE,
+    color: '#e8c8a8',
+    hairColor: '#2a2a2a',
+    shirtColor: '#006644',
+    name: 'McGonagall',
     dialog: [
-      "Want to reach Prakhar? 📮",
+      "Good day, student! 📚",
       "",
-      "He's always open to new",
-      "collaborations and ideas!",
+      "I'm Professor McGonagall.",
+      "Prakhar has mastered many spells—",
+      "React, TypeScript, C++, and more!",
       "",
-      "💡 Tip: Head to the Contact",
-      "building to the south!",
+      "💡 Visit the Library to the north",
+      "for the complete spell book!",
+      "",
+      "Mind your step in the corridors.",
     ],
     patrolPoints: [
-      { x: 15, y: 20 }, { x: 19, y: 20 }, { x: 19, y: 24 }, { x: 15, y: 24 },
+      { x: 14, y: 10 }, { x: 18, y: 10 }, { x: 18, y: 14 }, { x: 14, y: 14 },
     ],
-    speed: 1.1,
+    speed: 1.0,
+  },
+  {
+    id: 'hagrid',
+    x: 28 * TILE_SIZE,
+    y: 18 * TILE_SIZE,
+    color: '#c8a080',
+    hairColor: '#3a2010',
+    shirtColor: '#5a3a20',
+    name: 'Hagrid',
+    dialog: [
+      "Blimey! A new student! 🎉",
+      "",
+      "I'm Hagrid, Keeper of Keys.",
+      "Prakhar's built some amazin'",
+      "projects — MindBloom, CoordiNet...",
+      "",
+      "💡 Head east to the Room of",
+      "Requirement to see 'em all!",
+      "",
+      "Yer a wizard, visitor!",
+    ],
+    patrolPoints: [
+      { x: 28, y: 18 }, { x: 32, y: 18 }, { x: 32, y: 14 }, { x: 28, y: 14 },
+    ],
+    speed: 0.7,
+  },
+  {
+    id: 'hedwig',
+    x: 18 * TILE_SIZE,
+    y: 24 * TILE_SIZE,
+    color: '#e8e8f0',
+    hairColor: '#d0d0dd',
+    shirtColor: '#c0c0d0',
+    name: 'Hedwig',
+    dialog: [
+      "Hoot hoot! 🦉",
+      "",
+      "I'm Hedwig, the messenger owl.",
+      "Want to send Prakhar a message?",
+      "",
+      "💡 Fly south to the Owlery",
+      "to find all contact details!",
+      "",
+      "prakhartiwari6038@gmail.com",
+      "*ruffles feathers proudly*",
+    ],
+    patrolPoints: [
+      { x: 18, y: 24 }, { x: 22, y: 24 }, { x: 22, y: 28 }, { x: 18, y: 28 },
+    ],
+    speed: 1.3,
   },
 ];
 
@@ -177,7 +189,6 @@ export const updateNPC = (npc: NPC): void => {
     npc.x = nx;
     npc.y = ny;
   } else {
-    // Skip to next patrol point
     npc.patrolIndex = (npc.patrolIndex + 1) % npc.patrolPoints.length;
     npc.waitTimer = 30;
   }
@@ -196,7 +207,7 @@ export const drawNPC = (ctx: CanvasRenderingContext2D, npc: NPC, camX: number, c
   const s = 2;
 
   // Shadow
-  ctx.fillStyle = 'rgba(0,0,0,0.2)';
+  ctx.fillStyle = 'rgba(0,0,0,0.25)';
   ctx.beginPath();
   ctx.ellipse(x + 16, y + 30, 9, 3, 0, 0, Math.PI * 2);
   ctx.fill();
@@ -211,7 +222,6 @@ export const drawNPC = (ctx: CanvasRenderingContext2D, npc: NPC, camX: number, c
     ctx.fillRect(x + 5 * s, y + 0, 6 * s, 2 * s);
     ctx.fillRect(x + 4 * s, y + 1 * s, 1 * s, 3 * s);
     ctx.fillRect(x + 11 * s, y + 1 * s, 1 * s, 3 * s);
-    // Eyes
     ctx.fillStyle = '#222';
     ctx.fillRect(x + 6 * s, y + 4 * s, 2 * s, 1 * s);
     ctx.fillRect(x + 9 * s, y + 4 * s, 2 * s, 1 * s);
@@ -229,7 +239,18 @@ export const drawNPC = (ctx: CanvasRenderingContext2D, npc: NPC, camX: number, c
     ctx.fillRect(x + 9 * s, y + 4 * s, 2 * s, 1 * s);
   }
 
-  // Body
+  // Wizard hat for Dumbledore
+  if (npc.id === 'dumbledore') {
+    ctx.fillStyle = '#4a2080';
+    ctx.fillRect(x + 4 * s, y - 2 * s, 8 * s, 2 * s);
+    ctx.fillRect(x + 6 * s, y - 5 * s, 4 * s, 3 * s);
+    ctx.fillRect(x + 7 * s, y - 7 * s, 2 * s, 2 * s);
+    // Star on hat
+    ctx.fillStyle = '#ffd700';
+    ctx.fillRect(x + 7.5 * s, y - 6 * s, 1 * s, 1 * s);
+  }
+
+  // Robe/Body
   ctx.fillStyle = npc.shirtColor;
   ctx.fillRect(x + 4 * s, y + 7 * s, 8 * s, 5 * s);
 
@@ -244,8 +265,8 @@ export const drawNPC = (ctx: CanvasRenderingContext2D, npc: NPC, camX: number, c
     ctx.fillRect(x + 12 * s, y + 6 * s, 1 * s, 4 * s);
   }
 
-  // Legs
-  ctx.fillStyle = '#2c3e50';
+  // Legs (robes)
+  ctx.fillStyle = darkenColor(npc.shirtColor, 0.6);
   if (npc.moving) {
     if (npc.frame % 4 < 2) {
       ctx.fillRect(x + 5 * s, y + 12 * s, 3 * s, 3 * s);
@@ -260,35 +281,41 @@ export const drawNPC = (ctx: CanvasRenderingContext2D, npc: NPC, camX: number, c
   }
 
   // Shoes
-  ctx.fillStyle = '#555';
+  ctx.fillStyle = '#222';
   ctx.fillRect(x + 4 * s, y + 14 * s, 4 * s, 1 * s);
   ctx.fillRect(x + 9 * s, y + 14 * s, 4 * s, 1 * s);
 
-  // Name tag
+  // Name tag with magical glow
   ctx.font = '7px "Press Start 2P", monospace';
   ctx.textAlign = 'center';
   ctx.fillStyle = '#ffd700';
-  ctx.shadowColor = '#000';
-  ctx.shadowBlur = 3;
-  ctx.fillText(npc.name, x + TILE_SIZE / 2, y - 6);
+  ctx.shadowColor = '#ffd700';
+  ctx.shadowBlur = 4;
+  ctx.fillText(npc.name, x + TILE_SIZE / 2, y - (npc.id === 'dumbledore' ? 18 : 6));
   ctx.shadowBlur = 0;
 
-  // Exclamation bubble when idle
+  // Speech bubble when idle (wand sparkle for wizards, feather for Hedwig)
   if (!npc.moving) {
-    ctx.fillStyle = '#fff';
-    ctx.fillRect(x + 12, y - 18, 10, 12);
-    ctx.fillRect(x + 15, y - 7, 4, 4);
-    ctx.fillStyle = '#e74c3c';
-    ctx.font = '8px "Press Start 2P", monospace';
-    ctx.fillText('!', x + 17, y - 9);
+    if (npc.id === 'hedwig') {
+      ctx.fillStyle = '#fff';
+      ctx.font = '10px "Press Start 2P", monospace';
+      ctx.fillText('🦉', x + 18, y - 14);
+    } else {
+      ctx.fillStyle = '#ffd700';
+      ctx.font = '10px "Press Start 2P", monospace';
+      ctx.fillText('⚡', x + 18, y - 10);
+    }
   }
 };
 
 function darkenColor(hex: string, factor: number): string {
-  const r = parseInt(hex.slice(1, 3), 16);
-  const g = parseInt(hex.slice(3, 5), 16);
-  const b = parseInt(hex.slice(5, 7), 16);
-  return `rgb(${Math.floor(r * factor)},${Math.floor(g * factor)},${Math.floor(b * factor)})`;
+  if (hex.startsWith('#')) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return `rgb(${Math.floor(r * factor)},${Math.floor(g * factor)},${Math.floor(b * factor)})`;
+  }
+  return hex;
 }
 
 export const isNearNPC = (playerX: number, playerY: number, npc: NPC): boolean => {
