@@ -1,6 +1,9 @@
 import { Github, Linkedin, Instagram } from "lucide-react";
 import profileImage from "@/assets/profile-prakhar.jpg";
+import dumbledoreImage from "@/assets/dumbledore.png";
+import goldenSnitchImage from "@/assets/golden-snitch.png";
 import { useTypingAnimation } from "@/hooks/useTypingAnimation";
+import SparkleCanvas from "./SparkleCanvas";
 
 const Hero = () => {
   const { currentText } = useTypingAnimation({
@@ -12,15 +15,26 @@ const Hero = () => {
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+      <SparkleCanvas count={20} color="gold" />
+
       {/* Decorative magical elements */}
       <div className="absolute top-20 right-16 w-32 h-32 rounded-full border border-primary/20 animate-float-gentle" />
       <div className="absolute bottom-32 left-12 w-20 h-20 rounded-full bg-secondary/10 animate-float-blob" />
-      <div className="absolute top-1/3 right-1/4 text-primary/20 text-6xl animate-float-gentle" style={{ animationDelay: '1s' }}>✦</div>
-      <div className="absolute bottom-1/4 left-1/4 text-primary/15 text-4xl animate-float-gentle" style={{ animationDelay: '2s' }}>⚡</div>
+
+      {/* Golden Snitch floating */}
+      <img
+        src={goldenSnitchImage}
+        alt="Golden Snitch"
+        loading="lazy"
+        width={80}
+        height={80}
+        className="absolute top-24 right-[15%] w-16 sm:w-20 animate-float-gentle opacity-60 hidden md:block"
+        style={{ animationDelay: '0.5s' }}
+      />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          {/* Left - Profile Image */}
+          {/* Left - Profile with Dumbledore */}
           <div className="relative flex items-center justify-center order-1">
             <div className="relative w-full max-w-sm mx-auto">
               <div
@@ -39,6 +53,22 @@ const Hero = () => {
               <div className="absolute -top-4 -left-4 w-16 h-16 border border-primary/30 rounded-full" />
               <div className="absolute -bottom-2 -right-3 w-12 h-12 border border-secondary/30 rounded-full" />
             </div>
+
+            {/* Dumbledore next to profile */}
+            <div className="absolute -right-8 sm:-right-16 bottom-0 z-20 hidden lg:block">
+              <div className="relative">
+                <SparkleCanvas count={8} color="gold" className="!-inset-8" />
+                <img
+                  src={dumbledoreImage}
+                  alt="Dumbledore"
+                  loading="lazy"
+                  width={180}
+                  height={270}
+                  className="w-32 sm:w-44 drop-shadow-[0_0_20px_hsl(43,72%,55%,0.3)] animate-float-gentle"
+                  style={{ animationDelay: '1.5s' }}
+                />
+              </div>
+            </div>
           </div>
 
           {/* Right Content */}
@@ -55,7 +85,6 @@ const Hero = () => {
               </h1>
             </div>
 
-            {/* Typing Role */}
             <div className="h-8">
               <span className="text-muted-foreground text-lg md:text-xl font-light italic tracking-wide" style={{ fontFamily: "'Crimson Text', serif" }}>
                 {currentText}
@@ -63,7 +92,6 @@ const Hero = () => {
               </span>
             </div>
 
-            {/* Quote */}
             <div className="max-w-xs mx-auto lg:mx-0">
               <div className="quote-box">
                 <p className="text-sm text-muted-foreground italic leading-relaxed" style={{ fontFamily: "'Crimson Text', serif" }}>
@@ -72,7 +100,6 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Social */}
             <div className="flex gap-3 justify-center lg:justify-start pt-2">
               {[
                 { icon: Github, href: "https://github.com/prakhartiwaria221-afk", label: "GH" },
@@ -94,7 +121,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 animate-fade-in">
         <span className="text-xs text-muted-foreground tracking-widest uppercase" style={{ fontFamily: "'Crimson Text', serif" }}>Scroll</span>
         <div className="w-5 h-9 rounded-full border border-border/60 flex justify-center pt-2">
