@@ -1,10 +1,16 @@
 import { Github, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import SparkleCanvas from "./SparkleCanvas";
+import goldenSnitchImage from "@/assets/golden-snitch.png";
 import bookpardImage from "@/assets/bookpard-project.png";
 import mindbloomImage from "@/assets/mindbloom-project.png";
 import coordinetImage from "@/assets/coordinet-project.png";
 
 const Projects = () => {
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
+
   const projects = [
     {
       title: "MindBloom",
@@ -38,10 +44,25 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-24 sm:py-32 relative overflow-hidden">
+      <SparkleCanvas count={10} color="gold" />
       <div className="absolute bottom-10 right-5 w-28 h-28 rounded-full border border-primary/15 animate-float-gentle" />
 
+      {/* Golden Snitch */}
+      <img
+        src={goldenSnitchImage}
+        alt=""
+        loading="lazy"
+        width={60}
+        height={60}
+        className="absolute top-16 left-[10%] w-12 sm:w-16 animate-float-gentle opacity-40 hidden md:block"
+        style={{ animationDelay: '2s' }}
+      />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="flex items-start justify-between mb-14">
+        <div
+          ref={headerRef}
+          className={`flex items-start justify-between mb-14 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
           <div>
             <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>Portfolio</p>
             <h2 className="text-3xl sm:text-4xl font-black mb-2" style={{ fontFamily: "'Cinzel', serif" }}>
@@ -55,16 +76,20 @@ const Projects = () => {
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          {projects.map((project) => (
+        <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
+          {projects.map((project, index) => (
             <div
               key={project.title}
-              className="group relative rounded-2xl overflow-hidden card-parchment magic-border transition-all duration-500"
+              className={`group relative rounded-2xl overflow-hidden card-parchment magic-border transition-all duration-700 ${
+                gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+              }`}
+              style={{ transitionDelay: `${index * 150}ms` }}
             >
               <div className="relative h-48 overflow-hidden">
                 <img
                   src={project.image}
                   alt={project.title}
+                  loading="lazy"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
@@ -98,7 +123,7 @@ const Projects = () => {
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className={`flex items-center gap-3 transition-all duration-1000 delay-500 ${gridVisible ? 'opacity-100' : 'opacity-0'}`}>
           <span className="text-lg font-bold text-foreground" style={{ fontFamily: "'Cinzel', serif" }}>RECENT WORK</span>
           <Button
             variant="outline"

@@ -5,12 +5,16 @@ import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import SparkleCanvas from "./SparkleCanvas";
 import profileImage from "@/assets/profile-prakhar.jpg";
+import hedwigImage from "@/assets/hedwig.png";
 
 const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const { ref, isVisible } = useScrollAnimation();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { id, value } = e.target;
@@ -39,11 +43,12 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-24 sm:py-32 relative overflow-hidden">
+      <SparkleCanvas count={10} color="gold" />
       <div className="absolute top-20 left-5 w-32 h-32 rounded-full border border-primary/10 animate-float-blob" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <div ref={ref} className="max-w-6xl mx-auto">
+          <div className={`grid lg:grid-cols-2 gap-12 items-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div>
               <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>Contact</p>
               <h2 className="text-3xl sm:text-4xl font-black mb-2" style={{ fontFamily: "'Cinzel', serif" }}>
@@ -97,7 +102,7 @@ const Contact = () => {
               </form>
             </div>
 
-            <div className="hidden lg:flex justify-center">
+            <div className={`hidden lg:flex justify-center relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
               <div className="relative w-72">
                 <div
                   className="w-full h-[380px] rounded-t-[150px] overflow-hidden animate-glow-pulse"
@@ -113,6 +118,17 @@ const Contact = () => {
                 </div>
                 <div className="absolute -top-4 -right-4 w-14 h-14 rounded-full border border-primary/20" />
               </div>
+
+              {/* Hedwig */}
+              <img
+                src={hedwigImage}
+                alt="Hedwig"
+                loading="lazy"
+                width={120}
+                height={120}
+                className="absolute -top-8 -right-8 w-24 animate-float-gentle drop-shadow-[0_0_15px_hsl(0,0%,100%,0.2)]"
+                style={{ animationDelay: '1s' }}
+              />
             </div>
           </div>
         </div>
