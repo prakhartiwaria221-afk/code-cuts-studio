@@ -27,7 +27,7 @@ const Contact = () => {
     try {
       const { error } = await supabase.functions.invoke("send-contact-email", { body: formData });
       if (error) throw error;
-      toast({ title: "Message sent! 🎉", description: "Thank you for reaching out. I'll get back to you soon!" });
+      toast({ title: "Owl sent! 🦉", description: "Your message has been delivered. I'll respond soon!" });
       setFormData({ name: "", email: "", message: "" });
     } catch (error: any) {
       console.error("Error sending message:", error);
@@ -39,57 +39,50 @@ const Contact = () => {
 
   return (
     <section id="contact" className="py-24 sm:py-32 relative overflow-hidden">
-      {/* Decorative blob */}
-      <div className="absolute top-20 left-5 w-[140px] h-[140px] rounded-full border-[22px] border-muted/15 animate-blob" />
+      <div className="absolute top-20 left-5 w-32 h-32 rounded-full border border-primary/10 animate-float-blob" />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left - Form */}
             <div>
-              <h2 className="text-3xl sm:text-4xl font-black mb-2">
-                Good design is<br />
-                about process,<br />
-                not product.
+              <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>Contact</p>
+              <h2 className="text-3xl sm:text-4xl font-black mb-2" style={{ fontFamily: "'Cinzel', serif" }}>
+                Send an <span className="text-shimmer">Owl</span>
               </h2>
-              
-              <form onSubmit={handleSubmit} className="mt-8 space-y-4">
-                <div>
-                  <Input
-                    id="name"
-                    placeholder="Your name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="bg-transparent border-0 border-b-2 border-border rounded-none px-0 h-12 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-foreground"
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div>
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="Enter your email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="bg-transparent border-0 border-b-2 border-border rounded-none px-0 h-12 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-foreground"
-                    disabled={isSubmitting}
-                  />
-                </div>
-                <div>
-                  <Textarea
-                    id="message"
-                    placeholder="Describe your work..."
-                    rows={3}
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    className="bg-transparent border-0 border-b-2 border-border rounded-none px-0 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-foreground resize-none"
-                    disabled={isSubmitting}
-                  />
-                </div>
+              <p className="text-muted-foreground mb-8" style={{ fontFamily: "'Crimson Text', serif" }}>
+                Have a project in mind? Let's create something magical together.
+              </p>
+
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <Input
+                  id="name"
+                  placeholder="Your name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="bg-transparent border-0 border-b border-border rounded-none px-0 h-12 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-primary"
+                  disabled={isSubmitting}
+                />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="Enter your email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  className="bg-transparent border-0 border-b border-border rounded-none px-0 h-12 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-primary"
+                  disabled={isSubmitting}
+                />
+                <Textarea
+                  id="message"
+                  placeholder="Describe your project..."
+                  rows={3}
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  className="bg-transparent border-0 border-b border-border rounded-none px-0 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-primary resize-none"
+                  disabled={isSubmitting}
+                />
                 <Button
                   type="submit"
-                  variant="outline"
-                  className="rounded-full border-2 border-border hover:border-foreground/50 px-8 mt-4 group"
+                  className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 px-8 mt-4 group"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -97,22 +90,19 @@ const Contact = () => {
                   ) : (
                     <>
                       <ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      Send
+                      Send Owl
                     </>
                   )}
                 </Button>
               </form>
             </div>
 
-            {/* Right - Arch Profile */}
             <div className="hidden lg:flex justify-center">
               <div className="relative w-72">
                 <div
-                  className="w-full h-[380px]"
+                  className="w-full h-[380px] rounded-t-[150px] overflow-hidden animate-glow-pulse"
                   style={{
-                    borderRadius: '150px 150px 0 0',
-                    overflow: 'hidden',
-                    background: 'linear-gradient(180deg, hsl(40 30% 95%), hsl(0 0% 100%))',
+                    background: 'linear-gradient(180deg, hsl(43 40% 30%), hsl(230 25% 12%))',
                   }}
                 >
                   <img
@@ -121,8 +111,7 @@ const Contact = () => {
                     className="w-full h-full object-cover object-top"
                   />
                 </div>
-                {/* Decorative circle */}
-                <div className="absolute -top-4 -right-4 w-[60px] h-[60px] rounded-full border-[10px] border-muted/20" />
+                <div className="absolute -top-4 -right-4 w-14 h-14 rounded-full border border-primary/20" />
               </div>
             </div>
           </div>

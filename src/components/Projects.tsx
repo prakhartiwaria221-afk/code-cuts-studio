@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Github, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import bookpardImage from "@/assets/bookpard-project.png";
@@ -39,31 +38,28 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-24 sm:py-32 relative overflow-hidden">
-      {/* Decorative blob */}
-      <div className="absolute bottom-10 right-5 w-[120px] h-[120px] rounded-full border-[20px] border-muted/15 animate-float" />
-      
+      <div className="absolute bottom-10 right-5 w-28 h-28 rounded-full border border-primary/15 animate-float-gentle" />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
         <div className="flex items-start justify-between mb-14">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-black mb-2">
-              Some of my Project with<br />
-              Amazing Experience
+            <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>Portfolio</p>
+            <h2 className="text-3xl sm:text-4xl font-black mb-2" style={{ fontFamily: "'Cinzel', serif" }}>
+              Magical <span className="text-shimmer">Projects</span>
             </h2>
           </div>
           <div className="hidden sm:block max-w-xs text-right">
-            <p className="text-sm text-muted-foreground italic">
-              "If you think good design is expensive, you should look at the cost of bad design."
+            <p className="text-sm text-muted-foreground italic" style={{ fontFamily: "'Crimson Text', serif" }}>
+              "After all this time? — Always."
             </p>
           </div>
         </div>
 
-        {/* Project Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           {projects.map((project) => (
             <div
               key={project.title}
-              className="group relative rounded-2xl overflow-hidden border-2 border-border hover:border-foreground/30 transition-all duration-500"
+              className="group relative rounded-2xl overflow-hidden card-parchment magic-border transition-all duration-500"
             >
               <div className="relative h-48 overflow-hidden">
                 <img
@@ -75,17 +71,24 @@ const Projects = () => {
               </div>
 
               <div className="p-4">
-                <h3 className="text-sm font-bold text-foreground mb-1 group-hover:text-teal-light transition-colors">
+                <h3 className="text-sm font-bold text-foreground mb-1 group-hover:text-primary transition-colors" style={{ fontFamily: "'Cinzel', serif" }}>
                   {project.title}
                 </h3>
-                <p className="text-xs text-muted-foreground line-clamp-2 mb-3">
+                <p className="text-xs text-muted-foreground line-clamp-2 mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>
                   {project.description}
                 </p>
+                <div className="flex flex-wrap gap-1 mb-3">
+                  {project.tags.slice(0, 3).map((tag) => (
+                    <span key={tag} className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
                 <a
                   href={project.github}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors"
+                  className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Github size={12} />
                   View Code
@@ -95,13 +98,12 @@ const Projects = () => {
           ))}
         </div>
 
-        {/* See More */}
         <div className="flex items-center gap-3">
-          <span className="text-lg font-bold text-foreground">RECENT WORK</span>
+          <span className="text-lg font-bold text-foreground" style={{ fontFamily: "'Cinzel', serif" }}>RECENT WORK</span>
           <Button
             variant="outline"
             size="sm"
-            className="rounded-full border-2 border-border hover:border-foreground/30 px-6"
+            className="rounded-full border border-border hover:border-primary/50 hover:text-primary px-6"
             asChild
           >
             <a href="https://github.com/prakhartiwaria221-afk" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">

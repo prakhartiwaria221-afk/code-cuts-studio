@@ -12,76 +12,67 @@ const Hero = () => {
 
   return (
     <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
-      {/* Decorative Blobs */}
-      <div className="absolute top-10 right-10 w-[200px] h-[200px] rounded-full border-[30px] border-muted/30 animate-blob" />
-      <div className="absolute bottom-20 left-10 w-[150px] h-[150px] rounded-full border-[25px] border-muted/20 animate-float" />
-      <div className="absolute top-1/2 right-1/3 w-[80px] h-[80px] rounded-full bg-teal-light/10 animate-float-gentle" />
-      
-      {/* Small decorative dots */}
-      <div className="absolute top-[20%] left-[15%] w-3 h-3 rounded-full bg-muted-foreground/20" />
-      <div className="absolute top-[40%] right-[10%] w-2 h-2 rounded-full bg-muted-foreground/30" />
-      <div className="absolute bottom-[30%] left-[40%] w-4 h-4 rounded-full bg-muted-foreground/15" />
+      {/* Decorative magical elements */}
+      <div className="absolute top-20 right-16 w-32 h-32 rounded-full border border-primary/20 animate-float-gentle" />
+      <div className="absolute bottom-32 left-12 w-20 h-20 rounded-full bg-secondary/10 animate-float-blob" />
+      <div className="absolute top-1/3 right-1/4 text-primary/20 text-6xl animate-float-gentle" style={{ animationDelay: '1s' }}>✦</div>
+      <div className="absolute bottom-1/4 left-1/4 text-primary/15 text-4xl animate-float-gentle" style={{ animationDelay: '2s' }}>⚡</div>
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          {/* Left Content - Arch Profile */}
+          {/* Left - Profile Image */}
           <div className="relative flex items-center justify-center order-1">
             <div className="relative w-full max-w-sm mx-auto">
-              {/* Arch shaped white/cream background */}
-              <div className="relative rounded-b-none overflow-hidden">
-                <div 
-                  className="w-full h-[450px] sm:h-[520px] relative"
-                  style={{
-                    borderRadius: '200px 200px 0 0',
-                    overflow: 'hidden',
-                    background: 'linear-gradient(180deg, hsl(40 30% 95%), hsl(0 0% 100%))',
-                  }}
-                >
-                  <img
-                    src={profileImage}
-                    alt="Prakhar Tiwari"
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
+              <div
+                className="w-full h-[450px] sm:h-[520px] relative rounded-t-[200px] overflow-hidden animate-glow-pulse"
+                style={{
+                  background: 'linear-gradient(180deg, hsl(43 40% 30%), hsl(230 25% 12%))',
+                }}
+              >
+                <img
+                  src={profileImage}
+                  alt="Prakhar Tiwari"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
-
-              {/* Decorative circle behind arch */}
-              <div className="absolute -top-8 -left-8 w-[120px] h-[120px] rounded-full bg-muted/20 -z-10" />
-              <div className="absolute -bottom-4 -right-6 w-[80px] h-[80px] rounded-full border-[15px] border-muted/25 -z-10" />
+              {/* Decorative elements */}
+              <div className="absolute -top-4 -left-4 w-16 h-16 border border-primary/30 rounded-full" />
+              <div className="absolute -bottom-2 -right-3 w-12 h-12 border border-secondary/30 rounded-full" />
             </div>
           </div>
 
           {/* Right Content */}
           <div className="space-y-6 animate-fade-in text-center lg:text-left order-2">
-            {/* Paper plane icon */}
-            <div className="text-muted-foreground/50 text-3xl">✈</div>
-            
-            {/* Name */}
+            <div className="text-primary/40 text-3xl">⚡</div>
+
             <div className="space-y-2">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight">
+              <p className="text-muted-foreground text-sm tracking-[0.3em] uppercase font-medium" style={{ fontFamily: "'Crimson Text', serif" }}>
+                Welcome to my magical world
+              </p>
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight" style={{ fontFamily: "'Cinzel', serif" }}>
                 <span className="text-foreground">I am </span>
-                <span className="text-foreground">Prakhar</span>
+                <span className="text-shimmer">Prakhar</span>
               </h1>
             </div>
 
             {/* Typing Role */}
             <div className="h-8">
-              <span className="text-muted-foreground text-lg md:text-xl font-light italic tracking-wide">
+              <span className="text-muted-foreground text-lg md:text-xl font-light italic tracking-wide" style={{ fontFamily: "'Crimson Text', serif" }}>
                 {currentText}
-                <span className="animate-pulse text-foreground">|</span>
+                <span className="animate-pulse text-primary">|</span>
               </span>
             </div>
 
-            {/* Quote box */}
+            {/* Quote */}
             <div className="max-w-xs mx-auto lg:mx-0">
               <div className="quote-box">
-                <p className="text-sm text-muted-foreground italic leading-relaxed">
-                  "Blending creativity and code to craft beautiful, functional digital experiences."
+                <p className="text-sm text-muted-foreground italic leading-relaxed" style={{ fontFamily: "'Crimson Text', serif" }}>
+                  "It does not do to dwell on dreams and forget to live — but blending creativity and code is pure magic."
                 </p>
               </div>
             </div>
 
-            {/* Social Icons */}
+            {/* Social */}
             <div className="flex gap-3 justify-center lg:justify-start pt-2">
               {[
                 { icon: Github, href: "https://github.com/prakhartiwaria221-afk", label: "GH" },
@@ -93,7 +84,7 @@ const Hero = () => {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-11 h-11 rounded-full border-2 border-border flex items-center justify-center text-muted-foreground hover:text-foreground hover:border-foreground/50 transition-all duration-300 text-xs font-bold"
+                  className="w-11 h-11 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all duration-300 text-xs font-bold"
                 >
                   {social.label}
                 </a>
@@ -105,9 +96,9 @@ const Hero = () => {
 
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 animate-fade-in">
-        <span className="text-xs text-muted-foreground tracking-widest uppercase">Scroll</span>
-        <div className="w-5 h-9 rounded-full border-2 border-border/60 flex justify-center pt-2">
-          <div className="w-1 h-2.5 rounded-full bg-foreground/50 animate-bounce" />
+        <span className="text-xs text-muted-foreground tracking-widest uppercase" style={{ fontFamily: "'Crimson Text', serif" }}>Scroll</span>
+        <div className="w-5 h-9 rounded-full border border-border/60 flex justify-center pt-2">
+          <div className="w-1 h-2.5 rounded-full bg-primary/50 animate-bounce" />
         </div>
       </div>
     </section>

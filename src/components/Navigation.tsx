@@ -30,7 +30,8 @@ const Navigation = () => {
   const navLinks = [
     { name: "Home", href: "#home" },
     { name: "About", href: "#about" },
-    { name: "Portfolio", href: "#projects" },
+    { name: "Skills", href: "#skills" },
+    { name: "Projects", href: "#projects" },
     { name: "Contact", href: "#contact" },
   ];
 
@@ -44,27 +45,25 @@ const Navigation = () => {
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 py-4">
-          {/* Logo */}
           <a href="#home" className="flex items-center gap-2 group">
-            <span className="text-xl font-black text-foreground tracking-tight">
-              PT<span className="text-primary">.</span>
+            <span className="text-xl font-bold text-foreground tracking-tight" style={{ fontFamily: "'Cinzel', serif" }}>
+              P<span className="text-primary">⚡</span>T
             </span>
           </a>
 
-          {/* Desktop Navigation - Pill style */}
           <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => {
-              const isActive = activeSection === link.href.slice(1) || 
-                (link.href === "#projects" && activeSection === "projects");
+              const isActive = activeSection === link.href.slice(1);
               return (
                 <a
                   key={link.name}
                   href={link.href}
-                  className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                  className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
                     isActive
-                      ? "bg-foreground text-background"
+                      ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:text-foreground"
                   }`}
+                  style={{ fontFamily: "'Crimson Text', serif", fontSize: '0.95rem' }}
                 >
                   {link.name}
                 </a>
@@ -72,7 +71,6 @@ const Navigation = () => {
             })}
           </div>
 
-          {/* Right Side */}
           <div className="flex items-center gap-3">
             <ThemeToggle />
             <Button
@@ -86,7 +84,6 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile Navigation */}
         {isOpen && (
           <div className="md:hidden pb-6 animate-fade-in">
             <div className="flex flex-col gap-1 bg-card/90 backdrop-blur-xl rounded-2xl p-3 border border-border/30">
@@ -98,10 +95,11 @@ const Navigation = () => {
                     href={link.href}
                     className={`px-4 py-3 rounded-xl text-sm font-medium transition-all ${
                       isActive
-                        ? "text-background bg-foreground"
+                        ? "text-primary-foreground bg-primary"
                         : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
                     }`}
                     onClick={() => setIsOpen(false)}
+                    style={{ fontFamily: "'Crimson Text', serif" }}
                   >
                     {link.name}
                   </a>
