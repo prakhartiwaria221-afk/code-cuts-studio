@@ -1,6 +1,7 @@
 import { Code2, Palette, Zap } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SparkleCanvas from "./SparkleCanvas";
+import phoenixImage from "@/assets/phoenix.png";
 
 const Skills = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
