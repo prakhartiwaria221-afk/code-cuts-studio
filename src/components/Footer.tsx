@@ -11,10 +11,20 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="relative border-t border-border/30 bg-card/50">
+    <footer className="relative border-t border-border/30 bg-card/50 overflow-hidden">
+      {/* Dobby character */}
+      <img
+        src={dobbyImage}
+        alt="Dobby"
+        loading="lazy"
+        width={512}
+        height={512}
+        className="absolute -left-4 sm:left-4 bottom-0 w-16 h-16 sm:w-24 sm:h-24 opacity-60 hover:opacity-100 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto"
+      />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 pl-14 sm:pl-28">
             <span className="text-primary text-lg">⚡</span>
             <p className="text-sm text-muted-foreground" style={{ fontFamily: "'Crimson Text', serif" }}>
               © {currentYear} Prakhar Tiwari. Mischief Managed.
