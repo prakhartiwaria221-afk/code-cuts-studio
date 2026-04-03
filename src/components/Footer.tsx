@@ -1,4 +1,5 @@
 import { Github, Linkedin, Instagram } from "lucide-react";
+import dobbyImage from "@/assets/dobby.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
