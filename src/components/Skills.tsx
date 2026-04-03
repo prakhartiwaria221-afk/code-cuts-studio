@@ -35,6 +35,17 @@ const Skills = () => {
       <SparkleCanvas count={10} color="gold" />
       <div className="absolute top-10 left-0 w-36 h-36 rounded-full border border-primary/10 animate-float-gentle" />
 
+      {/* Phoenix character */}
+      <img
+        src={phoenixImage}
+        alt="Fawkes the Phoenix"
+        loading="lazy"
+        width={512}
+        height={512}
+        className="absolute -right-6 sm:right-6 top-8 sm:top-16 w-20 h-20 sm:w-32 sm:h-32 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto drop-shadow-[0_0_15px_rgba(255,100,0,0.3)]"
+        style={{ animationDelay: '1s' }}
+      />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
           ref={headerRef}
