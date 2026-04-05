@@ -33,7 +33,7 @@ const Hero = ({ house }: HeroProps) => {
         loading="lazy"
         width={80}
         height={80}
-        className="absolute top-24 right-[15%] w-16 sm:w-20 animate-float-gentle opacity-60 hidden md:block"
+        className="absolute top-24 right-[15%] w-16 sm:w-20 animate-float-gentle opacity-60"
         style={{ animationDelay: '0.5s' }}
       />
 
@@ -60,7 +60,7 @@ const Hero = ({ house }: HeroProps) => {
             </div>
 
             {/* Dumbledore next to profile */}
-            <div className="absolute -right-8 sm:-right-16 bottom-0 z-20 hidden lg:block">
+            <div className="absolute -right-8 sm:-right-16 bottom-0 z-20 block">
               <div className="relative">
                 <SparkleCanvas count={8} color="gold" className="!-inset-8" />
                 <img
@@ -140,7 +140,7 @@ const Hero = ({ house }: HeroProps) => {
         loading="lazy"
         width={512}
         height={512}
-        className="absolute bottom-12 left-[5%] w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto hidden md:block"
+        className="absolute bottom-12 left-[5%] w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
         style={{ animationDelay: '2s' }}
       />
 
