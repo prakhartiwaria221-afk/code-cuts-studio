@@ -2,6 +2,7 @@ import { GraduationCap, MapPin, Calendar } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SparkleCanvas from "./SparkleCanvas";
 import sortingHatImage from "@/assets/sorting-hat.png";
+import hermioneImage from "@/assets/hermione.png";
 
 const About = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
@@ -32,6 +33,17 @@ const About = () => {
     <section id="about" className="py-24 sm:py-32 relative overflow-hidden">
       <SparkleCanvas count={12} color="gold" />
       <div className="absolute top-20 right-0 w-40 h-40 rounded-full border border-primary/10 animate-float-gentle" />
+
+      {/* Hermione character */}
+      <img
+        src={hermioneImage}
+        alt="Hermione Granger"
+        loading="lazy"
+        width={512}
+        height={512}
+        className="absolute -left-4 sm:left-6 bottom-12 w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto hidden md:block"
+        style={{ animationDelay: '0.8s' }}
+      />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-6xl mx-auto">

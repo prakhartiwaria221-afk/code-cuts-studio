@@ -2,10 +2,15 @@ import { Github, Linkedin, Instagram } from "lucide-react";
 import profileImage from "@/assets/profile-prakhar.jpg";
 import dumbledoreImage from "@/assets/dumbledore.png";
 import goldenSnitchImage from "@/assets/golden-snitch.png";
+import harryImage from "@/assets/harry-potter.png";
 import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 import SparkleCanvas from "./SparkleCanvas";
 
-const Hero = () => {
+interface HeroProps {
+  house?: string | null;
+}
+
+const Hero = ({ house }: HeroProps) => {
   const { currentText } = useTypingAnimation({
     words: ["Front-End Developer", "Video Editor", "Tech Creator", "Problem Solver"],
     typingSpeed: 100,
@@ -73,6 +78,13 @@ const Hero = () => {
 
           {/* Right Content */}
           <div className="space-y-6 animate-fade-in text-center lg:text-left order-2">
+            {house && house !== "skip" && (
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 mb-2">
+                <span className="text-sm text-primary font-medium" style={{ fontFamily: "'Crimson Text', serif" }}>
+                  Sorted into {house} ⚡
+                </span>
+              </div>
+            )}
             <div className="text-primary/40 text-3xl">⚡</div>
 
             <div className="space-y-2">
@@ -120,6 +132,17 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* Harry Potter character */}
+      <img
+        src={harryImage}
+        alt="Harry Potter"
+        loading="lazy"
+        width={512}
+        height={512}
+        className="absolute bottom-12 left-[5%] w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto hidden md:block"
+        style={{ animationDelay: '2s' }}
+      />
 
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 animate-fade-in">
         <span className="text-xs text-muted-foreground tracking-widest uppercase" style={{ fontFamily: "'Crimson Text', serif" }}>Scroll</span>

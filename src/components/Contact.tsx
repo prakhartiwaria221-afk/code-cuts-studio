@@ -9,6 +9,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SparkleCanvas from "./SparkleCanvas";
 import profileImage from "@/assets/profile-prakhar.jpg";
 import hedwigImage from "@/assets/hedwig.png";
+import hagridImage from "@/assets/hagrid.png";
 
 const Contact = () => {
   const { toast } = useToast();
@@ -45,6 +46,17 @@ const Contact = () => {
     <section id="contact" className="py-24 sm:py-32 relative overflow-hidden">
       <SparkleCanvas count={10} color="gold" />
       <div className="absolute top-20 left-5 w-32 h-32 rounded-full border border-primary/10 animate-float-blob" />
+
+      {/* Hagrid character */}
+      <img
+        src={hagridImage}
+        alt="Hagrid"
+        loading="lazy"
+        width={512}
+        height={512}
+        className="absolute -right-4 sm:right-6 top-12 w-16 sm:w-28 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto hidden md:block"
+        style={{ animationDelay: '1.5s' }}
+      />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div ref={ref} className="max-w-6xl mx-auto">

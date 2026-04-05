@@ -6,6 +6,7 @@ import goldenSnitchImage from "@/assets/golden-snitch.png";
 import bookpardImage from "@/assets/bookpard-project.png";
 import mindbloomImage from "@/assets/mindbloom-project.png";
 import coordinetImage from "@/assets/coordinet-project.png";
+import ronImage from "@/assets/ron-weasley.png";
 
 const Projects = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
@@ -56,6 +57,17 @@ const Projects = () => {
         height={60}
         className="absolute top-16 left-[10%] w-12 sm:w-16 animate-float-gentle opacity-40 hidden md:block"
         style={{ animationDelay: '2s' }}
+      />
+
+      {/* Ron Weasley character */}
+      <img
+        src={ronImage}
+        alt="Ron Weasley"
+        loading="lazy"
+        width={512}
+        height={512}
+        className="absolute -right-4 sm:right-6 bottom-8 w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto hidden md:block"
+        style={{ animationDelay: '1.2s' }}
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
