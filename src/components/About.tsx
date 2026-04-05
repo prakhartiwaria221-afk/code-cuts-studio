@@ -2,6 +2,7 @@ import { GraduationCap, MapPin, Calendar } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SparkleCanvas from "./SparkleCanvas";
 import sortingHatImage from "@/assets/sorting-hat.png";
+import hermioneImage from "@/assets/hermione.png";
 
 const About = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
