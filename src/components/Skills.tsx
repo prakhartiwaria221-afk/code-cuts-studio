@@ -42,7 +42,7 @@ const Skills = () => {
         loading="lazy"
         width={512}
         height={512}
-        className="absolute -right-6 sm:right-6 top-8 sm:top-16 w-20 h-20 sm:w-32 sm:h-32 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto drop-shadow-[0_0_15px_rgba(255,100,0,0.3)]"
+        className="absolute right-2 sm:right-6 top-4 sm:top-16 w-12 sm:w-32 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none drop-shadow-[0_0_15px_rgba(255,100,0,0.3)]"
         style={{ animationDelay: '1s' }}
       />
 

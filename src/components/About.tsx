@@ -41,7 +41,7 @@ const About = () => {
         loading="lazy"
         width={512}
         height={512}
-        className="absolute -left-4 sm:left-6 bottom-12 w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
+        className="absolute left-2 sm:left-6 bottom-4 sm:bottom-12 w-12 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
         style={{ animationDelay: '0.8s' }}
       />
 
