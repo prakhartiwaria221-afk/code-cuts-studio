@@ -140,7 +140,7 @@ const Hero = ({ house }: HeroProps) => {
         loading="lazy"
         width={512}
         height={512}
-        className="absolute bottom-12 left-[5%] w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
+        className="absolute bottom-4 left-2 sm:bottom-12 sm:left-[5%] w-12 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
         style={{ animationDelay: '2s' }}
       />
 
