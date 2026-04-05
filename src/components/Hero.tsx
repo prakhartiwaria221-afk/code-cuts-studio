@@ -60,7 +60,7 @@ const Hero = ({ house }: HeroProps) => {
             </div>
 
             {/* Dumbledore next to profile */}
-            <div className="absolute -right-8 sm:-right-16 bottom-0 z-20 block">
+            <div className="absolute -right-2 sm:-right-16 bottom-0 z-20">
               <div className="relative">
                 <SparkleCanvas count={8} color="gold" className="!-inset-8" />
                 <img
@@ -69,7 +69,7 @@ const Hero = ({ house }: HeroProps) => {
                   loading="lazy"
                   width={180}
                   height={270}
-                  className="w-32 sm:w-44 drop-shadow-[0_0_20px_hsl(43,72%,55%,0.3)] animate-float-gentle"
+                  className="w-16 sm:w-32 lg:w-44 drop-shadow-[0_0_20px_hsl(43,72%,55%,0.3)] animate-float-gentle"
                   style={{ animationDelay: '1.5s' }}
                 />
               </div>
