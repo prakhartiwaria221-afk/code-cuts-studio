@@ -2,10 +2,15 @@ import { Github, Linkedin, Instagram } from "lucide-react";
 import profileImage from "@/assets/profile-prakhar.jpg";
 import dumbledoreImage from "@/assets/dumbledore.png";
 import goldenSnitchImage from "@/assets/golden-snitch.png";
+import harryImage from "@/assets/harry-potter.png";
 import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 import SparkleCanvas from "./SparkleCanvas";
 
-const Hero = () => {
+interface HeroProps {
+  house?: string | null;
+}
+
+const Hero = ({ house }: HeroProps) => {
   const { currentText } = useTypingAnimation({
     words: ["Front-End Developer", "Video Editor", "Tech Creator", "Problem Solver"],
     typingSpeed: 100,
