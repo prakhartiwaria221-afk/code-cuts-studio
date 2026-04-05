@@ -78,6 +78,13 @@ const Hero = ({ house }: HeroProps) => {
 
           {/* Right Content */}
           <div className="space-y-6 animate-fade-in text-center lg:text-left order-2">
+            {house && house !== "skip" && (
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/30 bg-primary/5 mb-2">
+                <span className="text-sm text-primary font-medium" style={{ fontFamily: "'Crimson Text', serif" }}>
+                  Sorted into {house} ⚡
+                </span>
+              </div>
+            )}
             <div className="text-primary/40 text-3xl">⚡</div>
 
             <div className="space-y-2">
