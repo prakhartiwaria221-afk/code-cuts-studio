@@ -9,6 +9,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SparkleCanvas from "./SparkleCanvas";
 import profileImage from "@/assets/profile-prakhar.jpg";
 import hedwigImage from "@/assets/hedwig.png";
+import hagridImage from "@/assets/hagrid.png";
 
 const Contact = () => {
   const { toast } = useToast();

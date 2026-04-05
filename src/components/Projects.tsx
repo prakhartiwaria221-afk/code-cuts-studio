@@ -59,6 +59,17 @@ const Projects = () => {
         style={{ animationDelay: '2s' }}
       />
 
+      {/* Ron Weasley character */}
+      <img
+        src={ronImage}
+        alt="Ron Weasley"
+        loading="lazy"
+        width={512}
+        height={512}
+        className="absolute -right-4 sm:right-6 bottom-8 w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto hidden md:block"
+        style={{ animationDelay: '1.2s' }}
+      />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
           ref={headerRef}
