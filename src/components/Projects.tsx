@@ -6,6 +6,7 @@ import goldenSnitchImage from "@/assets/golden-snitch.png";
 import bookpardImage from "@/assets/bookpard-project.png";
 import mindbloomImage from "@/assets/mindbloom-project.png";
 import coordinetImage from "@/assets/coordinet-project.png";
+import ronImage from "@/assets/ron-weasley.png";
 
 const Projects = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
