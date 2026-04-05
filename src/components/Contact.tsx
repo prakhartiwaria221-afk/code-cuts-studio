@@ -54,7 +54,7 @@ const Contact = () => {
         loading="lazy"
         width={512}
         height={512}
-        className="absolute -right-4 sm:right-6 top-12 w-16 sm:w-28 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
+        className="absolute right-2 sm:right-6 top-4 sm:top-12 w-12 sm:w-28 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
         style={{ animationDelay: '1.5s' }}
       />
 

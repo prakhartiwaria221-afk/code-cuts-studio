@@ -66,7 +66,7 @@ const Projects = () => {
         loading="lazy"
         width={512}
         height={512}
-        className="absolute -right-4 sm:right-6 bottom-8 w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
+        className="absolute right-2 sm:right-6 bottom-4 sm:bottom-8 w-12 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
         style={{ animationDelay: '1.2s' }}
       />
 
