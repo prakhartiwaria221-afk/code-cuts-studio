@@ -41,7 +41,7 @@ const About = () => {
         loading="lazy"
         width={512}
         height={512}
-        className="absolute -left-4 sm:left-6 bottom-12 w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto hidden md:block"
+        className="absolute -left-4 sm:left-6 bottom-12 w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none"
         style={{ animationDelay: '0.8s' }}
       />
 
@@ -86,7 +86,7 @@ const About = () => {
                 loading="lazy"
                 width={100}
                 height={100}
-                className="absolute -top-16 -right-4 w-20 sm:w-24 opacity-50 animate-float-gentle hidden lg:block"
+                className="absolute -top-16 -right-4 w-20 sm:w-24 opacity-50 animate-float-gentle"
               />
             </div>
           </div>
