@@ -133,6 +133,17 @@ const Hero = ({ house }: HeroProps) => {
         </div>
       </div>
 
+      {/* Harry Potter character */}
+      <img
+        src={harryImage}
+        alt="Harry Potter"
+        loading="lazy"
+        width={512}
+        height={512}
+        className="absolute bottom-12 left-[5%] w-16 sm:w-24 opacity-50 hover:opacity-90 transition-opacity duration-300 animate-float-gentle pointer-events-none sm:pointer-events-auto hidden md:block"
+        style={{ animationDelay: '2s' }}
+      />
+
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden lg:flex flex-col items-center gap-2 animate-fade-in">
         <span className="text-xs text-muted-foreground tracking-widest uppercase" style={{ fontFamily: "'Crimson Text', serif" }}>Scroll</span>
         <div className="w-5 h-9 rounded-full border border-border/60 flex justify-center pt-2">
