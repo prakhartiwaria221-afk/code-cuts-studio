@@ -33,7 +33,7 @@ const Hero = ({ house }: HeroProps) => {
         loading="lazy"
         width={80}
         height={80}
-        className="absolute top-24 right-[15%] w-16 sm:w-20 animate-float-gentle opacity-60"
+        className="absolute top-20 right-2 sm:right-[15%] w-10 sm:w-20 animate-float-gentle opacity-60"
         style={{ animationDelay: '0.5s' }}
       />
 
