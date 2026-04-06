@@ -7,10 +7,16 @@ const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
+
+      // Scroll progress
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      setScrollProgress(totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0);
+
       const sections = ["home", "about", "skills", "projects", "contact"];
       for (const section of sections) {
         const element = document.getElementById(section);
@@ -39,19 +45,25 @@ const Navigation = () => {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-xl border-b border-border/30"
+          ? "bg-background/80 backdrop-blur-xl border-b border-border/20 shadow-lg shadow-background/5"
           : "bg-transparent"
       }`}
     >
+      {/* Scroll progress bar */}
+      <div
+        className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary to-primary/50 transition-all duration-100"
+        style={{ width: `${scrollProgress}%` }}
+      />
+
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-18 py-4">
           <a href="#home" className="flex items-center gap-2 group">
-            <span className="text-xl font-bold text-foreground tracking-tight" style={{ fontFamily: "'Cinzel', serif" }}>
-              P<span className="text-primary">⚡</span>T
+            <span className="text-xl font-bold text-foreground tracking-tight group-hover:text-primary transition-colors" style={{ fontFamily: "'Cinzel', serif" }}>
+              P<span className="text-primary group-hover:scale-125 inline-block transition-transform">⚡</span>T
             </span>
           </a>
 
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1 bg-card/30 backdrop-blur-sm rounded-full px-2 py-1 border border-border/20">
             {navLinks.map((link) => {
               const isActive = activeSection === link.href.slice(1);
               return (
@@ -60,8 +72,8 @@ const Navigation = () => {
                   href={link.href}
                   className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
                     isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground"
+                      ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20"
+                      : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
                   }`}
                   style={{ fontFamily: "'Crimson Text', serif", fontSize: '0.95rem' }}
                 >

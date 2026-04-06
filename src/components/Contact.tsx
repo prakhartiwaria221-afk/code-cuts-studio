@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Loader2, ArrowRight } from "lucide-react";
+import { Loader2, ArrowRight, Mail, MapPin as MapPinIcon, Clock } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -15,6 +15,7 @@ const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+  const [focusedField, setFocusedField] = useState<string | null>(null);
   const { ref, isVisible } = useScrollAnimation();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -42,6 +43,12 @@ const Contact = () => {
     }
   };
 
+  const contactInfo = [
+    { icon: Mail, label: "Email", value: "prakhartiwari@email.com" },
+    { icon: MapPinIcon, label: "Location", value: "Gwalior, India" },
+    { icon: Clock, label: "Availability", value: "Open to opportunities" },
+  ];
+
   return (
     <section id="contact" className="py-24 sm:py-32 relative overflow-hidden">
       <SparkleCanvas count={10} color="gold" />
@@ -60,7 +67,7 @@ const Contact = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div ref={ref} className="max-w-6xl mx-auto">
-          <div className={`grid lg:grid-cols-2 gap-12 items-center transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className={`grid lg:grid-cols-2 gap-12 items-start transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
             <div>
               <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>Contact</p>
               <h2 className="text-3xl sm:text-4xl font-black mb-2" style={{ fontFamily: "'Cinzel', serif" }}>
@@ -70,36 +77,61 @@ const Contact = () => {
                 Have a project in mind? Let's create something magical together.
               </p>
 
+              {/* Contact info cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+                {contactInfo.map((info, i) => (
+                  <div key={i} className="p-4 rounded-2xl card-parchment magic-border text-center group hover:scale-[1.02] transition-all duration-300">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mx-auto mb-2 group-hover:bg-primary/15 transition-colors">
+                      <info.icon className="text-primary" size={18} />
+                    </div>
+                    <p className="text-xs text-muted-foreground mb-0.5">{info.label}</p>
+                    <p className="text-xs font-medium text-foreground">{info.value}</p>
+                  </div>
+                ))}
+              </div>
+
               <form onSubmit={handleSubmit} className="space-y-4">
-                <Input
-                  id="name"
-                  placeholder="Your name"
-                  value={formData.name}
-                  onChange={handleInputChange}
-                  className="bg-transparent border-0 border-b border-border rounded-none px-0 h-12 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-primary"
-                  disabled={isSubmitting}
-                />
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Enter your email"
-                  value={formData.email}
-                  onChange={handleInputChange}
-                  className="bg-transparent border-0 border-b border-border rounded-none px-0 h-12 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-primary"
-                  disabled={isSubmitting}
-                />
-                <Textarea
-                  id="message"
-                  placeholder="Describe your project..."
-                  rows={3}
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  className="bg-transparent border-0 border-b border-border rounded-none px-0 text-foreground placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:border-primary resize-none"
-                  disabled={isSubmitting}
-                />
+                <div className={`relative transition-all duration-300 ${focusedField === 'name' ? 'scale-[1.01]' : ''}`}>
+                  <Input
+                    id="name"
+                    placeholder="Your name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    onFocus={() => setFocusedField('name')}
+                    onBlur={() => setFocusedField(null)}
+                    className="bg-card/30 backdrop-blur-sm border border-border/50 rounded-xl px-4 h-12 text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/50 focus-visible:border-primary/50 transition-all"
+                    disabled={isSubmitting}
+                  />
+                </div>
+                <div className={`relative transition-all duration-300 ${focusedField === 'email' ? 'scale-[1.01]' : ''}`}>
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="Enter your email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    onFocus={() => setFocusedField('email')}
+                    onBlur={() => setFocusedField(null)}
+                    className="bg-card/30 backdrop-blur-sm border border-border/50 rounded-xl px-4 h-12 text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/50 focus-visible:border-primary/50 transition-all"
+                    disabled={isSubmitting}
+                  />
+                </div>
+                <div className={`relative transition-all duration-300 ${focusedField === 'message' ? 'scale-[1.01]' : ''}`}>
+                  <Textarea
+                    id="message"
+                    placeholder="Describe your project..."
+                    rows={4}
+                    value={formData.message}
+                    onChange={handleInputChange}
+                    onFocus={() => setFocusedField('message')}
+                    onBlur={() => setFocusedField(null)}
+                    className="bg-card/30 backdrop-blur-sm border border-border/50 rounded-xl px-4 py-3 text-foreground placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-primary/50 focus-visible:border-primary/50 resize-none transition-all"
+                    disabled={isSubmitting}
+                  />
+                </div>
                 <Button
                   type="submit"
-                  className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 px-8 mt-4 group"
+                  className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 px-8 mt-4 group w-full sm:w-auto"
                   disabled={isSubmitting}
                 >
                   {isSubmitting ? (
@@ -115,9 +147,11 @@ const Contact = () => {
             </div>
 
             <div className={`hidden lg:flex justify-center relative transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-              <div className="relative w-72">
+              <div className="relative w-72 group">
+                {/* Glow behind image */}
+                <div className="absolute inset-0 rounded-t-[150px] bg-gradient-to-b from-primary/15 to-transparent blur-3xl scale-110 group-hover:scale-125 transition-transform duration-700" />
                 <div
-                  className="w-full h-[380px] rounded-t-[150px] overflow-hidden animate-glow-pulse"
+                  className="w-full h-[380px] rounded-t-[150px] overflow-hidden animate-glow-pulse relative"
                   style={{
                     background: 'linear-gradient(180deg, hsl(43 40% 30%), hsl(230 25% 12%))',
                   }}
@@ -125,8 +159,9 @@ const Contact = () => {
                   <img
                     src={profileImage}
                     alt="Prakhar Tiwari"
-                    className="w-full h-full object-cover object-top"
+                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-background/50 via-transparent to-transparent" />
                 </div>
                 <div className="absolute -top-4 -right-4 w-14 h-14 rounded-full border border-primary/20" />
               </div>

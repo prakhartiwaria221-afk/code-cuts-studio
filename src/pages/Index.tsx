@@ -10,6 +10,8 @@ import MagicalParticles from "@/components/MagicalParticles";
 import CustomCursor from "@/components/CustomCursor";
 import SortingQuiz from "@/components/SortingQuiz";
 import SpellEffects from "@/components/SpellEffects";
+import SectionDivider from "@/components/SectionDivider";
+import { ParallaxShapes } from "@/components/ParallaxSection";
 
 const Index = () => {
   const [sorted, setSorted] = useState(false);
@@ -29,11 +31,16 @@ const Index = () => {
       <CustomCursor />
       <MagicalParticles />
       <SpellEffects />
+      <ParallaxShapes />
       <Navigation />
       <Hero house={house} />
+      <SectionDivider variant="ornate" />
       <About />
+      <SectionDivider variant="ornate" />
       <Skills />
+      <SectionDivider variant="ornate" />
       <Projects />
+      <SectionDivider variant="ornate" />
       <Contact />
       <Footer />
     </div>
