@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import MagicalParticles from "@/components/MagicalParticles";
 import CustomCursor from "@/components/CustomCursor";
 import SortingQuiz from "@/components/SortingQuiz";
+import SpellEffects from "@/components/SpellEffects";
 
 const Index = () => {
   const [sorted, setSorted] = useState(false);
