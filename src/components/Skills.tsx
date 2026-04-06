@@ -1,12 +1,60 @@
-import { Code2, Palette, Zap } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { Code2, Palette, Zap, Sparkles } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SparkleCanvas from "./SparkleCanvas";
 import phoenixImage from "@/assets/phoenix.png";
+
+const CircularProgress = ({ value, label, visible, delay, color }: { value: number; label: string; visible: boolean; delay: number; color: string }) => {
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    if (!visible) return;
+    const timer = setTimeout(() => {
+      let start = 0;
+      const interval = setInterval(() => {
+        start += 1;
+        if (start >= value) { setProgress(value); clearInterval(interval); }
+        else setProgress(start);
+      }, 15);
+      return () => clearInterval(interval);
+    }, delay);
+    return () => clearTimeout(timer);
+  }, [visible, value, delay]);
+
+  const circumference = 2 * Math.PI * 40;
+  const strokeDashoffset = circumference - (progress / 100) * circumference;
+
+  return (
+    <div className="flex flex-col items-center group">
+      <div className="relative w-24 h-24 sm:w-28 sm:h-28">
+        <svg className="w-full h-full -rotate-90" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="40" fill="none" stroke="hsl(var(--muted))" strokeWidth="6" />
+          <circle
+            cx="50" cy="50" r="40" fill="none"
+            stroke={color}
+            strokeWidth="6"
+            strokeLinecap="round"
+            strokeDasharray={circumference}
+            strokeDashoffset={strokeDashoffset}
+            className="transition-all duration-1000 ease-out"
+          />
+        </svg>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="text-lg sm:text-xl font-bold text-foreground" style={{ fontFamily: "'Cinzel', serif" }}>
+            {progress}%
+          </span>
+        </div>
+      </div>
+      <span className="mt-2 text-xs sm:text-sm text-muted-foreground text-center font-medium">{label}</span>
+    </div>
+  );
+};
 
 const Skills = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: cardsRef, isVisible: cardsVisible } = useScrollAnimation();
   const { ref: toolsRef, isVisible: toolsVisible } = useScrollAnimation();
+  const { ref: circularRef, isVisible: circularVisible } = useScrollAnimation();
+  const [activeTab, setActiveTab] = useState<'tech' | 'creative'>('tech');
 
   const techSkills = [
     { name: "C++", level: 60 },
@@ -21,6 +69,13 @@ const Skills = () => {
     { name: "Graphic Design", level: 50 },
   ];
 
+  const circularSkills = [
+    { name: "Problem Solving", value: 85, color: "hsl(43 72% 55%)" },
+    { name: "Team Work", value: 90, color: "hsl(0 55% 40%)" },
+    { name: "Communication", value: 75, color: "hsl(43 80% 70%)" },
+    { name: "Creativity", value: 80, color: "hsl(200 60% 50%)" },
+  ];
+
   const tools = [
     { name: "React", icon: "⚛️" },
     { name: "TypeScript", icon: "📘" },
@@ -28,7 +83,14 @@ const Skills = () => {
     { name: "Git", icon: "🔀" },
     { name: "VS Code", icon: "💻" },
     { name: "Figma", icon: "🎯" },
+    { name: "Node.js", icon: "🟢" },
+    { name: "Supabase", icon: "⚡" },
   ];
+
+  const activeSkills = activeTab === 'tech' ? techSkills : creativeSkills;
+  const gradientColor = activeTab === 'tech'
+    ? 'linear-gradient(90deg, hsl(43 72% 55%), hsl(43 80% 70%))'
+    : 'linear-gradient(90deg, hsl(0 55% 40%), hsl(0 45% 55%))';
 
   return (
     <section id="skills" className="py-24 sm:py-32 relative overflow-hidden">
@@ -60,80 +122,66 @@ const Skills = () => {
           </p>
         </div>
 
+        {/* Tab switcher + skill bars */}
         <div
           ref={cardsRef}
-          className="grid lg:grid-cols-2 gap-6 max-w-6xl mb-16"
+          className={`max-w-3xl mb-16 transition-all duration-1000 ${cardsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
-          {/* Tech Skills */}
-          <div className={`p-6 sm:p-8 rounded-3xl card-parchment magic-border transition-all duration-1000 ${cardsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                <Code2 className="text-primary" size={24} />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground" style={{ fontFamily: "'Cinzel', serif" }}>Technical Skills</h3>
-                <p className="text-sm text-muted-foreground">Languages & frameworks</p>
-              </div>
-            </div>
-
-            <div className="space-y-5">
-              {techSkills.map((skill, index) => (
-                <div key={index}>
-                  <div className="flex justify-between mb-2">
-                    <span className="text-foreground font-medium text-sm">{skill.name}</span>
-                    <span className="text-muted-foreground font-medium text-sm">{skill.level}%</span>
-                  </div>
-                  <div className="h-1.5 bg-muted rounded-full overflow-hidden">
-                    <div
-                      className="h-full rounded-full transition-all duration-1000 ease-out"
-                      style={{
-                        width: cardsVisible ? `${skill.level}%` : '0%',
-                        background: 'linear-gradient(90deg, hsl(43 72% 55%), hsl(43 80% 70%))',
-                        transitionDelay: `${index * 100 + 300}ms`,
-                      }}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* Tabs */}
+          <div className="flex gap-2 mb-8">
+            <button
+              onClick={() => setActiveTab('tech')}
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeTab === 'tech'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-card/50 text-muted-foreground hover:text-foreground border border-border/50'
+              }`}
+            >
+              <Code2 size={16} />
+              Technical
+            </button>
+            <button
+              onClick={() => setActiveTab('creative')}
+              className={`flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeTab === 'creative'
+                  ? 'bg-secondary text-secondary-foreground'
+                  : 'bg-card/50 text-muted-foreground hover:text-foreground border border-border/50'
+              }`}
+            >
+              <Palette size={16} />
+              Creative
+            </button>
           </div>
 
-          {/* Creative Skills */}
-          <div className={`p-6 sm:p-8 rounded-3xl card-parchment magic-border transition-all duration-1000 delay-200 ${cardsVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}>
-            <div className="flex items-center gap-3 mb-8">
-              <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center">
-                <Palette className="text-secondary" size={24} />
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-foreground" style={{ fontFamily: "'Cinzel', serif" }}>Creative Skills</h3>
-                <p className="text-sm text-muted-foreground">Design & editing</p>
-              </div>
-            </div>
-
-            <div className="space-y-5 mb-8">
-              {creativeSkills.map((skill, index) => (
-                <div key={index}>
+          {/* Skill bars with animation */}
+          <div className="p-6 sm:p-8 rounded-3xl card-parchment magic-border">
+            <div className="space-y-5">
+              {activeSkills.map((skill, index) => (
+                <div key={skill.name} className="group">
                   <div className="flex justify-between mb-2">
-                    <span className="text-foreground font-medium text-sm">{skill.name}</span>
+                    <span className="text-foreground font-medium text-sm group-hover:text-primary transition-colors">{skill.name}</span>
                     <span className="text-muted-foreground font-medium text-sm">{skill.level}%</span>
                   </div>
-                  <div className="h-1.5 bg-muted rounded-full overflow-hidden">
+                  <div className="h-2 bg-muted rounded-full overflow-hidden">
                     <div
-                      className="h-full rounded-full transition-all duration-1000 ease-out"
+                      className="h-full rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
                       style={{
                         width: cardsVisible ? `${skill.level}%` : '0%',
-                        background: 'linear-gradient(90deg, hsl(0 55% 40%), hsl(0 45% 55%))',
-                        transitionDelay: `${index * 100 + 500}ms`,
+                        background: gradientColor,
+                        transitionDelay: `${index * 100 + 300}ms`,
                       }}
-                    />
+                    >
+                      {/* Shimmer effect on bar */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-[shimmer_2s_linear_infinite]" />
+                    </div>
                   </div>
                 </div>
               ))}
             </div>
 
-            <div className="p-5 rounded-2xl border border-border/50 bg-muted/30">
+            <div className="mt-6 p-4 rounded-2xl border border-border/50 bg-muted/30">
               <div className="flex items-start gap-3">
-                <Zap className="text-primary flex-shrink-0 mt-0.5" size={16} />
+                <Sparkles className="text-primary flex-shrink-0 mt-0.5" size={16} />
                 <p className="text-sm text-muted-foreground leading-relaxed" style={{ fontFamily: "'Crimson Text', serif" }}>
                   Combining technical precision with creative vision to deliver
                   <span className="text-foreground font-medium"> functionally robust</span> and
@@ -141,6 +189,28 @@ const Skills = () => {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Circular soft skills */}
+        <div
+          ref={circularRef}
+          className={`mb-16 transition-all duration-1000 ${circularVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+        >
+          <h3 className="text-xl font-bold text-foreground mb-8" style={{ fontFamily: "'Cinzel', serif" }}>
+            Soft <span className="text-shimmer">Skills</span>
+          </h3>
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8 max-w-2xl">
+            {circularSkills.map((skill, i) => (
+              <CircularProgress
+                key={skill.name}
+                value={skill.value}
+                label={skill.name}
+                visible={circularVisible}
+                delay={i * 200}
+                color={skill.color}
+              />
+            ))}
           </div>
         </div>
 
@@ -155,12 +225,12 @@ const Skills = () => {
             {tools.map((tool, index) => (
               <div
                 key={index}
-                className={`flex items-center gap-2 px-5 py-2.5 rounded-full card-parchment magic-border transition-all duration-500 text-sm ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full card-parchment magic-border hover:scale-105 cursor-default transition-all duration-500 text-sm group ${
                   toolsVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
                 }`}
                 style={{ transitionDelay: `${index * 80}ms` }}
               >
-                <span className="text-lg">{tool.icon}</span>
+                <span className="text-lg group-hover:scale-125 transition-transform duration-300">{tool.icon}</span>
                 <span className="text-foreground font-medium">{tool.name}</span>
               </div>
             ))}

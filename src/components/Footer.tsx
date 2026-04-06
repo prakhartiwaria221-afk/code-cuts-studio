@@ -1,14 +1,16 @@
-import { Github, Linkedin, Instagram } from "lucide-react";
+import { Github, Linkedin, Instagram, Heart, ArrowUp } from "lucide-react";
 import dobbyImage from "@/assets/dobby.png";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   const socialLinks = [
-    { icon: Github, href: "https://github.com/prakhartiwaria221-afk", label: "GH" },
-    { icon: Linkedin, href: "https://linkedin.com/in/prakhar-tiwari-8b04a7296", label: "IN" },
-    { icon: Instagram, href: "https://instagram.com/prakhar6038", label: "IG" },
+    { icon: Github, href: "https://github.com/prakhartiwaria221-afk", label: "GitHub" },
+    { icon: Linkedin, href: "https://linkedin.com/in/prakhar-tiwari-8b04a7296", label: "LinkedIn" },
+    { icon: Instagram, href: "https://instagram.com/prakhar6038", label: "Instagram" },
   ];
+
+  const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
     <footer className="relative border-t border-border/30 bg-card/50 overflow-hidden">
@@ -23,28 +25,65 @@ const Footer = () => {
       />
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="py-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        {/* Top section */}
+        <div className="py-8 flex flex-col sm:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2 pl-14 sm:pl-28">
             <span className="text-primary text-lg">⚡</span>
-            <p className="text-sm text-muted-foreground" style={{ fontFamily: "'Crimson Text', serif" }}>
-              © {currentYear} Prakhar Tiwari. Mischief Managed.
-            </p>
+            <div>
+              <p className="text-sm font-medium text-foreground" style={{ fontFamily: "'Cinzel', serif" }}>
+                Prakhar Tiwari
+              </p>
+              <p className="text-xs text-muted-foreground" style={{ fontFamily: "'Crimson Text', serif" }}>
+                Front-End Developer & Creative
+              </p>
+            </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground mr-2" style={{ fontFamily: "'Crimson Text', serif" }}>Follow</span>
-            {socialLinks.map((social, index) => (
-              <a
-                key={index}
-                href={social.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full border border-border flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 transition-all text-xs font-bold"
-                aria-label={social.label}
-              >
-                {social.label}
-              </a>
-            ))}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              {socialLinks.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full border border-border/50 bg-card/30 flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 hover:scale-110 transition-all duration-300"
+                  aria-label={social.label}
+                >
+                  <social.icon size={16} />
+                </a>
+              ))}
+            </div>
+
+            {/* Back to top button */}
+            <button
+              onClick={scrollToTop}
+              className="w-9 h-9 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary hover:bg-primary/20 hover:scale-110 transition-all duration-300"
+              aria-label="Back to top"
+            >
+              <ArrowUp size={16} />
+            </button>
+          </div>
+        </div>
+
+        {/* Bottom section */}
+        <div className="border-t border-border/20 py-4">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p className="text-xs text-muted-foreground flex items-center gap-1" style={{ fontFamily: "'Crimson Text', serif" }}>
+              © {currentYear} Made with <Heart size={12} className="text-secondary" /> Mischief Managed.
+            </p>
+            <div className="flex gap-4">
+              {["Home", "About", "Skills", "Projects", "Contact"].map(link => (
+                <a
+                  key={link}
+                  href={`#${link.toLowerCase()}`}
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                  style={{ fontFamily: "'Crimson Text', serif" }}
+                >
+                  {link}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </div>

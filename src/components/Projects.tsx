@@ -1,4 +1,5 @@
-import { Github, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Github, ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "./ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SparkleCanvas from "./SparkleCanvas";
@@ -11,6 +12,8 @@ import ronImage from "@/assets/ron-weasley.png";
 const Projects = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [hoveredProject, setHoveredProject] = useState<number | null>(null);
 
   const projects = [
     {
@@ -19,6 +22,7 @@ const Projects = () => {
       tags: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
       image: mindbloomImage,
       github: "https://github.com/prakhartiwaria221-afk",
+      category: "Web App",
     },
     {
       title: "CoordiNet",
@@ -26,6 +30,7 @@ const Projects = () => {
       tags: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
       image: coordinetImage,
       github: "https://github.com/prakhartiwaria221-afk",
+      category: "Web App",
     },
     {
       title: "BookPard",
@@ -33,6 +38,7 @@ const Projects = () => {
       tags: ["React", "TypeScript", "Tailwind CSS", "Supabase"],
       image: bookpardImage,
       github: "https://github.com/prakhartiwaria221-afk",
+      category: "Full Stack",
     },
     {
       title: "Library Management",
@@ -40,8 +46,12 @@ const Projects = () => {
       tags: ["C++", "OOP"],
       image: "https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=800&h=500&fit=crop",
       github: "https://github.com/prakhartiwaria221-afk",
+      category: "Console",
     },
   ];
+
+  const filters = ["All", "Web App", "Full Stack", "Console"];
+  const filteredProjects = activeFilter === "All" ? projects : projects.filter(p => p.category === activeFilter);
 
   return (
     <section id="projects" className="py-24 sm:py-32 relative overflow-hidden">
@@ -73,7 +83,7 @@ const Projects = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div
           ref={headerRef}
-          className={`flex items-start justify-between mb-14 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+          className={`flex flex-col sm:flex-row items-start justify-between mb-10 gap-4 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
         >
           <div>
             <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>Portfolio</p>
@@ -88,14 +98,33 @@ const Projects = () => {
           </div>
         </div>
 
+        {/* Filter tabs */}
+        <div className={`flex gap-2 mb-8 flex-wrap transition-all duration-1000 delay-200 ${headerVisible ? 'opacity-100' : 'opacity-0'}`}>
+          {filters.map(filter => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                activeFilter === filter
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-card/50 text-muted-foreground hover:text-foreground border border-border/50'
+              }`}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
         <div ref={gridRef} className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <div
               key={project.title}
-              className={`group relative rounded-2xl overflow-hidden card-parchment magic-border transition-all duration-700 ${
+              className={`group relative rounded-2xl overflow-hidden card-parchment magic-border transition-all duration-700 hover:scale-[1.02] ${
                 gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
               }`}
               style={{ transitionDelay: `${index * 150}ms` }}
+              onMouseEnter={() => setHoveredProject(index)}
+              onMouseLeave={() => setHoveredProject(null)}
             >
               <div className="relative h-48 overflow-hidden">
                 <img
@@ -105,6 +134,27 @@ const Projects = () => {
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+
+                {/* Hover overlay */}
+                <div className={`absolute inset-0 bg-primary/80 flex items-center justify-center gap-3 transition-all duration-300 ${
+                  hoveredProject === index ? 'opacity-100' : 'opacity-0'
+                }`}>
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full bg-primary-foreground/90 flex items-center justify-center text-primary hover:scale-110 transition-transform"
+                  >
+                    <Github size={18} />
+                  </a>
+                </div>
+
+                {/* Category badge */}
+                <div className="absolute top-3 left-3">
+                  <span className="text-[10px] px-2.5 py-1 rounded-full bg-background/80 backdrop-blur-sm text-foreground font-medium">
+                    {project.category}
+                  </span>
+                </div>
               </div>
 
               <div className="p-4">
