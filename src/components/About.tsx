@@ -83,7 +83,7 @@ const About = () => {
             <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>About Me</p>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6" style={{ fontFamily: "'Cinzel', serif" }}>
               <AnimatedText text="A Consistent Experience" /><br />
-              <AnimatedText text="is a " delay={300} /><span className="text-shimmer"><AnimatedText text="Better" delay={450} /></span><AnimatedText text=" Experience." delay={550} />
+              <AnimatedText text="is a " delay={300} /><span className="text-primary"><AnimatedText text="Better" delay={450} /></span><AnimatedText text=" Experience." delay={550} />
             </h2>
           </div>
 

@@ -134,7 +134,7 @@ const Hero = ({ house }: HeroProps) => {
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight" style={{ fontFamily: "'Cinzel', serif" }}>
                 <AnimatedText text="I am " className="text-foreground" />
                 <br className="sm:hidden" />
-                <span className="text-shimmer"><AnimatedText text="Prakhar" delay={200} /></span>
+                <AnimatedText text="Prakhar" delay={200} className="text-primary" />
               </h1>
             </div>
 
