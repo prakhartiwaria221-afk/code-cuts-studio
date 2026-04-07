@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
@@ -12,15 +12,20 @@ import SortingQuiz from "@/components/SortingQuiz";
 import SpellEffects from "@/components/SpellEffects";
 import SectionDivider from "@/components/SectionDivider";
 import { ParallaxShapes } from "@/components/ParallaxSection";
+import LoadingScreen from "@/components/LoadingScreen";
+import GradientMesh from "@/components/GradientMesh";
 
 const Index = () => {
   const [sorted, setSorted] = useState(false);
   const [house, setHouse] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const handleSorted = (h: string) => {
     setHouse(h);
     setSorted(true);
   };
+
+  const handleLoadingComplete = useCallback(() => setLoading(false), []);
 
   if (!sorted) {
     return <SortingQuiz onComplete={handleSorted} />;
@@ -28,6 +33,8 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background relative">
+      {loading && <LoadingScreen onComplete={handleLoadingComplete} />}
+      <GradientMesh />
       <CustomCursor />
       <MagicalParticles />
       <SpellEffects />
