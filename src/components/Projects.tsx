@@ -77,7 +77,7 @@ const Projects = () => {
             <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>Portfolio</p>
             <h2 className="text-3xl sm:text-4xl font-black mb-2" style={{ fontFamily: "'Cinzel', serif" }}>
               <AnimatedText text="Magical " />
-              <span className="text-shimmer"><AnimatedText text="Projects" delay={250} /></span>
+              <span className="text-primary"><AnimatedText text="Projects" delay={250} /></span>
             </h2>
           </div>
           <div className="hidden sm:block max-w-xs text-right">

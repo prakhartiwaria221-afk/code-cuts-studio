@@ -116,7 +116,7 @@ const Skills = () => {
         >
           <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>My Skills</p>
           <h2 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Cinzel', serif" }}>
-            <AnimatedText text="Skills & " /><span className="text-shimmer"><AnimatedText text="Expertise" delay={250} /></span>
+            <AnimatedText text="Skills & " /><span className="text-primary"><AnimatedText text="Expertise" delay={250} /></span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl" style={{ fontFamily: "'Crimson Text', serif" }}>
             A blend of technical prowess and creative excellence
