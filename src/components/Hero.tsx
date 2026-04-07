@@ -7,6 +7,8 @@ import goldenSnitchImage from "@/assets/golden-snitch.png";
 import harryImage from "@/assets/harry-potter.png";
 import { useTypingAnimation } from "@/hooks/useTypingAnimation";
 import SparkleCanvas from "./SparkleCanvas";
+import MagneticButton from "./MagneticButton";
+import AnimatedText from "./AnimatedText";
 
 interface HeroProps {
   house?: string | null;
@@ -72,7 +74,6 @@ const Hero = ({ house }: HeroProps) => {
           {/* Left - Profile with Dumbledore */}
           <div className={`relative flex items-center justify-center order-1 transition-all duration-1000 ${loaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <div className="relative w-full max-w-sm mx-auto group">
-              {/* Glowing ring behind image */}
               <div className="absolute inset-0 rounded-t-[200px] bg-gradient-to-b from-primary/20 via-transparent to-secondary/10 blur-2xl scale-110 group-hover:scale-125 transition-transform duration-700" />
               
               <div
@@ -86,11 +87,9 @@ const Hero = ({ house }: HeroProps) => {
                   alt="Prakhar Tiwari"
                   className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                 />
-                {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-background/60 via-transparent to-transparent" />
               </div>
 
-              {/* Floating status badge */}
               <div className="absolute -top-2 -right-2 sm:top-4 sm:-right-6 z-30">
                 <div className="relative">
                   <div className="w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-green-500 animate-pulse" />
@@ -98,12 +97,10 @@ const Hero = ({ house }: HeroProps) => {
                 </div>
               </div>
 
-              {/* Decorative corner elements */}
               <div className="absolute -top-4 -left-4 w-16 h-16 border border-primary/30 rounded-full" />
               <div className="absolute -bottom-2 -right-3 w-12 h-12 border border-secondary/30 rounded-full" />
             </div>
 
-            {/* Dumbledore next to profile */}
             <div className="absolute -right-2 sm:-right-16 bottom-0 z-20">
               <div className="relative">
                 <SparkleCanvas count={8} color="gold" className="!-inset-8" />
@@ -135,9 +132,9 @@ const Hero = ({ house }: HeroProps) => {
                 Welcome to my magical world
               </p>
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-[0.95] tracking-tight" style={{ fontFamily: "'Cinzel', serif" }}>
-                <span className="text-foreground">I am </span>
+                <AnimatedText text="I am " className="text-foreground" />
                 <br className="sm:hidden" />
-                <span className="text-shimmer">Prakhar</span>
+                <span className="text-shimmer"><AnimatedText text="Prakhar" delay={200} /></span>
               </h1>
             </div>
 
@@ -161,27 +158,31 @@ const Hero = ({ house }: HeroProps) => {
               </div>
             </div>
 
-            {/* CTA Buttons */}
+            {/* CTA Buttons with Magnetic effect */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start pt-2">
-              <Button
-                className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 px-8 group"
-                asChild
-              >
-                <a href="#projects">
-                  View My Work
-                  <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
-                </a>
-              </Button>
-              <Button
-                variant="outline"
-                className="rounded-full border-border hover:border-primary/50 hover:text-primary px-8 group"
-                asChild
-              >
-                <a href="#contact">
-                  <Download className="mr-2 h-4 w-4 group-hover:-translate-y-0.5 transition-transform" />
-                  Get in Touch
-                </a>
-              </Button>
+              <MagneticButton>
+                <Button
+                  className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90 hover:shadow-[0_0_25px_hsl(43,72%,55%,0.3)] px-8 group transition-all duration-300"
+                  asChild
+                >
+                  <a href="#projects">
+                    View My Work
+                    <ArrowDown className="ml-2 h-4 w-4 group-hover:translate-y-0.5 transition-transform" />
+                  </a>
+                </Button>
+              </MagneticButton>
+              <MagneticButton>
+                <Button
+                  variant="outline"
+                  className="rounded-full border-border hover:border-primary/50 hover:text-primary hover:shadow-[0_0_20px_hsl(43,72%,55%,0.15)] px-8 group transition-all duration-300"
+                  asChild
+                >
+                  <a href="#contact">
+                    <Download className="mr-2 h-4 w-4 group-hover:-translate-y-0.5 transition-transform" />
+                    Get in Touch
+                  </a>
+                </Button>
+              </MagneticButton>
             </div>
 
             {/* Social Links */}
@@ -191,16 +192,17 @@ const Hero = ({ house }: HeroProps) => {
                 { icon: Linkedin, href: "https://linkedin.com/in/prakhar-tiwari-8b04a7296", label: "LinkedIn" },
                 { icon: Instagram, href: "https://instagram.com/prakhar6038", label: "Instagram" },
               ].map((social, i) => (
-                <a
-                  key={i}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-11 h-11 rounded-full border border-border/50 bg-card/30 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 hover:scale-110 transition-all duration-300"
-                  aria-label={social.label}
-                >
-                  <social.icon size={18} />
-                </a>
+                <MagneticButton key={i} strength={0.4}>
+                  <a
+                    href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-11 h-11 rounded-full border border-border/50 bg-card/30 backdrop-blur-sm flex items-center justify-center text-muted-foreground hover:text-primary hover:border-primary/50 hover:bg-primary/5 hover:scale-110 hover:shadow-[0_0_15px_hsl(43,72%,55%,0.2)] transition-all duration-300"
+                    aria-label={social.label}
+                  >
+                    <social.icon size={18} />
+                  </a>
+                </MagneticButton>
               ))}
             </div>
           </div>
