@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { GraduationCap, MapPin, Calendar, Code, Video, Layout, Smartphone, Palette } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SparkleCanvas from "./SparkleCanvas";
+import AnimatedText from "./AnimatedText";
 import sortingHatImage from "@/assets/sorting-hat.png";
 import hermioneImage from "@/assets/hermione.png";
 
@@ -81,8 +82,8 @@ const About = () => {
           >
             <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>About Me</p>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight mb-6" style={{ fontFamily: "'Cinzel', serif" }}>
-              A Consistent Experience<br />
-              is a <span className="text-shimmer">Better</span> Experience.
+              <AnimatedText text="A Consistent Experience" /><br />
+              <AnimatedText text="is a " delay={300} /><span className="text-shimmer"><AnimatedText text="Better" delay={450} /></span><AnimatedText text=" Experience." delay={550} />
             </h2>
           </div>
 

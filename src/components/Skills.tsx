@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Code2, Palette, Zap, Sparkles } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import SparkleCanvas from "./SparkleCanvas";
+import AnimatedText from "./AnimatedText";
 import phoenixImage from "@/assets/phoenix.png";
 
 const CircularProgress = ({ value, label, visible, delay, color }: { value: number; label: string; visible: boolean; delay: number; color: string }) => {
@@ -115,7 +116,7 @@ const Skills = () => {
         >
           <p className="text-primary text-sm tracking-[0.3em] uppercase mb-3" style={{ fontFamily: "'Crimson Text', serif" }}>My Skills</p>
           <h2 className="text-4xl sm:text-5xl font-black mb-4" style={{ fontFamily: "'Cinzel', serif" }}>
-            Skills & <span className="text-shimmer">Expertise</span>
+            <AnimatedText text="Skills & " /><span className="text-shimmer"><AnimatedText text="Expertise" delay={250} /></span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl" style={{ fontFamily: "'Crimson Text', serif" }}>
             A blend of technical prowess and creative excellence
